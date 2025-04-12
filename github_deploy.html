@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub部署助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3E7BFA;
+            --dark-primary: #2D4EA2;
+            --accent: #FF7D45;
+            --background: #F4F4F8;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #FFFFFF;
+            --gray-light: #EAEAEA;
+            --gray: #CCCCCC;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --success: #4CAF50;
+            --error: #F44336;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -40px;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark-primary);
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(62, 123, 250, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 8px;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--dark-primary);
+        }
+        
+        .command-box {
+            background-color: #1e1e1e;
+            color: #fff;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 16px;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .command-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .note {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .note i {
+            margin-right: 8px;
+            margin-top: 2px;
+        }
+        
+        .note.info {
+            background-color: rgba(62, 123, 250, 0.1);
+            color: var(--primary);
+        }
+        
+        .note.warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #e6a700;
+        }
+        
+        .note.error {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+        }
+        
+        .success-message {
+            display: none;
+            padding: 12px;
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border-radius: 6px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub 部署助手</h1>
+        
+        <div class="note info">
+            <i class="fas fa-info-circle"></i>
+            <div>
+                此工具可以帮助您轻松地将网站部署到 GitHub Pages。所有操作都在本地执行，不会发送您的个人信息到任何服务器。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">步骤 1: 设置 GitHub 信息</div>
+            <div class="form-group">
+                <label for="github-username">GitHub 用户名</label>
+                <input type="text" id="github-username" placeholder="例如：johndoe">
+            </div>
+            
+            <div class="form-group">
+                <label for="repo-name">仓库名称</label>
+                <input type="text" id="repo-name" placeholder="例如：gongcheng-deepseek-prototype" value="gongcheng-deepseek-prototype">
+            </div>
+            
+            <div class="form-group">
+                <label>认证方式</label>
+                <div class="checkbox-group">
+                    <input type="radio" id="auth-pat" name="auth-method" checked>
+                    <label for="auth-pat">个人访问令牌 (推荐)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="radio" id="auth-password" name="auth-method">
+                    <label for="auth-password">密码 (不推荐)</label>
+                </div>
+            </div>
+            
+            <div class="form-group" id="pat-group">
+                <label for="github-pat">个人访问令牌 (PAT)</label>
+                <input type="password" id="github-pat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                <div class="note info" style="margin-top: 8px; font-size: 13px;">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        您可以在 GitHub 的 Settings > Developer settings > Personal access tokens 创建令牌。
+                        确保授予 "repo" 权限。
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="password-group" style="display: none;">
+                <label for="github-password">GitHub 密码</label>
+                <input type="password" id="github-password" placeholder="您的 GitHub 密码">
+                <div class="note warning" style="margin-top: 8px; font-size: 13px;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        不建议使用密码认证，GitHub 可能会拒绝密码认证尝试。
+                        出于安全考虑，请优先使用个人访问令牌 (PAT)。
+                    </div>
+                </div>
+            </div>
+            
+            <button id="generate-btn">生成部署命令</button>
+        </div>
+        
+        <div id="commands-container" style="display: none;">
+            <div class="step">
+                <div class="step-title">步骤 2: 运行以下命令</div>
+                <div class="note info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        打开终端，切换到您项目的根目录，然后依次运行以下命令：
+                    </div>
+                </div>
+                
+                <div id="init-commands">
+                    <div class="command-box">
+                        <button class="copy-btn" data-target="init-command">复制</button>
+                        <pre id="init-command">git remote add origin https://github.com/username/repo.git
+git push -u origin main</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-title">步骤 3: 启用 GitHub Pages</div>
+                <ol>
+                    <li>访问您的 GitHub 仓库页面： <a id="repo-link" href="#" target="_blank">https://github.com/username/repo</a></li>
+                    <li>点击顶部的 "Settings" 选项卡</li>
+                    <li>在左侧菜单中，点击 "Pages"</li>
+                    <li>在 "Source" 部分，选择 "Deploy from a branch"</li>
+                    <li>在 "Branch" 下拉菜单中，选择 "main"，然后点击 "Save"</li>
+                    <li>等待几分钟，然后刷新页面，您的站点网址将显示在页面顶部</li>
+                </ol>
+                
+                <div class="note info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        您的网站将部署在： <span id="pages-url">https://username.github.io/repo/</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 切换认证方式
+        document.getElementById('auth-pat').addEventListener('change', function() {
+            document.getElementById('pat-group').style.display = 'block';
+            document.getElementById('password-group').style.display = 'none';
+        });
+        
+        document.getElementById('auth-password').addEventListener('change', function() {
+            document.getElementById('pat-group').style.display = 'none';
+            document.getElementById('password-group').style.display = 'block';
+        });
+        
+        // 复制命令
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('copy-btn')) {
+                const targetId = e.target.getAttribute('data-target');
+                const text = document.getElementById(targetId).textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = e.target.textContent;
+                    e.target.textContent = '已复制!';
+                    setTimeout(() => {
+                        e.target.textContent = originalText;
+                    }, 2000);
+                });
+            }
+        });
+        
+        // 生成命令
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const username = document.getElementById('github-username').value.trim();
+            const repoName = document.getElementById('repo-name').value.trim();
+            const usePat = document.getElementById('auth-pat').checked;
+            const pat = document.getElementById('github-pat').value.trim();
+            const password = document.getElementById('github-password').value.trim();
+            
+            if (!username) {
+                alert('请输入您的 GitHub 用户名');
+                return;
+            }
+            
+            if (!repoName) {
+                alert('请输入仓库名称');
+                return;
+            }
+            
+            if (usePat && !pat) {
+                alert('请输入您的个人访问令牌');
+                return;
+            }
+            
+            if (!usePat && !password) {
+                alert('请输入您的 GitHub 密码');
+                return;
+            }
+            
+            // 设置 URL
+            let remoteUrl;
+            if (usePat) {
+                remoteUrl = `https://${username}:${pat}@github.com/${username}/${repoName}.git`;
+            } else {
+                remoteUrl = `https://${username}:${password}@github.com/${username}/${repoName}.git`;
+            }
+            
+            // 生成初始化命令
+            const initCommand = `git remote add origin https://github.com/${username}/${repoName}.git
+git push -u origin main`;
+            
+            document.getElementById('init-command').textContent = initCommand;
+            document.getElementById('repo-link').href = `https://github.com/${username}/${repoName}`;
+            document.getElementById('repo-link').textContent = `https://github.com/${username}/${repoName}`;
+            document.getElementById('pages-url').textContent = `https://${username}.github.io/${repoName}/`;
+            
+            document.getElementById('commands-container').style.display = 'block';
+        });
+    </script>
+</body>
+</html> 
