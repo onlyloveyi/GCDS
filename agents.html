@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公诚DeepSeek - 智能体</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:18 阅</div>
+        <div>
+            <span>25.8K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>39%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <i class="fas fa-robot" style="margin-right: 8px;"></i>
+            智能体
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 80px;">
+        <!-- 搜索框 -->
+        <div class="input-group" style="margin-bottom: 24px;">
+            <i class="fas fa-search" style="color: var(--text-light); margin-right: 8px;"></i>
+            <input type="text" class="input-field" placeholder="搜索智能体...">
+        </div>
+        
+        <!-- 推荐智能体 -->
+        <div class="section-title">推荐智能体</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">财务智能体</div>
+                <div class="agent-description">专业财务问题解答</div>
+            </div>
+            <span class="badge">内测</span>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary);">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">合同审核助手</div>
+                <div class="agent-description">快速审核合同条款</div>
+            </div>
+            <span class="badge" style="background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary);">热门</span>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(233, 196, 106, 0.2); color: #E76F51;">
+                <i class="fas fa-plane"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">旅游助手</div>
+                <div class="agent-description">景点推荐与旅游规划</div>
+            </div>
+        </div>
+        
+        <!-- 新上线智能体 -->
+        <div class="section-title">新上线</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">学习辅导员</div>
+                <div class="agent-description">提供学习方法与知识辅导</div>
+            </div>
+            <span class="badge" style="background-color: rgba(231, 111, 81, 0.1); color: #E76F51;">新上线</span>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">创意助手</div>
+                <div class="agent-description">激发灵感，帮助头脑风暴</div>
+            </div>
+            <span class="badge" style="background-color: rgba(231, 111, 81, 0.1); color: #E76F51;">新上线</span>
+        </div>
+        
+        <!-- 最近使用 -->
+        <div class="section-title">最近使用</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(233, 196, 106, 0.2); color: #E76F51;">
+                <i class="fas fa-plane"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">旅游助手</div>
+                <div class="agent-description">景点推荐与旅游规划</div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-light);">10分钟前</div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">财务智能体</div>
+                <div class="agent-description">专业财务问题解答</div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-light);">昨天</div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

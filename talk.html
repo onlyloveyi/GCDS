@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公诚DeepSeek - 对话</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 针对此页面的覆盖样式 */
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-bubble {
+            max-width: 85%;
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+        }
+        
+        .chat-message.user .chat-bubble {
+            background-color: var(--primary);
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .chat-message:not(.user) .chat-bubble {
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+            border-top-left-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:19 阅</div>
+        <div>
+            <span>7.9K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>38%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;">
+                <i class="fas fa-bars"></i>
+            </button>
+            公诚DeepSeek
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <div class="chat-container">
+            <!-- 用户消息 -->
+            <div class="chat-message user">
+                <div class="chat-bubble">
+                    广州有什么特色景点
+                </div>
+            </div>
+            
+            <!-- AI 回复 -->
+            <div class="chat-message">
+                <div class="chat-bubble">
+                    <div style="margin-bottom: 8px; font-weight: 500;">收起深度思考 <i class="fas fa-chevron-up" style="color: var(--primary);"></i></div>
+                    
+                    <p>广州作为中国历史文化名城和现代化大都市，拥有丰富的历史文化和自然景观。以下是一些广州的特色景点：</p>
+                    
+                    <p><strong>1. 越秀公园</strong><br>
+                    广州最大的综合性公园，内有五羊雕像、镇海楼、中山纪念堂等景点，是广州市的标志性景观。</p>
+                    
+                    <p><strong>2. 陈家祠</strong><br>
+                    始建于清代，是广州保存最完好的古建筑之一，展示了岭南特色的建筑艺术和民俗文化。</p>
+                    
+                    <p><strong>3. 沙面岛</strong><br>
+                    位于珠江畔，是昔日的欧洲租界，保存着大量西式建筑，是广州城内的"异国情调"景点。</p>
+                    
+                    <p><strong>4. 广州塔（小蛮腰）</strong><br>
+                    现代广州的标志性建筑，是世界第四高塔，提供广州全景视野，夜晚灯光秀尤为壮观。</p>
+                    
+                    <p><strong>5. 上下九步行街</strong><br>
+                    广州最有代表性的传统商业步行街，汇集了众多老字号和地道美食。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 输入栏区域 -->
+    <div style="position: fixed; bottom: 76px; left: 0; right: 0; background-color: var(--background); border-top: 1px solid var(--gray-light);">
+        <!-- 开启新对话按钮 -->
+        <div style="text-align: center; padding: 10px 0;">
+            <button style="background-color: white; border: 1px solid var(--gray-light); border-radius: 16px; padding: 6px 16px; font-size: 13px; color: var(--text-light);">
+                <i class="fas fa-plus-circle" style="margin-right: 4px;"></i> 开启新对话
+            </button>
+        </div>
+        
+        <!-- 输入框 -->
+        <div style="padding: 0 16px 16px 16px;">
+            <div class="input-group" style="margin: 0;">
+                <input type="text" class="input-field" placeholder="给公诚DeepSeek发消息吧~">
+                <button class="input-action">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <button class="input-action" style="color: var(--primary);">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item active">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

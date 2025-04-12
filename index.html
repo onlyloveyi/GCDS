@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公诚DeepSeek - 优化原型</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 12px solid #1a1a1a;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background-color: #000;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: white;
+        }
+        .prototype-section {
+            margin-bottom: 60px;
+        }
+        .page-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .notch {
+            position: absolute;
+            width: 160px;
+            height: 30px;
+            background-color: #1a1a1a;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">公诚DeepSeek 优化原型设计</h1>
+        <p class="text-center mb-10 text-gray-600 max-w-3xl mx-auto">针对90后年轻人设计的清新现代风格，优化用户体验和视觉效果</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 justify-items-center">
+            <!-- 首页 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">首页/欢迎页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="home.html" frameborder="0"></iframe>
+                </div>
+            </div>
+            
+            <!-- 对话页面 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">对话页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="talk.html" frameborder="0"></iframe>
+                </div>
+            </div>
+            
+            <!-- 财务智能体页面 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">财务智能体页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="finance_agent.html" frameborder="0"></iframe>
+                </div>
+            </div>
+            
+            <!-- 知识库页面 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">知识库页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="knowledge.html" frameborder="0"></iframe>
+                </div>
+            </div>
+            
+            <!-- 景点问答示例页面 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">景点问答页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="places.html" frameborder="0"></iframe>
+                </div>
+            </div>
+            
+            <!-- 智能体选择页面 -->
+            <div class="prototype-section">
+                <h2 class="page-title text-xl text-center">智能体选择页面</h2>
+                <div class="phone-frame">
+                    <div class="notch"></div>
+                    <iframe class="iframe-container" src="agents.html" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-16 max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">设计说明</h2>
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">颜色方案</h3>
+                <p class="mb-2">将原先的主色调从强烈的红色改为更现代的蓝色调(#3E7BFA)，营造出专业、年轻且充满活力的感觉。</p>
+                <div class="flex space-x-4 my-3">
+                    <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background-color: #3E7BFA;">
+                        <span class="text-white text-xs">#3E7BFA</span>
+                    </div>
+                    <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background-color: #2D4EA2;">
+                        <span class="text-white text-xs">#2D4EA2</span>
+                    </div>
+                    <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background-color: #FF7D45;">
+                        <span class="text-white text-xs">#FF7D45</span>
+                    </div>
+                    <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background-color: #F4F4F8;">
+                        <span class="text-gray-800 text-xs">#F4F4F8</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">设计改进</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>重新设计了全局导航，使用圆形图标和标签提高识别度</li>
+                    <li>优化智能体界面布局，增加视觉层次感和空间感</li>
+                    <li>知识库界面加入图标和卡片设计，提升视觉吸引力</li>
+                    <li>优化状态栏和顶部导航，减少视觉压力</li>
+                    <li>改进对话界面，使用气泡样式增加亲和力</li>
+                    <li>全局采用圆角元素和合理留白，增加现代感</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

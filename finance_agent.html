@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公诚DeepSeek - 财务智能体</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:18 阅</div>
+        <div>
+            <span>8.4K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>39%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            公诚DeepSeek
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-bullseye"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <!-- 财务智能体介绍 -->
+        <div class="agent-card" style="flex-direction: column; align-items: flex-start; padding: 20px;">
+            <div style="display: flex; width: 100%; margin-bottom: 16px; align-items: center;">
+                <div class="agent-icon" style="width: 64px; height: 64px; font-size: 28px; background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div style="flex: 1; margin-left: 16px;">
+                    <div style="font-size: 20px; font-weight: 600; margin-bottom: 6px;">财务智能体</div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge" style="background-color: rgba(62, 123, 250, 0.15);">
+                            <i class="fas fa-flask" style="margin-right: 4px;"></i> 内测
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-light);">
+                            <i class="far fa-eye" style="margin-right: 4px;"></i> 5.2k
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-light);">
+                            <i class="far fa-star" style="margin-right: 4px;"></i> 4.8
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="color: var(--text-light); font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+                专业财务问题解答智能体，拥有丰富的财务知识库，可解答财务报表分析、税务规划、成本控制、投资决策等相关问题。
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">财务报表</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">税务筹划</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">成本控制</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">财务分析</span>
+            </div>
+            
+            <div style="display: flex; gap: 10px; width: 100%;">
+                <button class="btn btn-primary" style="flex: 1;">
+                    <i class="fas fa-robot"></i> 开始咨询
+                </button>
+                <button style="background-color: white; border: 1px solid var(--gray-light); border-radius: 8px; padding: 12px; color: var(--text-light); flex: 0 0 auto;">
+                    <i class="fas fa-plus-circle"></i> 新对话
+                </button>
+            </div>
+        </div>
+        
+        <!-- 示例问题 -->
+        <div class="section-title">您可以这样问我</div>
+        
+        <div class="card">
+            <div style="font-weight: 500;">如何解读资产负债表中的关键指标？</div>
+        </div>
+        
+        <div class="card">
+            <div style="font-weight: 500;">小规模纳税人和一般纳税人的区别？</div>
+        </div>
+        
+        <div class="card">
+            <div style="font-weight: 500;">企业现金流管理的最佳实践有哪些？</div>
+        </div>
+        
+        <div class="card">
+            <div style="font-weight: 500;">如何评估公司的偿债能力？</div>
+        </div>
+        
+        <!-- 相关智能体 -->
+        <div class="section-title">相关智能体</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary);">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">税务助手</div>
+                <div class="agent-description">专注各类税务问题解答和筹划建议</div>
+            </div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(233, 196, 106, 0.2); color: #E76F51;">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">投资分析师</div>
+                <div class="agent-description">提供投资分析和资产配置建议</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 
