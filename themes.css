@@ -1,0 +1,141 @@
+/* 主题颜色方案 */
+
+/* 主题1：默认主题 - 现代蓝色 */
+.theme-1 {
+    --primary: #3E7BFA;
+    --dark-primary: #2D4EA2;
+    --accent: #FF7D45;
+    --background: #F4F4F8;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --white: #FFFFFF;
+    --gray-light: #EAEAEA;
+    --gray: #CCCCCC;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题2：深邃紫色 */
+.theme-2 {
+    --primary: #6A5ACD;
+    --dark-primary: #483D8B;
+    --accent: #FF6B81;
+    --background: #F8F7FC;
+    --text-dark: #2E2E2E;
+    --text-light: #6E6E6E;
+    --white: #FFFFFF;
+    --gray-light: #EAEAEA;
+    --gray: #CCCCCC;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题3：活力橙色 */
+.theme-3 {
+    --primary: #FF8C00;
+    --dark-primary: #E07800;
+    --accent: #4F86F7;
+    --background: #FFF8F2;
+    --text-dark: #333333;
+    --text-light: #777777;
+    --white: #FFFFFF;
+    --gray-light: #F0F0F0;
+    --gray: #D6D6D6;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题4：商务灰色 */
+.theme-4 {
+    --primary: #607D8B;
+    --dark-primary: #455A64;
+    --accent: #FFC107;
+    --background: #ECEFF1;
+    --text-dark: #263238;
+    --text-light: #546E7A;
+    --white: #FFFFFF;
+    --gray-light: #E1E5E7;
+    --gray: #B0BEC5;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题5：自然绿色 */
+.theme-5 {
+    --primary: #4CAF50;
+    --dark-primary: #388E3C;
+    --accent: #FF5722;
+    --background: #F1F8E9;
+    --text-dark: #33691E;
+    --text-light: #558B2F;
+    --white: #FFFFFF;
+    --gray-light: #E8F5E9;
+    --gray: #C8E6C9;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题6：深夜模式 */
+.theme-6 {
+    --primary: #BB86FC;
+    --dark-primary: #7B3FCC;
+    --accent: #03DAC6;
+    --background: #121212;
+    --text-dark: #E1E1E1;
+    --text-light: #B3B3B3;
+    --white: #1E1E1E;
+    --gray-light: #2D2D2D;
+    --gray: #3D3D3D;
+    --shadow: rgba(255, 255, 255, 0.05);
+}
+
+/* 主题7：柔和粉色 */
+.theme-7 {
+    --primary: #F06292;
+    --dark-primary: #D13B72;
+    --accent: #42A5F5;
+    --background: #FFF0F8;
+    --text-dark: #442C2E;
+    --text-light: #7A6366;
+    --white: #FFFFFF;
+    --gray-light: #F9E4EC;
+    --gray: #F6C9DC;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题8：沉稳红色 */
+.theme-8 {
+    --primary: #D32F2F;
+    --dark-primary: #B71C1C;
+    --accent: #448AFF;
+    --background: #FFEBEE;
+    --text-dark: #3E2723;
+    --text-light: #795548;
+    --white: #FFFFFF;
+    --gray-light: #FFCDD2;
+    --gray: #EF9A9A;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题9：科技蓝绿 */
+.theme-9 {
+    --primary: #00BCD4;
+    --dark-primary: #0097A7;
+    --accent: #FF9800;
+    --background: #E0F7FA;
+    --text-dark: #006064;
+    --text-light: #0097A7;
+    --white: #FFFFFF;
+    --gray-light: #B2EBF2;
+    --gray: #80DEEA;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 主题10：高端金色 */
+.theme-10 {
+    --primary: #FFC107;
+    --dark-primary: #FFA000;
+    --accent: #536DFE;
+    --background: #FFFDE7;
+    --text-dark: #33333D;
+    --text-light: #5D5D5D;
+    --white: #FFFFFF;
+    --gray-light: #FFF9C4;
+    --gray: #FFECB3;
+    --shadow: rgba(0, 0, 0, 0.05);
+} 
