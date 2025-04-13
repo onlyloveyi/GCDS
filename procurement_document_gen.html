@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 采购文件生成</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .input-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .input-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+        .input-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            background-color: var(--white);
+            font-size: 14px;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(62, 123, 250, 0.1);
+            outline: none;
+        }
+        .input-field::placeholder {
+            color: #C5C5C7;
+        }
+        .textarea-field {
+            resize: none;
+            min-height: 90px;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-item.selected {
+            border-color: var(--primary);
+            background-color: rgba(62, 123, 250, 0.05);
+        }
+        .radio-circle {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .radio-item.selected .radio-circle {
+            border-color: var(--primary);
+        }
+        .radio-circle-inner {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: none;
+        }
+        .radio-item.selected .radio-circle-inner {
+            display: block;
+        }
+        .radio-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+            align-items: center;
+        }
+        .steps-container::after {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 24px;
+            right: 24px;
+            height: 2px;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+        .step-item {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 2px solid var(--gray-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            z-index: 2;
+        }
+        .step-item.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .step-item.completed {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .step-label {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .step-item.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .template-card {
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            background-color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .template-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .template-card.selected {
+            border-color: var(--primary);
+            background-color: rgba(62, 123, 250, 0.05);
+        }
+        .template-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .template-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: rgba(62, 123, 250, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 16px;
+        }
+        .template-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .template-subtitle {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .smart-suggestion {
+            background-color: rgba(62, 123, 250, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .smart-suggestion i {
+            font-size: 14px;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        .smart-suggestion-text {
+            font-size: 12px;
+            color: var(--text-dark);
+            flex: 1;
+        }
+        .quick-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(62, 123, 250, 0.08);
+            border: 1px solid rgba(62, 123, 250, 0.2);
+            border-radius: 16px;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: var(--primary);
+            margin-right: 6px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-button:hover {
+            background-color: rgba(62, 123, 250, 0.15);
+        }
+        .quick-button i {
+            margin-right: 4px;
+        }
+
+        /* 以微信小程序表单风格重新定义样式 */
+        .wx-form-group {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .wx-form-label {
+            font-size: 14px;
+            color: #333;
+            min-width: 90px;
+        }
+        .wx-form-input {
+            flex: 1;
+            font-size: 14px;
+            border: none;
+            background: transparent;
+            padding: 0 10px;
+        }
+        .wx-form-textarea {
+            display: block;
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            padding: 10px 0;
+            min-height: 60px;
+            resize: none;
+        }
+        .wx-form-textarea-container {
+            padding-top: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .wx-form-textarea-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .wx-form-section {
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            padding: 0 16px;
+            overflow: hidden;
+        }
+        .wx-form-hint {
+            font-size: 12px;
+            color: #999;
+            padding: 6px 0;
+        }
+        .wx-card-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            padding: 16px 0 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 4px;
+        }
+        /* 微信风格单选按钮组 */
+        .wx-radio-group {
+            background: #fff;
+            border-radius: 8px;
+        }
+        .wx-radio-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .wx-radio-item:last-child {
+            border-bottom: none;
+        }
+        .wx-radio-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .wx-radio-item.selected .wx-radio-circle {
+            border-color: var(--primary);
+        }
+        .wx-radio-item.selected .wx-radio-circle:after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            position: absolute;
+        }
+        .wx-radio-label {
+            font-size: 14px;
+            color: #333;
+        }
+        .input-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 8px;
+        }
+        .template-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            background-color: rgba(62, 123, 250, 0.08);
+            border: none;
+            border-radius: 16px;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .template-button i {
+            margin-right: 6px;
+        }
+        .template-button:active {
+            transform: scale(0.98);
+        }
+        .document-preview {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 20px;
+        }
+        .document-preview-header {
+            padding: 16px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .document-preview-header i {
+            margin-right: 8px;
+        }
+        .document-preview-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .document-preview-image {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+            font-size: 36px;
+            color: var(--primary);
+        }
+        .document-preview-info {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .document-preview-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .document-preview-meta {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .document-preview-details {
+            width: 100%;
+            border-top: 1px solid var(--gray-light);
+            padding-top: 16px;
+        }
+        .document-preview-details-item {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .document-preview-details-item i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        .step-content {
+            display: none;
+            margin-top: 30px !important;
+        }
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+            margin-top: 30px !important;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>上午11:30 阅</div>
+        <div>
+            <span>9.2K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>45%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='bidding_agent.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            采购文件生成
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 步骤指示器 -->
+        <div class="steps-container">
+            <div class="step-item active" data-step="1">
+                <span>1</span>
+                <div class="step-label">基本信息</div>
+            </div>
+            <div class="step-item" data-step="2">
+                <span>2</span>
+                <div class="step-label">采购方式</div>
+            </div>
+            <div class="step-item" data-step="3">
+                <span>3</span>
+                <div class="step-label">采购需求</div>
+            </div>
+            <div class="step-item" data-step="4">
+                <span>4</span>
+                <div class="step-label">文件模板</div>
+            </div>
+            <div class="step-item" data-step="5">
+                <span>5</span>
+                <div class="step-label">生成文件</div>
+            </div>
+        </div>
+        
+        <!-- 步骤1: 基本信息 -->
+        <div class="step-content active" id="step-1">
+            <div class="wx-form-section">
+                <div class="wx-card-title">基本信息</div>
+                
+                <div class="wx-form-group">
+                    <div class="wx-form-label">项目名称</div>
+                    <input type="text" class="wx-form-input" placeholder="请输入项目名称" value="智慧城市数据中心基础设施采购项目">
+                </div>
+                
+                <div class="wx-form-group">
+                    <div class="wx-form-label">采购单位</div>
+                    <input type="text" class="wx-form-input" placeholder="请输入采购单位名称" value="某市大数据管理局">
+                </div>
+                
+                <div class="wx-form-group" style="border-bottom: none;">
+                    <div class="wx-form-label">采购预算</div>
+                    <input type="text" class="wx-form-input" placeholder="请输入采购预算金额" value="2,450,000.00元">
+                </div>
+                <div class="wx-form-hint">预算金额范围: 100,000元 - 5,000,000元</div>
+            </div>
+        </div>
+        
+        <!-- 步骤2: 采购方式 -->
+        <div class="step-content" id="step-2">
+            <div class="wx-form-section">
+                <div class="wx-card-title">采购方式</div>
+                
+                <div class="smart-suggestion">
+                    <i class="fas fa-lightbulb"></i>
+                    <div class="smart-suggestion-text">
+                        基于您的预算和采购内容，推荐使用公开招标方式
+                    </div>
+                </div>
+                
+                <div class="wx-radio-group">
+                    <div class="wx-radio-item selected">
+                        <div class="wx-radio-circle"></div>
+                        <div class="wx-radio-label">公开招标</div>
+                    </div>
+                    
+                    <div class="wx-radio-item">
+                        <div class="wx-radio-circle"></div>
+                        <div class="wx-radio-label">竞争性谈判</div>
+                    </div>
+                    
+                    <div class="wx-radio-item">
+                        <div class="wx-radio-circle"></div>
+                        <div class="wx-radio-label">询价采购</div>
+                    </div>
+                    
+                    <div class="wx-radio-item">
+                        <div class="wx-radio-circle"></div>
+                        <div class="wx-radio-label">单一来源</div>
+                    </div>
+                    
+                    <div class="wx-radio-item">
+                        <div class="wx-radio-circle"></div>
+                        <div class="wx-radio-label">竞争性磋商</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 步骤3: 采购需求 -->
+        <div class="step-content" id="step-3">
+            <div class="wx-form-section">
+                <div class="wx-card-title">采购需求</div>
+                
+                <div class="smart-suggestion">
+                    <i class="fas fa-lightbulb"></i>
+                    <div class="smart-suggestion-text">
+                        已智能识别您的需求类型: IT设备采购
+                    </div>
+                </div>
+                
+                <div class="wx-form-textarea-container">
+                    <div class="wx-form-textarea-label">采购内容概述</div>
+                    <textarea class="wx-form-textarea" placeholder="请简要描述采购内容和用途">本项目拟采购数据中心基础设施，包括服务器、存储设备、网络设备和安全设备，用于构建智慧城市大数据平台的基础设施环境。</textarea>
+                    <div class="input-actions">
+                        <button class="template-button">
+                            <i class="fas fa-clipboard-list"></i>
+                            选择模板
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="wx-form-textarea-container">
+                    <div class="wx-form-textarea-label">技术参数与要求</div>
+                    <textarea class="wx-form-textarea" placeholder="请输入具体的技术要求" style="min-height: 80px;">1. 服务器: 双路服务器，CPU≥Intel Xeon Gold 6248R或同等性能，内存≥256GB，硬盘≥2TB SSD+4TB SATA，数量10台；
+2. 存储设备: 全闪存阵列，有效容量≥100TB，IOPS≥100万，吞吐量≥10GB/s；
+3. 网络设备: 核心交换机≥100G端口×4+40G端口×24，汇聚交换机≥40G端口×4+10G端口×48；
+4. 安全设备: 下一代防火墙，吞吐量≥20Gbps，并发连接≥800万。</textarea>
+                </div>
+                
+                <div style="padding: 12px 0;">
+                    <div style="font-size: 13px; font-weight: 500; margin-bottom: 8px;">快速添加设备要求:</div>
+                    <div>
+                        <button class="quick-button"><i class="fas fa-server"></i> 服务器</button>
+                        <button class="quick-button"><i class="fas fa-hdd"></i> 存储</button>
+                        <button class="quick-button"><i class="fas fa-network-wired"></i> 网络</button>
+                        <button class="quick-button"><i class="fas fa-shield-alt"></i> 安全</button>
+                        <button class="quick-button"><i class="fas fa-plus"></i> 自定义</button>
+                    </div>
+                </div>
+                
+                <div class="wx-form-textarea-container">
+                    <div class="wx-form-textarea-label">资质要求</div>
+                    <textarea class="wx-form-textarea" placeholder="请输入投标人资质要求" style="min-height: 70px;">1. 投标人须具有计算机信息系统集成二级或以上资质；
+2. 投标人须是服务器和存储设备原厂授权代理商；
+3. 投标人须有3个及以上类似项目实施经验；
+4. 投标人项目团队须包含至少2名原厂认证工程师。</textarea>
+                </div>
+                
+                <div class="wx-form-textarea-container" style="border-bottom: none;">
+                    <div class="wx-form-textarea-label">交付及服务要求</div>
+                    <textarea class="wx-form-textarea" placeholder="请输入交付时间、地点及售后服务要求" style="min-height: 70px;">1. 交付时间: 合同签订后60日内完成交付和安装；
+2. 交付地点: 采购方指定的数据中心机房；
+3. 质保期: 所有设备质保期3年，提供7×24小时技术支持；
+4. 培训要求: 提供不少于5天的管理和运维培训。</textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 步骤4: 文件模板 -->
+        <div class="step-content" id="step-4">
+            <div class="wx-form-section">
+                <div class="wx-card-title">文件模板选择</div>
+                
+                <div class="smart-suggestion">
+                    <i class="fas fa-lightbulb"></i>
+                    <div class="smart-suggestion-text">
+                        基于您的项目规模和内容，推荐使用IT设备采购专用模板
+                    </div>
+                </div>
+                
+                <div style="margin: 16px 0;">
+                    <div class="wx-radio-group">
+                        <div class="wx-radio-item">
+                            <div class="wx-radio-circle"></div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">政府采购标准招标文件</div>
+                                <div style="font-size: 12px; color: #999;">符合《政府采购法》要求的标准格式文件</div>
+                            </div>
+                        </div>
+                        
+                        <div class="wx-radio-item selected">
+                            <div class="wx-radio-circle"></div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">IT设备采购专用模板</div>
+                                <div style="font-size: 12px; color: #999;">针对IT设备采购优化的专用模板</div>
+                            </div>
+                        </div>
+                        
+                        <div class="wx-radio-item">
+                            <div class="wx-radio-circle"></div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">简化采购文件模板</div>
+                                <div style="font-size: 12px; color: #999;">适用于小额采购项目，内容更加精简</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="font-size: 13px; color: #666; background-color: #f8f8f8; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+                    <div style="font-weight: 500; margin-bottom: 4px;">当前选择: IT设备采购专用模板</div>
+                    <div>包含IT设备技术参数表格、兼容性测试方案、安装部署要求等专业化内容，适合数据中心和IT基础设施采购项目使用。</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 步骤5: 文件生成 -->
+        <div class="step-content" id="step-5">
+            <div class="wx-form-section">
+                <div class="wx-card-title">文件生成</div>
+                
+                <div id="generating-view">
+                    <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-weight: 500; font-size: 14px;">正在生成文件...</div>
+                        <div style="font-size: 12px; color: #999;">剩余时间: 1分20秒</div>
+                    </div>
+                    
+                    <div style="height: 6px; background-color: #f0f0f0; border-radius: 3px; overflow: hidden; margin-bottom: 20px;">
+                        <div style="height: 100%; width: 65%; background-color: var(--primary); transition: width 0.5s ease-in-out;"></div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 30px 0;">
+                        <div style="font-size: 36px; color: var(--primary); margin-bottom: 12px;">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div style="font-weight: 500; font-size: 15px; margin-bottom: 6px;">智慧城市数据中心基础设施采购项目</div>
+                        <div style="font-size: 13px; color: #999;">IT设备采购招标文件</div>
+                    </div>
+                </div>
+                
+                <div id="completed-view" style="display: none;">
+                    <div style="background-color: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 16px;">
+                        <div style="padding: 10px 16px; background-color: var(--primary); color: white; font-size: 14px; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="margin-right: 6px;"></i>
+                            文件已生成
+                        </div>
+                        <div style="padding: 16px; text-align: center;">
+                            <div style="font-size: 32px; color: var(--primary); margin-bottom: 10px;">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div style="font-weight: 500; font-size: 14px; margin-bottom: 4px;">智慧城市数据中心基础设施采购项目招标文件</div>
+                            <div style="font-size: 12px; color: #999; margin-bottom: 16px;">28页 · 1.2MB · 已完成</div>
+                            
+                            <div style="border-top: 1px solid #eee; padding-top: 12px; margin-bottom: 12px;">
+                                <div style="font-size: 13px; text-align: left; font-weight: 500; margin-bottom: 8px;">文件内容包括:</div>
+                                <div style="display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666;">
+                                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px; font-size: 11px;"></i>
+                                    <div>招标公告</div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666;">
+                                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px; font-size: 11px;"></i>
+                                    <div>投标人须知</div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666;">
+                                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px; font-size: 11px;"></i>
+                                    <div>评标方法和标准</div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666;">
+                                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px; font-size: 11px;"></i>
+                                    <div>技术规格要求</div>
+                                </div>
+                                <div style="display: flex; align-items: center; font-size: 12px; color: #666;">
+                                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px; font-size: 11px;"></i>
+                                    <div>合同条款</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; gap: 8px;">
+                        <button class="btn" style="flex: 1; background-color: white; border: 1px solid #ddd; color: #333; font-size: 13px; padding: 10px 0; border-radius: 6px;">
+                            <i class="fas fa-eye"></i> 预览文件
+                        </button>
+                        <button class="btn" style="flex: 1; background-color: white; border: 1px solid #ddd; color: #333; font-size: 13px; padding: 10px 0; border-radius: 6px;">
+                            <i class="fas fa-edit"></i> 编辑文件
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 12px 16px; background-color: white; box-shadow: 0 -1px 4px rgba(0,0,0,0.1); display: flex; gap: 8px;">
+            <button id="prev-btn" class="btn" style="flex: 1; background-color: #f3f3f3; border: none; color: #666; font-size: 14px; padding: 10px 0; border-radius: 6px;" disabled>
+                <i class="fas fa-arrow-left" style="margin-right: 4px;"></i> 上一步
+            </button>
+            <button id="next-btn" class="btn btn-primary" style="flex: 1; font-size: 14px; padding: 10px 0; border-radius: 6px;">
+                下一步 <i class="fas fa-arrow-right" style="margin-left: 4px;"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentStep = 1;
+            const totalSteps = 5;
+            
+            const updateStepDisplay = () => {
+                // 隐藏所有步骤内容
+                document.querySelectorAll('.step-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 显示当前步骤内容
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                // 更新步骤指示器
+                document.querySelectorAll('.step-item').forEach(step => {
+                    const stepNum = parseInt(step.dataset.step);
+                    step.classList.remove('active', 'completed');
+                    
+                    if (stepNum === currentStep) {
+                        step.classList.add('active');
+                    } else if (stepNum < currentStep) {
+                        step.classList.add('completed');
+                        step.innerHTML = '<i class="fas fa-check"></i><div class="step-label">' + step.querySelector('.step-label').textContent + '</div>';
+                    } else {
+                        step.innerHTML = `<span>${stepNum}</span><div class="step-label">${step.querySelector('.step-label').textContent}</div>`;
+                    }
+                });
+                
+                // 更新按钮状态
+                document.getElementById('prev-btn').disabled = (currentStep === 1);
+                
+                if (currentStep === totalSteps) {
+                    document.getElementById('next-btn').innerHTML = '<i class="fas fa-download" style="margin-right: 4px;"></i> 下载文件';
+                } else {
+                    document.getElementById('next-btn').innerHTML = '下一步 <i class="fas fa-arrow-right" style="margin-left: 4px;"></i>';
+                }
+                
+                // 如果是最后一步，模拟生成完成
+                if (currentStep === totalSteps) {
+                    setTimeout(() => {
+                        document.getElementById('generating-view').style.display = 'none';
+                        document.getElementById('completed-view').style.display = 'block';
+                    }, 3000);
+                }
+            };
+            
+            // 下一步按钮
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepDisplay();
+                } else {
+                    // 下载逻辑
+                    alert('文件下载将开始...');
+                }
+            });
+            
+            // 上一步按钮
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateStepDisplay();
+                }
+            });
+            
+            // 步骤指示器点击事件
+            document.querySelectorAll('.step-item').forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNum = parseInt(step.dataset.step);
+                    if (stepNum < currentStep) {
+                        currentStep = stepNum;
+                        updateStepDisplay();
+                    }
+                });
+            });
+            
+            // 微信风格单选按钮逻辑
+            document.querySelectorAll('.wx-radio-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    // 找到父元素下的所有单选项
+                    const parent = item.parentElement;
+                    parent.querySelectorAll('.wx-radio-item').forEach(i => {
+                        i.classList.remove('selected');
+                    });
+                    item.classList.add('selected');
+                });
+            });
+            
+            // 传统单选按钮逻辑（留着用于旧结构）
+            document.querySelectorAll('.radio-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.radio-item').forEach(i => {
+                        i.classList.remove('selected');
+                    });
+                    item.classList.add('selected');
+                });
+            });
+            
+            // 模板卡片选择逻辑
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.template-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    card.classList.add('selected');
+                });
+            });
+            
+            // 进度条动画
+            setTimeout(() => {
+                // 使用新的进度条样式
+                const progressBar = document.querySelector('#generating-view div[style*="background-color: #f0f0f0"]').firstElementChild;
+                if (progressBar) {
+                    progressBar.style.width = '85%';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

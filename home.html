@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 首页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:18 阅</div>
+        <div>
+            <span>25.8K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>39%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <i class="fas fa-comment-dots"></i>
+            XXDeepSeek
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-bullseye"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <!-- 欢迎区域 -->
+        <div style="text-align: center; padding: 30px 0;">
+            <div style="width: 100px; height: 100px; margin: 0 auto 20px; background-color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <img src="https://via.placeholder.com/80" alt="Logo" style="width: 80px; height: 80px; border-radius: 40px;">
+            </div>
+            <h1 style="font-size: 24px; margin-bottom: 8px;">你好，我是XXDeepSeek</h1>
+            <p style="color: var(--text-light); margin-bottom: 20px;">顶级知识搜索，专业实时更精准！</p>
+            
+            <!-- 开启新对话按钮 -->
+            <button style="background-color: white; border: 1px solid var(--gray-light); border-radius: 16px; padding: 6px 16px; font-size: 13px; color: var(--text-light); margin-bottom: 20px;">
+                <i class="fas fa-plus-circle" style="margin-right: 4px;"></i> 开启新对话
+            </button>
+        </div>
+        
+        <!-- 输入框 -->
+        <div class="input-group" style="margin-bottom: 20px;">
+            <input type="text" class="input-field" placeholder="有什么可以帮助您的？">
+            <button class="input-action">
+                <i class="fas fa-paperclip"></i>
+            </button>
+            <button class="input-action" style="color: var(--primary);">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        
+        <!-- 智能体快捷入口 -->
+        <div class="section-title">推荐智能体</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">财务智能体</div>
+                <div class="agent-description">专业财务问题解答</div>
+            </div>
+            <span class="badge">内测</span>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">合同审核助手</div>
+                <div class="agent-description">快速审核合同条款</div>
+            </div>
+        </div>
+        
+        <!-- 最近对话记录 -->
+        <div class="section-title">最近问答</div>
+        
+        <div class="card">
+            <div style="font-weight: 500; margin-bottom: 8px;">广州有什么特色景点</div>
+            <div style="color: var(--text-light); font-size: 14px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                广州作为中国历史文化名城和现代化大都市，拥有丰富的历史文化和自然景观...
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 12px; color: var(--text-light);">
+                <span>5分钟前</span>
+                <span><i class="fas fa-bookmark" style="color: var(--primary);"></i></span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div style="font-weight: 500; margin-bottom: 8px;">如何分析企业财务报表</div>
+            <div style="color: var(--text-light); font-size: 14px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                财务报表分析是评估企业财务状况的重要工具，主要包括资产负债表、利润表和现金流量表...
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 12px; color: var(--text-light);">
+                <span>昨天 15:30</span>
+                <span><i class="far fa-bookmark"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item active">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

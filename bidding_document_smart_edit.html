@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 招标文件智能修改</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .edit-section {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 16px;
+        }
+        .edit-tabs {
+            display: flex;
+            margin-bottom: 12px;
+            background-color: var(--gray-light-2);
+            border-radius: 8px;
+            padding: 3px;
+        }
+        .edit-tab {
+            flex: 1;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .edit-tab.active {
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .diff-view {
+            font-family: 'Menlo', 'Monaco', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            padding: 6px;
+            border-radius: 8px;
+            background-color: var(--gray-light-2);
+            width: 100%;
+        }
+        .diff-view table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .diff-view td {
+            padding: 0;
+        }
+        .line-removed {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #d44;
+            text-decoration: line-through;
+            padding: 1px 4px;
+        }
+        .line-added {
+            background-color: rgba(68, 214, 125, 0.1);
+            color: #3a3;
+            padding: 1px 4px;
+        }
+        .edit-item {
+            border-bottom: 1px solid var(--gray-light);
+            padding: 12px 0;
+        }
+        .edit-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .edit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .edit-title {
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .edit-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .badge-critical {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #FF4C4C;
+        }
+        .edit-location {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .edit-desc {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+        }
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background-color: var(--gray-light);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-right: 12px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .legal-reference {
+            font-size: 12px;
+            margin-top: 6px;
+            padding: 6px;
+            background-color: rgba(var(--primary-rgb), 0.05);
+            border-radius: 6px;
+            color: var(--text-light);
+        }
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            background-color: var(--gray-light-2);
+            color: var(--text-dark);
+            border: none;
+            margin-top: 10px;
+        }
+        .action-button i {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>下午3:45 阅</div>
+        <div>
+            <span>6.2K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>42%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='bidding_document_audit.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            招标文件智能修改
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 进度展示 -->
+        <div class="edit-section">
+            <div style="font-weight: 600; margin-bottom: 16px;">招标文件智能修改</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+                <div class="progress-text">2/5 项</div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-light); margin-top: 8px;">
+                正在分析文件并生成修改建议，可能需要几分钟时间...
+            </div>
+        </div>
+        
+        <!-- 修改模式切换 -->
+        <div class="edit-section">
+            <div class="edit-tabs">
+                <div class="edit-tab active">智能修改</div>
+                <div class="edit-tab">对比查看</div>
+                <div class="edit-tab">逐条审阅</div>
+            </div>
+            
+            <div style="font-size: 14px; color: var(--text-light); background-color: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 16px;">
+                <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                系统已根据《政府采购法》和《招标投标法》等法规，对问题内容进行智能修改。您可以逐条审阅并选择是否应用修改。
+            </div>
+        </div>
+        
+        <!-- 修改内容 - 评分标准 -->
+        <div class="edit-section">
+            <div class="edit-item">
+                <div class="edit-header">
+                    <div class="edit-title">评分标准调整</div>
+                    <div class="edit-badge badge-critical">严重问题</div>
+                </div>
+                <div class="edit-location">
+                    <i class="fas fa-file-alt"></i> 第47页 - 评分标准
+                </div>
+                <div class="edit-desc">
+                    模糊的评分标准可能导致评审不公平，已完善评分量化指标
+                </div>
+                
+                <div class="diff-view">
+<table style="border-collapse: collapse; width: 100%;">
+<tr><td class="line-removed">技术方案完整性 (10分)</td></tr>
+<tr><td class="line-removed">- 方案完整性好：8-10分</td></tr>
+<tr><td class="line-removed">- 方案完整性一般：4-7分</td></tr>
+<tr><td class="line-removed">- 方案完整性较差：0-3分</td></tr>
+<tr><td class="line-added">技术方案完整性 (10分)</td></tr>
+<tr><td class="line-added">- 方案内容完整覆盖全部需求点，结构清晰，逻辑严密：8-10分</td></tr>
+<tr><td class="line-added">- 方案覆盖主要需求点(≥80%)，结构基本合理：4-7分</td></tr>
+<tr><td class="line-added">- 方案覆盖需求点不足80%，结构混乱或逻辑不清：0-3分</td></tr>
+</table>
+                </div>
+                
+                <div class="legal-reference">
+                    <i class="fas fa-balance-scale"></i> 法规依据：《政府采购法实施条例》第三十九条 - 评审标准应当清晰、明确、量化，具有可操作性。
+                </div>
+                
+                <div style="display: flex; gap: 12px; margin-top: 16px;">
+                    <button class="action-button" style="flex: 1;">
+                        <i class="fas fa-times"></i> 拒绝修改
+                    </button>
+                    <button class="action-button" style="flex: 1; background-color: rgba(var(--primary-rgb), 0.1); color: var(--primary);">
+                        <i class="fas fa-pen"></i> 手动编辑
+                    </button>
+                    <button class="action-button" style="flex: 1; background-color: var(--primary); color: white;">
+                        <i class="fas fa-check"></i> 接受修改
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 修改内容 - 技术规格 -->
+        <div class="edit-section">
+            <div class="edit-item">
+                <div class="edit-header">
+                    <div class="edit-title">技术规格修改</div>
+                    <div class="edit-badge badge-critical">严重问题</div>
+                </div>
+                <div class="edit-location">
+                    <i class="fas fa-file-alt"></i> 第82页 - 技术规格
+                </div>
+                <div class="edit-desc">
+                    技术规格描述疑似指向特定品牌，修改为性能要求范围
+                </div>
+                
+                <div class="diff-view">
+<table style="border-collapse: collapse; width: 100%;">
+<tr><td class="line-removed">4.3.2 控制系统硬件要求</td></tr>
+<tr><td class="line-removed">处理器: X86架构，主频3.2GHz，6核12线程</td></tr>
+<tr><td class="line-removed">内存: 32GB DDR4 2666MHz</td></tr>
+<tr><td class="line-removed">存储: 512GB NVMe SSD + 2TB HDD</td></tr>
+<tr><td class="line-removed">接口: 2×USB 3.1, 4×USB 2.0, 1×HDMI, 1×DP</td></tr>
+<tr><td class="line-removed">网络: 支持千兆以太网，内置BluePort技术</td></tr>
+<tr><td class="line-removed">电源: 350W铂金认证</td></tr>
+<tr><td class="line-removed">系统支持：必须支持MultiFlex动态资源调度技术</td></tr>
+<tr><td class="line-added">4.3.2 控制系统硬件要求</td></tr>
+<tr><td class="line-added">处理器: 支持X86或ARM架构，主频≥3.0GHz，核心数≥6</td></tr>
+<tr><td class="line-added">内存: ≥32GB</td></tr>
+<tr><td class="line-added">存储: ≥512GB SSD + ≥1TB HDD/SSD</td></tr>
+<tr><td class="line-added">接口: ≥2×USB 3.0或以上, ≥4×USB 2.0或以上, 支持高清视频输出</td></tr>
+<tr><td class="line-added">网络: 支持千兆以太网</td></tr>
+<tr><td class="line-added">电源: ≥350W，高能效认证</td></tr>
+<tr><td class="line-added">系统支持：支持资源调度与优化技术</td></tr>
+</table>
+                </div>
+                
+                <div class="legal-reference">
+                    <i class="fas fa-balance-scale"></i> 法规依据：《政府采购法》第二十一条 - 采购人不得以特定品牌或供应商作为参数指标。
+                </div>
+                
+                <div style="display: flex; gap: 12px; margin-top: 16px;">
+                    <button class="action-button" style="flex: 1;">
+                        <i class="fas fa-times"></i> 拒绝修改
+                    </button>
+                    <button class="action-button" style="flex: 1; background-color: rgba(var(--primary-rgb), 0.1); color: var(--primary);">
+                        <i class="fas fa-pen"></i> 手动编辑
+                    </button>
+                    <button class="action-button" style="flex: 1; background-color: var(--primary); color: white;">
+                        <i class="fas fa-check"></i> 接受修改
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 待修改内容 -->
+        <div class="edit-section">
+            <div style="text-align: center; color: var(--text-light);">
+                <div style="margin-bottom: 12px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
+                </div>
+                <div style="font-size: 14px;">正在分析其他问题并生成修改建议...</div>
+                <div style="font-size: 13px; margin-top: 4px; opacity: 0.8;">预计剩余时间：2分钟</div>
+            </div>
+        </div>
+        
+        <!-- 待处理问题列表 -->
+        <div class="edit-section">
+            <div style="font-weight: 600; margin-bottom: 16px;">待处理问题</div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--gray-light); align-items: center;">
+                <div>
+                    <div style="font-weight: 500; margin-bottom: 4px;">资格条件过高</div>
+                    <div style="font-size: 13px; color: var(--text-light);">第23页 - 资格要求</div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-light);">
+                    <i class="fas fa-hourglass-half"></i> 待处理
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--gray-light); align-items: center;">
+                <div>
+                    <div style="font-weight: 500; margin-bottom: 4px;">投标截止时间过短</div>
+                    <div style="font-size: 13px; color: var(--text-light);">第15页 - 时间安排</div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-light);">
+                    <i class="fas fa-hourglass-half"></i> 待处理
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 12px; align-items: center;">
+                <div>
+                    <div style="font-weight: 500; margin-bottom: 4px;">缺少附件清单</div>
+                    <div style="font-size: 13px; color: var(--text-light);">第112页 - 附件</div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-light);">
+                    <i class="fas fa-hourglass-half"></i> 待处理
+                </div>
+            </div>
+        </div>
+        
+        <!-- 下方提交按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 16px; background-color: white; box-shadow: 0 -2px 10px var(--shadow);">
+            <button class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-check" style="background-color: white; color: var(--primary); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;"></i> 应用所有修改并生成修改后文件
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

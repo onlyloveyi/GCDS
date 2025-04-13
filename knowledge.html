@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 知识库</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:18 阅</div>
+        <div>
+            <span>0.2K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>39%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <i class="fas fa-database" style="margin-right: 8px;"></i>
+            知识库
+        </div>
+        <div class="navbar-actions">
+            <button class="btn btn-small" style="background-color: rgba(255,255,255,0.15); color: white; padding: 6px 12px; font-size: 13px; border-radius: 16px;">
+                <i class="fas fa-cog"></i> 知识管理
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 80px;">
+        <!-- 搜索框 -->
+        <div class="input-group" style="margin-bottom: 24px;">
+            <i class="fas fa-search" style="color: var(--text-light); margin-right: 8px;"></i>
+            <input type="text" class="input-field" placeholder="搜索知识库...">
+        </div>
+        
+        <!-- 我创建的 -->
+        <div class="section-title">我创建的</div>
+        
+        <div class="kb-grid">
+            <div class="kb-card">
+                <div class="kb-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="kb-name">个人知识库</div>
+                <div class="kb-meta">34 文档 · 2天前更新</div>
+            </div>
+            
+            <div class="kb-card">
+                <div class="kb-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="kb-name">测试新增库-01</div>
+                <div class="kb-meta">12 文档 · 5天前更新</div>
+            </div>
+            
+            <div class="kb-card">
+                <div class="kb-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="kb-name">建安杯-知识库</div>
+                <div class="kb-meta">27 文档 · 昨天更新</div>
+            </div>
+            
+            <div class="kb-card">
+                <div class="kb-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="kb-name">个人知识库</div>
+                <div class="kb-meta">18 文档 · 1周前更新</div>
+            </div>
+        </div>
+        
+        <!-- 我加入的 -->
+        <div class="section-title">我加入的</div>
+        
+        <div class="kb-grid">
+            <div class="kb-card">
+                <div class="kb-icon" style="background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary);">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="kb-name">蔡奕强知识库</div>
+                <div class="kb-meta">
+                    <span style="display: inline-block; background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary); padding: 2px 6px; border-radius: 4px; font-size: 10px;">
+                        本部/蔡奕强
+                    </span>
+                </div>
+            </div>
+            
+            <div class="kb-card">
+                <div class="kb-icon" style="background-color: rgba(233, 196, 106, 0.2); color: #E76F51;">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="kb-name">公司制度</div>
+                <div class="kb-meta">
+                    <span style="display: inline-block; background-color: rgba(233, 196, 106, 0.2); color: #E76F51; padding: 2px 6px; border-radius: 4px; font-size: 10px;">
+                        本部/严晶清
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 推荐知识库 -->
+        <div class="section-title">推荐知识库</div>
+        
+        <div class="kb-grid">
+            <div class="kb-card">
+                <div class="kb-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="kb-name">财务规范指南</div>
+                <div class="kb-meta">58 文档 · 热度 4.8</div>
+            </div>
+            
+            <div class="kb-card">
+                <div class="kb-icon" style="background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="kb-name">项目管理体系</div>
+                <div class="kb-meta">43 文档 · 热度 4.6</div>
+            </div>
+        </div>
+        
+        <!-- 最近查阅 -->
+        <div class="section-title">最近查阅</div>
+        
+        <div class="card" style="display: flex; align-items: center;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background-color: rgba(62, 123, 250, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 12px; color: var(--primary);">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">2023年第四季度财务报表分析</div>
+                <div style="font-size: 12px; color: var(--text-light);">个人知识库 · 3天前查阅</div>
+            </div>
+            <div>
+                <i class="fas fa-chevron-right" style="color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" style="display: flex; align-items: center;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background-color: rgba(38, 70, 83, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 12px; color: var(--dark-primary);">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">公司员工手册.pdf</div>
+                <div style="font-size: 12px; color: var(--text-light);">公司制度 · 昨天查阅</div>
+            </div>
+            <div>
+                <i class="fas fa-chevron-right" style="color: var(--text-light);"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 
