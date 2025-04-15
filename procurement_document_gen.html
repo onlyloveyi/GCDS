@@ -649,23 +649,186 @@
                             <div class="wx-radio-circle"></div>
                             <div>
                                 <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">IT设备采购专用模板</div>
-                                <div style="font-size: 12px; color: #999;">针对IT设备采购优化的专用模板</div>
+                                <div style="font-size: 12px; color: #999;">针对IT设备采购优化的招标文件，包含专业技术条款</div>
                             </div>
                         </div>
                         
                         <div class="wx-radio-item">
                             <div class="wx-radio-circle"></div>
                             <div>
-                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">简化采购文件模板</div>
-                                <div style="font-size: 12px; color: #999;">适用于小额采购项目，内容更加精简</div>
+                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">单位历史模板</div>
+                                <div style="font-size: 12px; color: #999;">基于您单位历史招标文件的风格和格式</div>
+                            </div>
+                        </div>
+                        
+                        <div class="wx-radio-item">
+                            <div class="wx-radio-circle"></div>
+                            <div style="display: flex; align-items: center; flex: 1; justify-content: space-between;">
+                                <div>
+                                    <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">自定义模板</div>
+                                    <div style="font-size: 12px; color: #999;">上传您自己的文件模板</div>
+                                </div>
+                                <button class="btn-outline" style="font-size: 12px; padding: 4px 10px; margin-left: 10px;">
+                                    <i class="fas fa-upload"></i> 上传
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wx-form-section" style="margin-top: 16px;">
+                <div class="wx-card-title">文档生成选项</div>
+                
+                <div style="font-size: 14px; font-weight: 500; margin: 12px 0 8px 0;">选择需要生成的文档</div>
+                
+                <div style="padding: 0 0 12px 0;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" checked style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">采购招标文件</div>
+                                <div style="font-size: 12px; color: #999;">包含投标须知、技术要求等</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" checked style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">采购实施方案</div>
+                                <div style="font-size: 12px; color: #999;">包含采购方式、评分表等</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" checked style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">采购申请表</div>
+                                <div style="font-size: 12px; color: #999;">用于内部审批流程</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" checked style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">会议纪要</div>
+                                <div style="font-size: 12px; color: #999;">采购项目立项/讨论纪要</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">采购总结报告</div>
+                                <div style="font-size: 12px; color: #999;">项目采购过程总结</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; background: white; border-radius: 8px; padding: 12px; border: 1px solid rgba(0,0,0,0.05);">
+                            <input type="checkbox" style="margin-right: 10px;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 500;">评标报告</div>
+                                <div style="font-size: 12px; color: #999;">评标过程与结果记录</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div style="font-size: 13px; color: #666; background-color: #f8f8f8; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-                    <div style="font-weight: 500; margin-bottom: 4px;">当前选择: IT设备采购专用模板</div>
-                    <div>包含IT设备技术参数表格、兼容性测试方案、安装部署要求等专业化内容，适合数据中心和IT基础设施采购项目使用。</div>
+                <div style="font-size: 14px; font-weight: 500; margin: 12px 0 8px 0;">输出文件格式</div>
+                <div style="padding: 0 0 12px 0; display: flex; justify-content: space-between; gap: 12px;">
+                    <div style="display: flex; align-items: center; padding: 10px 16px; background: white; border-radius: 8px; border: 1px solid var(--primary); flex: 1;">
+                        <input type="radio" name="format" checked style="margin-right: 8px;">
+                        <div style="font-size: 13px; display: flex; align-items: center;">
+                            <i class="fas fa-file-word" style="color: #4285F4; margin-right: 6px;"></i> Word格式
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 10px 16px; background: white; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); flex: 1;">
+                        <input type="radio" name="format" style="margin-right: 8px;">
+                        <div style="font-size: 13px; display: flex; align-items: center;">
+                            <i class="fas fa-file-pdf" style="color: #EA4335; margin-right: 6px;"></i> PDF格式
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 10px 16px; background: white; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); flex: 1;">
+                        <input type="radio" name="format" style="margin-right: 8px;">
+                        <div style="font-size: 13px; display: flex; align-items: center;">
+                            <i class="fas fa-file-powerpoint" style="color: #FF6D01; margin-right: 6px;"></i> PPT格式
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="font-size: 14px; font-weight: 500; margin: 12px 0 8px 0;">文档模块配置</div>
+                <div style="background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <div style="font-size: 14px; font-weight: 500;">采购文件模块</div>
+                        <div style="font-size: 12px; color: var(--primary); display: flex; align-items: center;">
+                            <i class="fas fa-sort"></i> 拖动调整顺序
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-grip-lines" style="color: #999; margin-right: 10px;"></i>
+                                <div style="font-size: 13px;">招标公告</div>
+                            </div>
+                            <div>
+                                <input type="checkbox" checked style="margin-right: 6px;">
+                                <i class="fas fa-ellipsis-v" style="color: #999; font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-grip-lines" style="color: #999; margin-right: 10px;"></i>
+                                <div style="font-size: 13px;">投标须知</div>
+                            </div>
+                            <div>
+                                <input type="checkbox" checked style="margin-right: 6px;">
+                                <i class="fas fa-ellipsis-v" style="color: #999; font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-grip-lines" style="color: #999; margin-right: 10px;"></i>
+                                <div style="font-size: 13px;">技术要求与参数</div>
+                            </div>
+                            <div>
+                                <input type="checkbox" checked style="margin-right: 6px;">
+                                <i class="fas fa-ellipsis-v" style="color: #999; font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-grip-lines" style="color: #999; margin-right: 10px;"></i>
+                                <div style="font-size: 13px;">评分标准</div>
+                            </div>
+                            <div>
+                                <input type="checkbox" checked style="margin-right: 6px;">
+                                <i class="fas fa-ellipsis-v" style="color: #999; font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 6px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-grip-lines" style="color: #999; margin-right: 10px;"></i>
+                                <div style="font-size: 13px;">合同主要条款</div>
+                            </div>
+                            <div>
+                                <input type="checkbox" checked style="margin-right: 6px;">
+                                <i class="fas fa-ellipsis-v" style="color: #999; font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 6px;">
+                            <button style="background: none; border: none; color: var(--primary); font-size: 13px;">
+                                <i class="fas fa-plus-circle"></i> 添加模块
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
