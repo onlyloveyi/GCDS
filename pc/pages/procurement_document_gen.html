@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>采购文件生成 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .required-field::after {
+            content: "*";
+            color: #EF4444;
+            margin-left: 0.25rem;
+        }
+        .form-error {
+            color: #EF4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .input.error {
+            border-color: #EF4444;
+        }
+        .module-nav {
+            display: flex;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            gap: 1rem;
+        }
+        .module-nav-item {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .module-nav-item.active {
+            background-color: #2563EB;
+            color: white;
+        }
+        .module-nav-item:hover:not(.active) {
+            background-color: #F3F4F6;
+        }
+        .autosave-indicator {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #6B7280;
+            visibility: hidden;
+        }
+        .autosave-indicator.saving {
+            visibility: visible;
+        }
+        .autosave-indicator.saved {
+            color: #10B981;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">招标工具</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-contract"></i>
+                    <span>招标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>投标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>专家评审表稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>评委视频稽核</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>采购文件生成</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>采购方案生成</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <h2 class="text-xl font-semibold">采购文件生成</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline" id="historyBtn">
+                        <i class="fas fa-history mr-2"></i>
+                        历史记录
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <div class="max-w-5xl mx-auto">
+                    <!-- 顶部进度条 -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-green-500 rounded-l-full"></div>
+                                <div class="flex items-center justify-center absolute -top-2 left-0 w-6 h-6 rounded-full bg-green-500 text-white">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <div class="absolute -bottom-8 left-0 font-medium text-green-500 text-center w-20 -ml-6">基本信息</div>
+                            </div>
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-gray-300"></div>
+                                <div class="flex items-center justify-center absolute -top-2 left-1/2 w-6 h-6 rounded-full bg-gray-300 text-white transform -translate-x-1/2">
+                                    <span class="text-xs">2</span>
+                                </div>
+                                <div class="absolute -bottom-8 left-1/2 font-medium text-gray-500 text-center w-20 transform -translate-x-1/2">内容定制</div>
+                            </div>
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-gray-300 rounded-r-full"></div>
+                                <div class="flex items-center justify-center absolute -top-2 right-0 w-6 h-6 rounded-full bg-gray-300 text-white">
+                                    <span class="text-xs">3</span>
+                                </div>
+                                <div class="absolute -bottom-8 right-0 font-medium text-gray-500 text-center w-20 -mr-6">生成完成</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 主要内容区 -->
+                    <div class="bg-white rounded-xl shadow-sm p-8 mb-6">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-file-invoice text-green-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold">采购文件生成</h2>
+                                <p class="text-gray-600">填写基本信息，智能生成规范化采购文件</p>
+                            </div>
+                        </div>
+
+                        <!-- 模块化导航 -->
+                        <div class="module-nav">
+                            <div class="module-nav-item active" data-target="basic-info">基本信息</div>
+                            <div class="module-nav-item" data-target="procurement-method">采购方式与评审</div>
+                            <div class="module-nav-item" data-target="project-type">项目类型</div>
+                            <div class="module-nav-item" data-target="project-desc">项目描述</div>
+                            <div class="module-nav-item" data-target="special-requirements">特殊要求</div>
+                        </div>
+                        
+                        <form id="procurementForm" class="border-t border-gray-200 pt-6">
+                            <!-- 自动保存提示 -->
+                            <div class="flex justify-end mb-4">
+                                <span class="autosave-indicator" id="autosaveIndicator">
+                                    <i class="fas fa-sync-alt fa-spin mr-1"></i>
+                                    <span id="autosaveText">自动保存中...</span>
+                                </span>
+                            </div>
+
+                            <!-- 基本信息 -->
+                            <div class="form-section active" id="basic-info">
+                                <h3 class="font-medium text-lg mb-4">基本信息</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目名称</label>
+                                        <input type="text" class="input w-full" name="projectName" placeholder="某市政务信息系统集成项目" required>
+                                        <div class="form-error">请输入项目名称</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目编号</label>
+                                        <input type="text" class="input w-full" name="projectCode" placeholder="例如：GCZY-2023-015" required>
+                                        <div class="form-error">请输入项目编号</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">采购人</label>
+                                        <input type="text" class="input w-full" name="procurer" placeholder="某市政务服务数据管理局" required>
+                                        <div class="form-error">请输入采购人</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">采购代理机构</label>
+                                        <input type="text" class="input w-full" name="agency" placeholder="某招标代理有限公司">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目预算金额(万元)</label>
+                                        <input type="number" class="input w-full" name="budget" placeholder="500" required min="0">
+                                        <div class="form-error">请输入有效的项目预算金额</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">最高限价(万元)</label>
+                                        <input type="number" class="input w-full" name="maxPrice" placeholder="500" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 采购方式与评审方法 -->
+                            <div class="form-section hidden" id="procurement-method">
+                                <h3 class="font-medium text-lg mb-4">采购方式与评审方法</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">采购方式</label>
+                                        <select class="input w-full" name="procurementMethod" required>
+                                            <option value="">请选择采购方式</option>
+                                            <option value="open">公开招标</option>
+                                            <option value="invite">邀请招标</option>
+                                            <option value="negotiate">竞争性谈判</option>
+                                            <option value="consult">竞争性磋商</option>
+                                            <option value="single">单一来源采购</option>
+                                            <option value="inquiry">询价采购</option>
+                                        </select>
+                                        <div class="form-error">请选择采购方式</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">评审方法</label>
+                                        <select class="input w-full" name="evaluationMethod" required>
+                                            <option value="">请选择评审方法</option>
+                                            <option value="comprehensive">综合评分法</option>
+                                            <option value="lowest">最低评标价法</option>
+                                            <option value="costeffective">性价比法</option>
+                                        </select>
+                                        <div class="form-error">请选择评审方法</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">投标保证金(万元)</label>
+                                        <input type="number" class="input w-full" name="bidBond" placeholder="5" min="0">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">履约保证金比例(%)</label>
+                                        <input type="number" class="input w-full" name="performanceBond" placeholder="5" min="0" max="100">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 项目类型 -->
+                            <div class="form-section hidden" id="project-type">
+                                <h3 class="font-medium text-lg mb-4">项目类型</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                                    <div class="border rounded-lg p-4 bg-green-50 border-green-200 relative project-type-item">
+                                        <input type="radio" name="projectType" id="itSystem" value="itSystem" checked class="absolute right-3 top-3" required>
+                                        <label for="itSystem" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-laptop-code text-green-500 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">信息系统</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于信息系统建设、软件开发等IT项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
+                                        <input type="radio" name="projectType" id="goods" value="goods" class="absolute right-3 top-3">
+                                        <label for="goods" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-boxes text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">货物类</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于设备、材料等货物采购项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
+                                        <input type="radio" name="projectType" id="service" value="service" class="absolute right-3 top-3">
+                                        <label for="service" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-concierge-bell text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">服务类</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于咨询、服务外包等服务类项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
+                                        <input type="radio" name="projectType" id="engineering" value="engineering" class="absolute right-3 top-3">
+                                        <label for="engineering" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-hard-hat text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">工程类</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于建设工程、装修改造等工程项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
+                                        <input type="radio" name="projectType" id="ppp" value="ppp" class="absolute right-3 top-3">
+                                        <label for="ppp" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-handshake text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">PPP项目</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于政府和社会资本合作项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
+                                        <input type="radio" name="projectType" id="other" value="other" class="absolute right-3 top-3">
+                                        <label for="other" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-tools text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">其他类型</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">自定义项目类型</p>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 项目描述 -->
+                            <div class="form-section hidden" id="project-desc">
+                                <h3 class="font-medium text-lg mb-4">项目描述</h3>
+                                
+                                <div class="mb-6">
+                                    <textarea class="input w-full h-32" name="projectDescription" placeholder="请填写项目基本情况、采购内容、技术要求等，也可上传需求文档由系统自动提取"></textarea>
+                                    <div class="mt-2 flex items-center">
+                                        <button type="button" class="text-sm text-green-600 hover:text-green-800 flex items-center">
+                                            <i class="fas fa-upload mr-1"></i>
+                                            上传需求文档
+                                        </button>
+                                        <span class="mx-2 text-gray-300">|</span>
+                                        <button type="button" class="text-sm text-green-600 hover:text-green-800 flex items-center">
+                                            <i class="fas fa-microphone mr-1"></i>
+                                            语音输入
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 特殊要求 -->
+                            <div class="form-section hidden" id="special-requirements">
+                                <h3 class="font-medium text-lg mb-4">特殊要求</h3>
+                                
+                                <div class="space-y-3 mb-6">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-green-500" name="allowJointBidding" value="1">
+                                        <span class="ml-2">支持联合体投标</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-green-500" name="forSmallBusiness" value="1">
+                                        <span class="ml-2">专门面向中小企业</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-green-500" name="importedProducts" value="1">
+                                        <span class="ml-2">采购进口产品</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-green-500" name="mandatoryStandards" value="1">
+                                        <span class="ml-2">需要政府采购强制性标准</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-info-circle text-green-400"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-green-700">
+                                                完成基本信息填写后，点击"下一步"进入内容定制页面，您可以进一步自定义文件结构和细节内容。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <div class="flex items-center">
+                                    <button type="button" id="prevBtn" class="btn btn-outline opacity-50 cursor-not-allowed" disabled>
+                                        <i class="fas fa-arrow-left mr-2"></i>
+                                        上一项
+                                    </button>
+                                    <button type="button" id="nextBtn" class="btn btn-outline ml-3">
+                                        下一项
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" id="saveBtn" class="btn btn-outline mr-4">
+                                        <i class="fas fa-save mr-2"></i>
+                                        保存草稿
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        下一步
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模块导航功能
+            const moduleNavItems = document.querySelectorAll('.module-nav-item');
+            const formSections = document.querySelectorAll('.form-section');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentSectionIndex = 0;
+
+            // 自动保存功能
+            const form = document.getElementById('procurementForm');
+            const autosaveIndicator = document.getElementById('autosaveIndicator');
+            const autosaveText = document.getElementById('autosaveText');
+            let autosaveTimeout;
+            
+            // 切换模块显示
+            function showSection(index) {
+                formSections.forEach((section, i) => {
+                    if (i === index) {
+                        section.classList.remove('hidden');
+                        section.classList.add('active');
+                        moduleNavItems[i].classList.add('active');
+                    } else {
+                        section.classList.add('hidden');
+                        section.classList.remove('active');
+                        moduleNavItems[i].classList.remove('active');
+                    }
+                });
+                
+                // 更新上一步/下一步按钮状态
+                prevBtn.disabled = index === 0;
+                prevBtn.classList.toggle('opacity-50', index === 0);
+                prevBtn.classList.toggle('cursor-not-allowed', index === 0);
+                
+                nextBtn.disabled = index === formSections.length - 1;
+                nextBtn.classList.toggle('opacity-50', index === formSections.length - 1);
+                nextBtn.classList.toggle('cursor-not-allowed', index === formSections.length - 1);
+                
+                currentSectionIndex = index;
+            }
+            
+            // 导航点击事件
+            moduleNavItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    showSection(index);
+                });
+            });
+            
+            // 上一步/下一步按钮
+            prevBtn.addEventListener('click', () => {
+                if (currentSectionIndex > 0) {
+                    showSection(currentSectionIndex - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentSectionIndex < formSections.length - 1) {
+                    showSection(currentSectionIndex + 1);
+                }
+            });
+            
+            // 项目类型选择
+            const projectTypeItems = document.querySelectorAll('.project-type-item');
+            projectTypeItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // 更新样式
+                    projectTypeItems.forEach(typeItem => {
+                        if (typeItem.querySelector('input[type="radio"]').checked) {
+                            typeItem.classList.add('bg-green-50', 'border-green-200');
+                            typeItem.querySelector('i').classList.remove('text-gray-400');
+                            typeItem.querySelector('i').classList.add('text-green-500');
+                        } else {
+                            typeItem.classList.remove('bg-green-50', 'border-green-200');
+                            typeItem.querySelector('i').classList.add('text-gray-400');
+                            typeItem.querySelector('i').classList.remove('text-green-500');
+                        }
+                    });
+                    
+                    autoSave();
+                });
+            });
+            
+            // 表单验证
+            function validateCurrentSection() {
+                const currentSection = formSections[currentSectionIndex];
+                const requiredFields = currentSection.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.classList.add('error');
+                        const errorElement = field.nextElementSibling;
+                        if (errorElement && errorElement.classList.contains('form-error')) {
+                            errorElement.style.display = 'block';
+                        }
+                        isValid = false;
+                    } else {
+                        field.classList.remove('error');
+                        const errorElement = field.nextElementSibling;
+                        if (errorElement && errorElement.classList.contains('form-error')) {
+                            errorElement.style.display = 'none';
+                        }
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            // 自动保存
+            function autoSave() {
+                clearTimeout(autosaveTimeout);
+                
+                autosaveTimeout = setTimeout(() => {
+                    // 显示保存中状态
+                    autosaveIndicator.classList.add('saving');
+                    autosaveIndicator.classList.remove('saved');
+                    autosaveText.textContent = '自动保存中...';
+                    
+                    // 模拟保存数据
+                    setTimeout(() => {
+                        const formData = new FormData(form);
+                        const data = Object.fromEntries(formData.entries());
+                        
+                        // 保存到localStorage（实际项目中会发送到服务器）
+                        localStorage.setItem('procurementFormDraft', JSON.stringify({
+                            data: data,
+                            timestamp: new Date().toISOString()
+                        }));
+                        
+                        // 显示已保存状态
+                        autosaveIndicator.classList.remove('saving');
+                        autosaveIndicator.classList.add('saved');
+                        autosaveText.textContent = '已自动保存';
+                        
+                        // 3秒后隐藏提示
+                        setTimeout(() => {
+                            autosaveIndicator.classList.remove('saved');
+                        }, 3000);
+                    }, 800);
+                }, 1000);
+            }
+            
+            // 手动保存
+            document.getElementById('saveBtn').addEventListener('click', function() {
+                // 显示保存中状态
+                autosaveIndicator.classList.add('saving');
+                autosaveIndicator.classList.remove('saved');
+                autosaveText.textContent = '保存中...';
+                
+                setTimeout(() => {
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    
+                    // 保存到localStorage（实际项目中会发送到服务器）
+                    localStorage.setItem('procurementFormDraft', JSON.stringify({
+                        data: data,
+                        timestamp: new Date().toISOString()
+                    }));
+                    
+                    // 显示已保存状态
+                    autosaveIndicator.classList.remove('saving');
+                    autosaveIndicator.classList.add('saved');
+                    autosaveText.textContent = '已保存草稿';
+                    
+                    // 提示用户
+                    alert('草稿已保存成功！');
+                }, 800);
+            });
+            
+            // 加载保存的草稿
+            function loadDraft() {
+                const savedDraft = localStorage.getItem('procurementFormDraft');
+                if (savedDraft) {
+                    try {
+                        const { data } = JSON.parse(savedDraft);
+                        
+                        // 填充表单数据
+                        Object.entries(data).forEach(([name, value]) => {
+                            const field = form.elements[name];
+                            if (field) {
+                                if (field.type === 'checkbox') {
+                                    field.checked = value === '1';
+                                } else if (field.type === 'radio') {
+                                    const radio = document.getElementById(value);
+                                    if (radio) radio.checked = true;
+                                } else {
+                                    field.value = value;
+                                }
+                            }
+                        });
+                        
+                        // 更新项目类型样式
+                        const selectedType = document.querySelector('input[name="projectType"]:checked');
+                        if (selectedType) {
+                            const selectedItem = selectedType.closest('.project-type-item');
+                            projectTypeItems.forEach(item => {
+                                if (item === selectedItem) {
+                                    item.classList.add('bg-green-50', 'border-green-200');
+                                    item.querySelector('i').classList.remove('text-gray-400');
+                                    item.querySelector('i').classList.add('text-green-500');
+                                } else {
+                                    item.classList.remove('bg-green-50', 'border-green-200');
+                                    item.querySelector('i').classList.add('text-gray-400');
+                                    item.querySelector('i').classList.remove('text-green-500');
+                                }
+                            });
+                        }
+                        
+                        // 提示用户已加载草稿
+                        autosaveIndicator.classList.add('saved');
+                        autosaveText.textContent = '已加载草稿';
+                        
+                        setTimeout(() => {
+                            autosaveIndicator.classList.remove('saved');
+                        }, 3000);
+                        
+                    } catch (e) {
+                        console.error('加载草稿失败', e);
+                    }
+                }
+            }
+            
+            // 表单提交
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateCurrentSection()) {
+                    // 提交表单逻辑 - 此处可以发送到服务器
+                    // 模拟处理
+                    alert('表单验证通过，即将进入下一步！');
+                    window.location.href = '?step=2'; // 实际项目中跳转到下一步
+                }
+            });
+            
+            // 所有输入框变化时触发自动保存
+            form.addEventListener('input', autoSave);
+            form.addEventListener('change', autoSave);
+            
+            // 初始化显示第一个模块
+            showSection(0);
+            
+            // 加载草稿
+            loadDraft();
+        });
+    </script>
+</body>
+</html> 

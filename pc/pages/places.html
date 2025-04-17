@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>景点问答 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">历史记录</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>查看历史记录</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>收藏景点</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <button class="btn btn-outline mr-4">
+                            <i class="fas fa-plus"></i> 开启新对话
+                        </button>
+                        <h2 class="text-xl font-semibold">景点问答</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sliders-h mr-2"></i>
+                        偏好设置
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- 对话内容 -->
+                <div class="p-6 bg-gray-50">
+                    <!-- 欢迎消息 -->
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-white rounded-lg shadow-sm p-6 max-w-3xl w-full">
+                            <div class="flex items-center mb-4">
+                                <div class="rounded-full bg-green-100 p-3 mr-4">
+                                    <i class="fas fa-map-marked-alt text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">景点问答助手</h3>
+                                    <p class="text-sm text-gray-600">专业解答全球景点相关问题</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">您可以询问有关景点的信息，如开放时间、门票价格、交通指南、游览建议等。还可以获取特定地区的景点推荐和旅游路线规划。</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <button class="btn btn-outline text-sm py-2">北京景点推荐</button>
+                                <button class="btn btn-outline text-sm py-2">西藏旅游攻略</button>
+                                <button class="btn btn-outline text-sm py-2">东南亚旅游建议</button>
+                                <button class="btn btn-outline text-sm py-2">欧洲旅行路线</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户提问 -->
+                    <div class="flex justify-end mb-6">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm">
+                            <p>推荐几个适合冬季游玩的北京景点</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI回答 -->
+                    <div class="flex mb-8">
+                        <div class="bg-white rounded-lg rounded-tl-none px-6 py-5 max-w-3xl shadow-sm">
+                            <p class="mb-4">以下是几个适合冬季游玩的北京景点：</p>
+                            
+                            <div class="space-y-6 mb-4">
+                                <!-- 景点卡片1 -->
+                                <div class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex flex-col md:flex-row">
+                                        <div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="故宫博物院" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                                        </div>
+                                        <div class="p-5 md:w-2/3">
+                                            <h4 class="font-semibold text-lg mb-1">故宫博物院</h4>
+                                            <div class="flex items-center mb-2">
+                                                <i class="fas fa-map-marker-alt text-red-500 mr-1"></i>
+                                                <span class="text-sm text-gray-600">北京市东城区景山前街4号</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 mb-3">冬季的故宫别有一番韵味，尤其是下雪后的紫禁城，红墙金瓦白雪相映，美不胜收。冬季游客较少，参观体验更佳。</p>
+                                            <div class="flex flex-wrap gap-2 mb-3">
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">文化遗产</span>
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">博物馆</span>
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">雪景观赏</span>
+                                            </div>
+                                            <div class="flex justify-between items-center text-sm border-t pt-3 mt-2">
+                                                <span><i class="fas fa-ticket-alt text-gray-500 mr-1"></i> 门票：60元起</span>
+                                                <span><i class="far fa-clock text-gray-500 mr-1"></i> 开放：8:30-17:00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 景点卡片2 -->
+                                <div class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex flex-col md:flex-row">
+                                        <div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1584649095245-e25bb930f08e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="颐和园" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                                        </div>
+                                        <div class="p-5 md:w-2/3">
+                                            <h4 class="font-semibold text-lg mb-1">颐和园</h4>
+                                            <div class="flex items-center mb-2">
+                                                <i class="fas fa-map-marker-alt text-red-500 mr-1"></i>
+                                                <span class="text-sm text-gray-600">北京市海淀区新建宫门路19号</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 mb-3">冬季的颐和园昆明湖结冰后会变成天然溜冰场，可以体验冰上活动。雪后的园林景色更加静谧优美，是摄影爱好者的天堂。</p>
+                                            <div class="flex flex-wrap gap-2 mb-3">
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">世界遗产</span>
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">皇家园林</span>
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">冰上活动</span>
+                                            </div>
+                                            <div class="flex justify-between items-center text-sm border-t pt-3 mt-2">
+                                                <span><i class="fas fa-ticket-alt text-gray-500 mr-1"></i> 门票：30元起</span>
+                                                <span><i class="far fa-clock text-gray-500 mr-1"></i> 开放：6:30-18:00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 景点卡片3 -->
+                                <div class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex flex-col md:flex-row">
+                                        <div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="南锣鼓巷" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                                        </div>
+                                        <div class="p-5 md:w-2/3">
+                                            <h4 class="font-semibold text-lg mb-1">南锣鼓巷</h4>
+                                            <div class="flex items-center mb-2">
+                                                <i class="fas fa-map-marker-alt text-red-500 mr-1"></i>
+                                                <span class="text-sm text-gray-600">北京市东城区南锣鼓巷</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 mb-3">冬季的南锣鼓巷胡同内有许多特色小店和餐厅，可以品尝热气腾腾的北京小吃，感受传统胡同文化，是躲避寒冷的好去处。</p>
+                                            <div class="flex flex-wrap gap-2 mb-3">
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">胡同文化</span>
+                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">美食街区</span>
+                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">历史街区</span>
+                                            </div>
+                                            <div class="flex justify-between items-center text-sm border-t pt-3 mt-2">
+                                                <span><i class="fas fa-ticket-alt text-gray-500 mr-1"></i> 门票：免费</span>
+                                                <span><i class="far fa-clock text-gray-500 mr-1"></i> 开放：全天</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-3">冬季出行建议：</p>
+                            <ul class="list-disc pl-5 space-y-1 mb-4">
+                                <li>北京冬季气温较低，请做好保暖工作，穿着厚实保暖的衣物</li>
+                                <li>冬季干燥，注意补充水分，可携带保湿喷雾</li>
+                                <li>景点间距离较远，建议合理规划行程，可使用公共交通工具</li>
+                                <li>部分户外景点可能因天气原因临时关闭，出行前建议查询开放情况</li>
+                            </ul>
+                            
+                            <p>您有什么其他关于北京冬季旅游的问题吗？</p>
+                            
+                            <p class="text-sm text-gray-500 text-right mt-3">11:20 AM</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户提问 -->
+                    <div class="flex justify-end mb-6">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm">
+                            <p>这些景点附近有哪些特色美食推荐？</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI回答 -->
+                    <div class="flex">
+                        <div class="bg-white rounded-lg rounded-tl-none px-6 py-5 max-w-3xl shadow-sm">
+                            <p class="mb-4">以下是这些北京景点附近的特色美食推荐：</p>
+                            
+                            <div class="space-y-6 mb-4">
+                                <!-- 美食区域1 -->
+                                <div class="p-5 border rounded-lg shadow-sm hover:shadow-md transition-shadow bg-gradient-to-r from-orange-50 to-white">
+                                    <h4 class="font-semibold text-lg mb-3 border-b pb-2">故宫周边美食</h4>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start bg-white p-3 rounded-lg">
+                                            <div class="bg-orange-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0">
+                                                <i class="fas fa-utensils text-orange-500"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium">老北京炸酱面</h5>
+                                                <p class="text-sm text-gray-600">推荐店铺：护国寺小吃（东华门店）</p>
+                                                <p class="text-sm text-gray-700 mt-1">距故宫东华门约500米，百年老字号，炸酱面和豌豆黄最为出名，冬日来一碗热腾腾的炸酱面，温暖舒适。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-white p-3 rounded-lg">
+                                            <div class="bg-orange-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0">
+                                                <i class="fas fa-utensils text-orange-500"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium">全聚德烤鸭</h5>
+                                                <p class="text-sm text-gray-600">推荐店铺：全聚德（前门店）</p>
+                                                <p class="text-sm text-gray-700 mt-1">北京最有名的烤鸭店之一，距故宫南边约2公里，特色菜有烤鸭、烤鸭卷饼、鸭汤等，冬季品尝热气腾腾的烤鸭，回味无穷。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 美食区域2 -->
+                                <div class="p-5 border rounded-lg shadow-sm hover:shadow-md transition-shadow bg-gradient-to-r from-orange-50 to-white">
+                                    <h4 class="font-semibold text-lg mb-3 border-b pb-2">南锣鼓巷美食</h4>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start bg-white p-3 rounded-lg">
+                                            <div class="bg-orange-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0">
+                                                <i class="fas fa-utensils text-orange-500"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium">文宇奶酪</h5>
+                                                <p class="text-sm text-gray-600">地址：南锣鼓巷内</p>
+                                                <p class="text-sm text-gray-700 mt-1">南锣鼓巷内最受欢迎的甜品店之一，招牌奶酪口感细腻，冬天来一份热奶酪，暖胃又暖心。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-white p-3 rounded-lg">
+                                            <div class="bg-orange-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0">
+                                                <i class="fas fa-utensils text-orange-500"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium">旺角豆花</h5>
+                                                <p class="text-sm text-gray-600">地址：南锣鼓巷33号</p>
+                                                <p class="text-sm text-gray-700 mt-1">传统北京豆花，冬季有热豆花配红糖或咸菜，是抵御寒冷的美味小吃。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-white p-3 rounded-lg">
+                                            <div class="bg-orange-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0">
+                                                <i class="fas fa-utensils text-orange-500"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium">羊蝎子火锅</h5>
+                                                <p class="text-sm text-gray-600">推荐店铺：京味斋</p>
+                                                <p class="text-sm text-gray-700 mt-1">南锣鼓巷附近有多家羊蝎子火锅店，冬季来一锅热气腾腾的羊蝎子火锅，是北京冬季的传统美食，暖身提神。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-3">冬季美食小贴士：</p>
+                            <ul class="list-disc pl-5 space-y-1 mb-4">
+                                <li>北京冬季适合吃火锅、涮羊肉、炖菜等热食</li>
+                                <li>传统小吃如豆汁、糖葫芦、艾窝窝等也是冬季特色</li>
+                                <li>周末和节假日人流量大，建议提前预约热门餐厅</li>
+                                <li>许多餐厅提供预约和外卖服务，可通过大众点评、美团等平台查询</li>
+                            </ul>
+                            
+                            <p>需要我为您提供更详细的餐厅信息或其他美食推荐吗？</p>
+                            
+                            <p class="text-sm text-gray-500 text-right mt-3">11:25 AM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="bg-white border-t p-4">
+                <div class="flex mb-2 space-x-2">
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-image mr-1"></i> 图片
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-map mr-1"></i> 地图
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-calendar-day mr-1"></i> 行程计划
+                    </button>
+                </div>
+                <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                    <textarea class="flex-1 bg-transparent border-0 focus:ring-0 resize-none p-2 h-12" placeholder="请输入您的问题..."></textarea>
+                    <button class="bg-blue-600 text-white rounded-lg p-3 ml-2 hover:bg-blue-700 transition">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

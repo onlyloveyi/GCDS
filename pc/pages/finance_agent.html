@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务智能体 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3" style="width: 36px; height: 36px;">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">财务工具</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>财务计算器</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>财务报表分析</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>财务数据可视化</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <button class="btn btn-outline mr-4">
+                            <i class="fas fa-plus"></i> 开启新对话
+                        </button>
+                        <h2 class="text-xl font-semibold">财务智能体</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-upload mr-2"></i>
+                        上传文件
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 财务智能体功能选择 -->
+            <div class="bg-white border-b">
+                <div class="container mx-auto py-6 px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-file-invoice text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">财务报表分析</h3>
+                                    <p class="text-sm text-gray-600">分析财务报表，识别关键指标和风险</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-coins text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">税务规划</h3>
+                                    <p class="text-sm text-gray-600">提供合法税收筹划建议，优化税负</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-green-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-chart-line text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">财务预测</h3>
+                                    <p class="text-sm text-gray-600">基于历史数据预测未来财务状况</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-orange-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-piggy-bank text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">投资建议</h3>
+                                    <p class="text-sm text-gray-600">根据财务状况提供投资组合建议</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- 对话内容 -->
+                <div class="p-6 bg-gray-50">
+                    <!-- 欢迎消息 -->
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-white rounded-lg shadow-sm p-6 max-w-3xl w-full">
+                            <div class="flex items-center mb-4">
+                                <div class="rounded-full bg-blue-100 p-3 mr-4">
+                                    <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">财务智能体</h3>
+                                    <p class="text-sm text-gray-600">专业解答财务相关问题，提供财务分析与建议</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">您可以向我咨询各类财务问题，如财务报表分析、税务筹划、财务预测、投资建议等。上传财务文件或直接提问均可。</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <button class="btn btn-outline text-sm py-2">企业财务分析</button>
+                                <button class="btn btn-outline text-sm py-2">个人税务筹划</button>
+                                <button class="btn btn-outline text-sm py-2">投资回报计算</button>
+                                <button class="btn btn-outline text-sm py-2">财务报表解读</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户提问 -->
+                    <div class="flex justify-end mb-6">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm">
+                            <p>请分析这份财务报表的主要指标和存在的潜在风险</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI回答 -->
+                    <div class="flex mb-8">
+                        <div class="bg-white rounded-lg rounded-tl-none px-6 py-5 max-w-3xl shadow-sm">
+                            <p class="mb-4">为了进行财务报表分析，我需要查看具体的财务报表数据。您可以上传财务报表文件（Excel、PDF等格式），或者提供关键财务数据如：</p>
+                            
+                            <ul class="list-disc pl-5 space-y-2 mb-4">
+                                <li>资产负债表数据</li>
+                                <li>利润表数据</li>
+                                <li>现金流量表数据</li>
+                                <li>关键财务比率</li>
+                            </ul>
+                            
+                            <p class="mb-4">上传文件后，我可以为您分析以下方面：</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-sm transition-shadow">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-chart-pie mr-2 text-blue-600"></i>
+                                        盈利能力分析
+                                    </h4>
+                                    <p class="text-sm">分析毛利率、净利率、ROA、ROE等指标，评估企业获利能力</p>
+                                </div>
+                                
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-sm transition-shadow">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-water mr-2 text-blue-600"></i>
+                                        流动性分析
+                                    </h4>
+                                    <p class="text-sm">分析流动比率、速动比率等，评估企业短期偿债能力</p>
+                                </div>
+                                
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-sm transition-shadow">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-balance-scale mr-2 text-blue-600"></i>
+                                        偿债能力分析
+                                    </h4>
+                                    <p class="text-sm">分析资产负债率、利息保障倍数等，评估长期偿债能力</p>
+                                </div>
+                                
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-sm transition-shadow">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-cogs mr-2 text-blue-600"></i>
+                                        运营效率分析
+                                    </h4>
+                                    <p class="text-sm">分析存货周转率、应收账款周转率等，评估资产利用效率</p>
+                                </div>
+                                
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-sm transition-shadow md:col-span-2">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-exclamation-triangle mr-2 text-blue-600"></i>
+                                        风险识别
+                                    </h4>
+                                    <p class="text-sm">识别财务数据中的异常情况、潜在风险点和改进机会</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-center bg-gray-50 p-5 rounded-lg mb-4 shadow-sm">
+                                <button class="btn btn-primary mr-4 px-5">
+                                    <i class="fas fa-upload mr-2"></i> 上传财务报表
+                                </button>
+                                <span class="text-gray-500 mx-3">或</span>
+                                <button class="btn btn-outline ml-4 px-5">
+                                    <i class="fas fa-keyboard mr-2"></i> 手动输入数据
+                                </button>
+                            </div>
+                            
+                            <p>您还可以指定想要重点分析的特定领域，如运营成本、债务结构或现金流等。</p>
+                            
+                            <p class="text-sm text-gray-500 text-right mt-3">14:35 PM</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户提问 -->
+                    <div class="flex justify-end mb-6">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm">
+                            <p>我公司目前应收账款周转率较低，如何改善？</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI回答 -->
+                    <div class="flex">
+                        <div class="bg-white rounded-lg rounded-tl-none px-6 py-5 max-w-3xl shadow-sm">
+                            <p class="mb-4">应收账款周转率低表明公司在收回客户欠款方面存在效率问题，这可能导致现金流压力增加。以下是改善应收账款周转率的建议：</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-blue-800 mb-3 pb-2 border-b">应收账款管理策略</h4>
+                                
+                                <div class="space-y-4 mt-4">
+                                    <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="bg-blue-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium text-blue-900">完善信用政策</h5>
+                                            <p class="text-sm text-gray-700 mt-1">制定严格的客户信用评估体系，根据客户信用等级设置不同的付款条件。对信用较差的客户可要求预付款或缩短信用期。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="bg-blue-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium text-blue-900">优化账款催收流程</h5>
+                                            <p class="text-sm text-gray-700 mt-1">建立系统化的应收账款跟踪系统，设置账款提醒和升级处理流程。可以考虑安排专人负责应收账款管理，并设立催收绩效考核。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="bg-blue-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium text-blue-900">提供付款激励</h5>
+                                            <p class="text-sm text-gray-700 mt-1">对提前付款的客户提供折扣，如"2/10，n/30"（10天内付款可获2%折扣，否则30天内需付全款）。这可以激励客户更快结清账款。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="bg-blue-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium text-blue-900">考虑应收账款融资</h5>
+                                            <p class="text-sm text-gray-700 mt-1">可以通过保理业务或应收账款资产证券化等方式提前收回资金。虽然会产生一定成本，但可以显著改善现金流。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="bg-blue-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium text-blue-900">完善内部协调</h5>
+                                            <p class="text-sm text-gray-700 mt-1">加强销售部门与财务部门的协作，将应收账款回收情况纳入销售人员的绩效考核，确保销售团队在追求销售额的同时也关注回款质量。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg mb-4 shadow-sm">
+                                <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                                    <i class="fas fa-lightbulb mr-2 text-yellow-600"></i>
+                                    注意事项
+                                </h4>
+                                <p class="text-sm">改善应收账款周转率时需平衡收款效率与客户关系，过于严苛的收款政策可能影响业务拓展。建议根据公司实际情况和行业特点制定合适的策略。</p>
+                            </div>
+                            
+                            <p>如果您能提供更多公司的具体情况，如行业类型、主要客户群体、当前的信用政策等，我可以给出更加针对性的建议。</p>
+                            
+                            <p class="text-sm text-gray-500 text-right mt-3">14:40 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="bg-white border-t p-4">
+                <div class="flex mb-2 space-x-2">
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-file-upload mr-1"></i> 上传文件
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-table mr-1"></i> 数据表格
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-chart-bar mr-1"></i> 图表
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm">
+                        <i class="fas fa-calculator mr-1"></i> 计算器
+                    </button>
+                </div>
+                <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                    <textarea class="flex-1 bg-transparent border-0 focus:ring-0 resize-none p-2 h-12" placeholder="输入您的财务问题..."></textarea>
+                    <button class="bg-blue-600 text-white rounded-lg p-3 ml-2 hover:bg-blue-700 transition">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专家评审表稽核 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">招标工具</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-contract"></i>
+                    <span>招标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>投标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>专家评审表稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>评委视频稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>采购文件生成</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>采购方案生成</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <h2 class="text-xl font-semibold">专家评审表稽核</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-history mr-2"></i>
+                        历史记录
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <div class="max-w-5xl mx-auto">
+                    <!-- 顶部进度条 -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-blue-500 rounded-l-full"></div>
+                                <div class="flex items-center justify-center absolute -top-2 left-0 w-6 h-6 rounded-full bg-blue-500 text-white">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <div class="absolute -bottom-8 left-0 font-medium text-blue-500 text-center w-20 -ml-6">上传文件</div>
+                            </div>
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-gray-300"></div>
+                                <div class="flex items-center justify-center absolute -top-2 left-1/2 w-6 h-6 rounded-full bg-gray-300 text-white transform -translate-x-1/2">
+                                    <span class="text-xs">2</span>
+                                </div>
+                                <div class="absolute -bottom-8 left-1/2 font-medium text-gray-500 text-center w-20 transform -translate-x-1/2">稽核中</div>
+                            </div>
+                            <div class="flex-1 relative">
+                                <div class="h-2 bg-gray-300 rounded-r-full"></div>
+                                <div class="flex items-center justify-center absolute -top-2 right-0 w-6 h-6 rounded-full bg-gray-300 text-white">
+                                    <span class="text-xs">3</span>
+                                </div>
+                                <div class="absolute -bottom-8 right-0 font-medium text-gray-500 text-center w-20 -mr-6">稽核报告</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 主要内容区 -->
+                    <div class="bg-white rounded-xl shadow-sm p-8 mb-6">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-clipboard-check text-blue-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold">专家评审表稽核</h2>
+                                <p class="text-gray-600">上传专家评审表，分析打分合规性、一致性和专业性</p>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-6">
+                            <h3 class="font-medium text-lg mb-4">选择文件类型</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="border rounded-lg p-4 bg-blue-50 border-blue-200 relative">
+                                    <input type="radio" name="fileType" id="technical" checked class="absolute right-3 top-3">
+                                    <label for="technical" class="block cursor-pointer">
+                                        <div class="text-center mb-2">
+                                            <i class="fas fa-file-code text-blue-500 text-3xl"></i>
+                                        </div>
+                                        <h4 class="font-medium text-center">技术标评审表</h4>
+                                        <p class="text-xs text-gray-600 text-center mt-1">适用于对投标人技术方案的评审</p>
+                                    </label>
+                                </div>
+                                
+                                <div class="border rounded-lg p-4 hover:bg-gray-50 relative">
+                                    <input type="radio" name="fileType" id="commercial" class="absolute right-3 top-3">
+                                    <label for="commercial" class="block cursor-pointer">
+                                        <div class="text-center mb-2">
+                                            <i class="fas fa-file-invoice-dollar text-gray-400 text-3xl"></i>
+                                        </div>
+                                        <h4 class="font-medium text-center">商务标评审表</h4>
+                                        <p class="text-xs text-gray-600 text-center mt-1">适用于对投标人商务条件的评审</p>
+                                    </label>
+                                </div>
+                                
+                                <div class="border rounded-lg p-4 hover:bg-gray-50 relative">
+                                    <input type="radio" name="fileType" id="price" class="absolute right-3 top-3">
+                                    <label for="price" class="block cursor-pointer">
+                                        <div class="text-center mb-2">
+                                            <i class="fas fa-file-invoice text-gray-400 text-3xl"></i>
+                                        </div>
+                                        <h4 class="font-medium text-center">价格标评审表</h4>
+                                        <p class="text-xs text-gray-600 text-center mt-1">适用于对投标人报价的评审</p>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <h3 class="font-medium text-lg mb-4">上传评审表文件</h3>
+                            
+                            <div class="mb-6">
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                                    <div class="mb-4">
+                                        <i class="fas fa-file-upload text-gray-400 text-4xl"></i>
+                                    </div>
+                                    <h4 class="font-medium mb-2">拖放文件到此处或点击上传</h4>
+                                    <p class="text-sm text-gray-600 mb-4">支持XLS、XLSX、PDF格式文件，单个文件最大50MB</p>
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-folder-open mr-2"></i>
+                                        选择文件
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                                <h3 class="font-medium mb-3">已上传文件</h3>
+                                <div class="divide-y divide-gray-200">
+                                    <div class="py-3 flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-file-excel text-green-600 mr-3 text-xl"></i>
+                                            <div>
+                                                <h4 class="font-medium">专家1-技术评审表.xlsx</h4>
+                                                <p class="text-xs text-gray-500">2.8MB · 刚刚上传</p>
+                                            </div>
+                                        </div>
+                                        <button class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="py-3 flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-file-excel text-green-600 mr-3 text-xl"></i>
+                                            <div>
+                                                <h4 class="font-medium">专家2-技术评审表.xlsx</h4>
+                                                <p class="text-xs text-gray-500">3.1MB · 刚刚上传</p>
+                                            </div>
+                                        </div>
+                                        <button class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="py-3 flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-file-excel text-green-600 mr-3 text-xl"></i>
+                                            <div>
+                                                <h4 class="font-medium">专家3-技术评审表.xlsx</h4>
+                                                <p class="text-xs text-gray-500">2.5MB · 刚刚上传</p>
+                                            </div>
+                                        </div>
+                                        <button class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h3 class="font-medium text-lg mb-4">稽核选项</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h4 class="font-medium mb-3">基础稽核项</h4>
+                                        <div class="space-y-3">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">打分合规性检查</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">评分一致性分析</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">专家评分偏差检测</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">评价意见与打分关联性检查</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 class="font-medium mb-3">高级稽核项</h4>
+                                        <div class="space-y-3">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">专业性分析</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500" checked>
+                                                <span class="ml-2">评审表格式规范性检查</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500">
+                                                <span class="ml-2">与历史评审数据比对</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox text-blue-500">
+                                                <span class="ml-2">评委打分风格分析</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-yellow-700">
+                                            稽核结果仅供参考，最终评审结果请以人工核验为准。请确保评审表格式符合系统要求，否则可能影响识别准确性。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button class="btn btn-outline mr-4">
+                                    返回
+                                </button>
+                                <button class="btn btn-primary">
+                                    开始稽核
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

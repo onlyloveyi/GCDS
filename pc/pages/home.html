@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3" style="width: 36px; height: 36px;">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">设置</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>个人中心</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="content-area">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <h2 class="text-xl font-semibold">欢迎使用公诚DeepSeek</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline flex items-center">
+                        <i class="fas fa-bell mr-2"></i>
+                        <span class="sr-only">通知</span>
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页面内容 -->
+            <div class="p-6">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold mb-2">你好，用户</h1>
+                    <p class="text-gray-600">今天是个探索AI的好日子</p>
+                </div>
+                
+                <!-- 快速操作面板 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="card p-6 flex items-center">
+                        <div class="rounded-full bg-blue-100 p-4 mr-4">
+                            <i class="fas fa-comments text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-1">开始对话</h3>
+                            <p class="text-sm text-gray-600">与AI助手进行自然对话</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 flex items-center">
+                        <div class="rounded-full bg-purple-100 p-4 mr-4">
+                            <i class="fas fa-robot text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-1">专业智能体</h3>
+                            <p class="text-sm text-gray-600">探索特定领域的AI专家</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 flex items-center">
+                        <div class="rounded-full bg-green-100 p-4 mr-4">
+                            <i class="fas fa-book text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-1">知识探索</h3>
+                            <p class="text-sm text-gray-600">查阅专业知识库</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐功能 -->
+                <h2 class="text-xl font-semibold mb-4">推荐功能</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                    <!-- 功能卡片 1 -->
+                    <div class="card overflow-hidden">
+                        <div class="h-40 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-5xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold mb-2">财务智能体</h3>
+                            <p class="text-sm text-gray-600 mb-4">专业解答财务相关问题，提供财务分析与建议</p>
+                            <div class="flex space-x-2">
+                                <span class="tag tag-blue">财务</span>
+                                <span class="tag tag-blue">会计</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 功能卡片 2 -->
+                    <div class="card overflow-hidden">
+                        <div class="h-40 bg-gradient-to-r from-purple-500 to-purple-700 flex items-center justify-center">
+                            <i class="fas fa-gavel text-white text-5xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold mb-2">招标智能体</h3>
+                            <p class="text-sm text-gray-600 mb-4">专注招投标领域咨询，提供文件审核与生成服务</p>
+                            <div class="flex space-x-2">
+                                <span class="tag tag-purple">招标</span>
+                                <span class="tag tag-purple">采购</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 功能卡片 3 -->
+                    <div class="card overflow-hidden">
+                        <div class="h-40 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
+                            <i class="fas fa-map-marked-alt text-white text-5xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold mb-2">景点问答</h3>
+                            <p class="text-sm text-gray-600 mb-4">专业解答各地景点相关信息，推荐旅游路线</p>
+                            <div class="flex space-x-2">
+                                <span class="tag tag-green">旅游</span>
+                                <span class="tag tag-green">景点</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 近期活动 -->
+                <h2 class="text-xl font-semibold mb-4">近期活动</h2>
+                <div class="card p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold">最近对话</h3>
+                        <a href="#" class="text-blue-600 text-sm hover:underline">查看全部</a>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 hover:bg-gray-50 rounded-lg">
+                            <div class="rounded-full bg-blue-100 p-2 mr-3">
+                                <i class="fas fa-comments text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">关于公司财务报表的解析</p>
+                                <p class="text-sm text-gray-600">2小时前</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 hover:bg-gray-50 rounded-lg">
+                            <div class="rounded-full bg-purple-100 p-2 mr-3">
+                                <i class="fas fa-gavel text-purple-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">招标文件稽核与修改</p>
+                                <p class="text-sm text-gray-600">昨天</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 hover:bg-gray-50 rounded-lg">
+                            <div class="rounded-full bg-green-100 p-2 mr-3">
+                                <i class="fas fa-map-marker-alt text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">北京景点推荐</p>
+                                <p class="text-sm text-gray-600">3天前</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

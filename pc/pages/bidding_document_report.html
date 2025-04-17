@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招标文件稽核报告 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="home.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="chat.html" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="knowledge.html" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="places.html" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="agents.html" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="finance_agent.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="bidding_agent.html" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">招标工具</div>
+                <a href="bidding_document_audit.html" class="nav-item">
+                    <i class="fas fa-file-contract"></i>
+                    <span>招标文件稽核</span>
+                </a>
+                <a href="bid_document_audit.html" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>投标文件稽核</span>
+                </a>
+                <a href="expert_review_audit.html" class="nav-item">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>专家评审表稽核</span>
+                </a>
+                <a href="video_review_audit.html" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>评委视频稽核</span>
+                </a>
+                <a href="procurement_document_gen.html" class="nav-item">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>采购文件生成</span>
+                </a>
+                <a href="procurement_plan_gen.html" class="nav-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>采购方案生成</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <h2 class="text-xl font-semibold">招标文件稽核报告</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="dropdown relative">
+                        <button class="btn btn-outline flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            导出报告
+                            <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 mr-2"></i>
+                                导出为PDF
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <i class="fas fa-file-word text-blue-500 mr-2"></i>
+                                导出为Word
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <i class="fas fa-file-excel text-green-500 mr-2"></i>
+                                导出问题清单
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <!-- 进度指示器 -->
+                <div class="max-w-5xl mx-auto mb-8">
+                    <div class="stepper-horizontal">
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <div class="step-title">上传文件</div>
+                        </div>
+                        <div class="step-line completed"></div>
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <div class="step-title">稽核中</div>
+                        </div>
+                        <div class="step-line completed"></div>
+                        <div class="step active">
+                            <div class="step-circle">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="step-title">稽核报告</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-sm overflow-hidden mb-6 transition-all duration-300 hover:shadow-md">
+                    <!-- 报告头部 -->
+                    <div class="p-6 border-b">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-purple-800 mb-2 flex items-center">
+                                    <i class="fas fa-file-contract text-purple-600 mr-3"></i>
+                                    某市政府办公设备采购项目招标文件
+                                </h3>
+                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                    <div class="mr-4">
+                                        <i class="far fa-calendar-alt mr-1"></i>
+                                        分析日期: 2023-06-15
+                                    </div>
+                                    <div class="mr-4">
+                                        <i class="far fa-file mr-1"></i>
+                                        文件大小: 2.5MB
+                                    </div>
+                                    <div>
+                                        <i class="far fa-clock mr-1"></i>
+                                        耗时: 45秒
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+                                <div class="text-xs text-green-800 font-medium">综合评分</div>
+                                <div class="text-3xl font-bold text-green-600">87<span class="text-sm font-normal">/100</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 评分卡片 -->
+                    <div class="p-6 border-b">
+                        <h4 class="font-semibold text-gray-700 mb-4">评分详情</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">合规性</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">92<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#10B981 92%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-green-600">92%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">公平性</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">85<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#3B82F6 85%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-blue-600">85%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">技术要求</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">78<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#FBBF24 78%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-amber-500">78%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">一致性</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">94<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#10B981 94%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-green-600">94%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">完整性</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">90<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#10B981 90%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-green-600">90%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-300 hover:shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-500">表述清晰度</h5>
+                                        <div class="text-2xl font-bold mt-1 text-gray-800">82<span class="text-sm font-normal text-gray-500">/100</span></div>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: conic-gradient(#60A5FA 82%, #E5E7EB 0);">
+                                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                                            <span class="text-sm font-bold text-blue-500">82%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题统计 -->
+                    <div class="p-6 border-b">
+                        <h4 class="font-semibold text-gray-700 mb-4">问题概览</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-gray-800">18</div>
+                                        <div class="text-sm text-gray-500">总问题数</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-red-500">3</div>
+                                        <div class="text-sm text-gray-500">严重问题</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-amber-500">8</div>
+                                        <div class="text-sm text-gray-500">中等问题</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-blue-500">7</div>
+                                        <div class="text-sm text-gray-500">轻微问题</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm flex items-center">
+                                <!-- 问题分布图 -->
+                                <div class="w-1/2">
+                                    <div class="relative w-40 h-40 mx-auto">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="w-32 h-32 rounded-full" style="background: conic-gradient(#EF4444 17%, #F59E0B 61%, #3B82F6 100%);"></div>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="w-24 h-24 rounded-full bg-white"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-1/2">
+                                    <div class="mb-2 flex items-center">
+                                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                                        <div class="text-sm text-gray-600">严重问题 (17%)</div>
+                                    </div>
+                                    <div class="mb-2 flex items-center">
+                                        <div class="w-3 h-3 bg-amber-500 rounded-full mr-2"></div>
+                                        <div class="text-sm text-gray-600">中等问题 (44%)</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                                        <div class="text-sm text-gray-600">轻微问题 (39%)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题列表 -->
+                <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                    <div class="p-6 border-b flex items-center justify-between">
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                            <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                            问题清单
+                        </h4>
+                        <div class="flex items-center gap-2">
+                            <div class="relative">
+                                <input type="text" class="input pl-10 py-2 text-sm" placeholder="搜索问题...">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <div class="dropdown relative">
+                                <button class="btn btn-sm btn-outline flex items-center py-2">
+                                    <i class="fas fa-filter mr-1"></i>
+                                    筛选
+                                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                                <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
+                                    <div class="p-2">
+                                        <div class="mb-2">
+                                            <div class="font-medium text-xs text-gray-700 mb-1">问题严重程度</div>
+                                            <div class="flex items-center mb-1">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">严重问题</label>
+                                            </div>
+                                            <div class="flex items-center mb-1">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">中等问题</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">轻微问题</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-xs text-gray-700 mb-1">问题类别</div>
+                                            <div class="flex items-center mb-1">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">合规性问题</label>
+                                            </div>
+                                            <div class="flex items-center mb-1">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">公平性问题</label>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-3 h-3 mr-2" checked>
+                                                <label class="text-sm">技术要求问题</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-sm bg-purple-600 text-white w-full mt-2">应用筛选</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        严重程度
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        位置
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        问题描述
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        建议修改
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            严重
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        第12页, 第3条
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        投标人资格要求中"具有3年以上同类项目经验"属于倾向性条款，可能限制竞争
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        修改为"具有同类项目经验"或明确说明要求此条件的合理原因
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-purple-600 hover:text-purple-900 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
+                                            中等
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        第24页, 第8条
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        评分标准中"技术参数响应程度"权重过低，可能导致低质量产品中标
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        建议提高技术参数响应分值比重至25%以上
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-purple-600 hover:text-purple-900 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            轻微
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        第36页, 第15条
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        "质保期"表述不一致，正文要求1年但合同条款中要求2年
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        统一质保期要求，建议采用2年标准
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-purple-600 hover:text-purple-900 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            严重
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        第18页, 第5.2条
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        技术要求中指定了特定品牌的组件，违反政府采购法公平竞争原则
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        改为功能性、性能性描述，不指定特定品牌
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-purple-600 hover:text-purple-900 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
+                                            中等
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        第42页, 第9.3条
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        付款条件要求"验收合格后90天内支付"，时间过长影响供应商积极性
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        建议改为"验收合格后30天内支付"
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-purple-600 hover:text-purple-900 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="px-6 py-3 bg-gray-50 border-t flex items-center justify-between">
+                        <div class="text-sm text-gray-500">
+                            显示 1 - 5 共 18 个问题
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="px-3 py-1 bg-purple-600 border border-purple-600 rounded text-sm text-white">
+                                1
+                            </button>
+                            <button class="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50">
+                                2
+                            </button>
+                            <button class="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50">
+                                3
+                            </button>
+                            <button class="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50">
+                                4
+                            </button>
+                            <button class="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-500 hover:bg-gray-50">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="max-w-5xl mx-auto mt-6 flex justify-end space-x-4">
+                    <button class="btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-700 px-6 py-2 rounded-lg shadow-sm transition-colors">
+                        <i class="fas fa-print mr-2"></i>
+                        打印报告
+                    </button>
+                    <a href="bidding_document_smart_edit.html" class="btn bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-sm transition-colors">
+                        <i class="fas fa-magic mr-2"></i>
+                        智能修改
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 下拉菜单功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggles = document.querySelectorAll('.dropdown > button');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const menu = this.nextElementSibling;
+                    menu.classList.toggle('hidden');
+                });
+            });
+            
+            // 点击其他区域关闭下拉菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.add('hidden');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

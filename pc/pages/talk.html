@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对话 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 增强消息气泡对比度 */
+        .user-message-bubble {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .ai-message-bubble {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                transition: left 0.3s ease;
+                z-index: 50;
+            }
+            .sidebar.show {
+                left: 0;
+            }
+            .sidebar-toggle {
+                display: block;
+            }
+            .message-content {
+                max-width: 90%;
+            }
+        }
+        
+        /* 消息气泡悬停效果增强 */
+        .message-bubble {
+            transition: transform 0.1s ease;
+        }
+        .message-bubble:hover {
+            transform: translateY(-1px);
+        }
+        
+        /* 上传进度条动画 */
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .progress-animate {
+            animation: progress 2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏切换按钮（移动端显示） -->
+        <button class="sidebar-toggle fixed top-4 left-4 z-50 bg-white rounded-full p-2 shadow-md hidden md:hidden" aria-label="打开侧边栏">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3" style="width: 36px; height: 36px;">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索对话..." aria-label="搜索对话">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <!-- 对话列表 -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="text-xs uppercase font-semibold text-gray-500 ml-2">近期对话</div>
+                    <div class="flex items-center">
+                        <button class="text-sm text-blue-600 hover:text-blue-800 mr-2" aria-label="导出所有对话" title="导出所有对话">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="text-sm text-blue-600 hover:text-blue-800" aria-label="新建对话">
+                            <i class="fas fa-plus"></i> 新建
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="space-y-2 max-h-64 overflow-y-auto pr-1" id="chat-history-container">
+                    <a href="#" class="block p-3 rounded-lg bg-blue-50 border-l-4 border-blue-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-medium text-blue-800">通用对话</h3>
+                            <span class="text-xs text-gray-500">刚刚</span>
+                        </div>
+                        <p class="text-sm text-gray-600 truncate">如何使用公诚DeepSeek的智能分析功能？</p>
+                    </a>
+                    
+                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-medium">财务报表分析</h3>
+                            <span class="text-xs text-gray-500">2小时前</span>
+                        </div>
+                        <p class="text-sm text-gray-600 truncate">请帮我分析这份财务报表的关键指标</p>
+                    </a>
+                    
+                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-medium">招标文件稽核</h3>
+                            <span class="text-xs text-gray-500">昨天</span>
+                        </div>
+                        <p class="text-sm text-gray-600 truncate">这份招标文件是否符合规范要求？</p>
+                    </a>
+                    
+                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-medium">北京景点推荐</h3>
+                            <span class="text-xs text-gray-500">3天前</span>
+                        </div>
+                        <p class="text-sm text-gray-600 truncate">推荐北京适合冬季游玩的景点</p>
+                    </a>
+                </div>
+                
+                <!-- 批量管理选项，默认隐藏 -->
+                <div class="mt-2 flex items-center justify-between px-2 hidden" id="batch-actions">
+                    <div>
+                        <span class="text-xs text-gray-500">已选择 <span id="selected-count">0</span> 项</span>
+                    </div>
+                    <div>
+                        <button class="text-xs text-red-600 hover:text-red-800 mr-2" id="delete-selected" aria-label="删除所选对话">
+                            删除所选
+                        </button>
+                        <button class="text-xs text-gray-600 hover:text-gray-800" id="cancel-selection" aria-label="取消选择">
+                            取消
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 查看更多对话 -->
+                <div class="text-center mt-2">
+                    <button class="text-xs text-blue-600 hover:text-blue-800" aria-label="查看更多对话">
+                        查看更多对话
+                    </button>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item" aria-label="首页">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item active" aria-label="对话">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item" aria-label="知识库">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item" aria-label="景点问答">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item" aria-label="智能体选择">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item" aria-label="财务智能体">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item" aria-label="招标智能体">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">设置</div>
+                <a href="#" class="nav-item" aria-label="系统设置">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="#" class="nav-item" aria-label="个人中心">
+                    <i class="fas fa-user"></i>
+                    <span>个人中心</span>
+                </a>
+                
+                <!-- 新增清理历史对话选项 -->
+                <div class="text-center mt-6 px-2">
+                    <button class="btn btn-outline w-full text-sm" id="clear-history-btn" aria-label="清理历史对话">
+                        <i class="fas fa-trash-alt mr-2"></i>
+                        清理历史对话
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- 聊天区域 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <button class="btn btn-outline mr-4" aria-label="新建对话">
+                            <i class="fas fa-plus mr-2"></i>
+                            新建对话
+                        </button>
+                        <h2 class="text-xl font-semibold">通用对话</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline" aria-label="设置">
+                        <i class="fas fa-cog mr-2"></i>
+                        设置
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 聊天内容区 -->
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50" id="chat-content">
+                <!-- 加载更多历史消息 -->
+                <div class="text-center mb-6">
+                    <button class="text-sm text-blue-600 hover:text-blue-800 flex items-center justify-center mx-auto py-2 px-3 rounded-lg hover:bg-blue-50" aria-label="加载更多历史消息">
+                        <i class="fas fa-arrow-up mr-1"></i> 加载更多历史消息
+                    </button>
+                </div>
+                
+                <!-- 欢迎消息 -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-white rounded-lg shadow-sm p-4 max-w-lg">
+                        <h3 class="font-semibold text-lg mb-2">欢迎使用公诚DeepSeek</h3>
+                        <p class="text-gray-600 mb-3">我是您的智能助手，可以帮您解答问题、提供专业建议、完成各种任务。</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="btn btn-outline text-sm py-2 flex items-center justify-center" aria-label="财务分析">
+                                <i class="fas fa-chart-pie mr-1"></i> 财务分析
+                            </button>
+                            <button class="btn btn-outline text-sm py-2 flex items-center justify-center" aria-label="招标咨询">
+                                <i class="fas fa-gavel mr-1"></i> 招标咨询
+                            </button>
+                            <button class="btn btn-outline text-sm py-2 flex items-center justify-center" aria-label="景点推荐">
+                                <i class="fas fa-map-marker-alt mr-1"></i> 景点推荐
+                            </button>
+                            <button class="btn btn-outline text-sm py-2 flex items-center justify-center" aria-label="数据分析">
+                                <i class="fas fa-chart-bar mr-1"></i> 数据分析
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 消息内容 -->
+                <div class="space-y-6">
+                    <!-- 用户消息 -->
+                    <div class="flex justify-end">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm user-message-bubble message-bubble group" role="region" aria-label="用户消息">
+                            <p>如何使用公诚DeepSeek的智能分析功能？</p>
+                            <div class="invisible group-hover:visible mt-2 flex justify-end text-xs text-blue-200 space-x-2">
+                                <button aria-label="编辑消息"><i class="fas fa-edit"></i> 编辑</button>
+                                <button aria-label="删除消息"><i class="fas fa-trash"></i> 删除</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI消息 -->
+                    <div class="flex">
+                        <div class="bg-white rounded-lg rounded-tl-none px-4 py-3 max-w-2xl shadow-sm ai-message-bubble message-bubble group relative" role="region" aria-label="AI回复">
+                            <p class="mb-3">公诚DeepSeek的智能分析功能可以帮助您分析各类文档、数据和信息。使用方法如下：</p>
+                            <ol class="list-decimal pl-5 space-y-2 mb-3">
+                                <li>选择相应的智能体（如财务智能体、招标智能体等）</li>
+                                <li>上传需要分析的文件或直接输入需要分析的文本内容</li>
+                                <li>选择分析类型（如文件稽核、数据分析、内容优化等）</li>
+                                <li>点击"开始分析"按钮</li>
+                                <li>等待系统处理完成后查看分析报告</li>
+                            </ol>
+                            <p>公诚DeepSeek支持多种文件格式，包括PDF、Word、Excel等。您还可以将分析结果导出或生成修改建议。</p>
+                            <div class="text-xs text-gray-500 flex justify-between items-center mt-3">
+                                <div class="invisible group-hover:visible flex space-x-2">
+                                    <button aria-label="复制内容"><i class="fas fa-copy"></i> 复制</button>
+                                    <button aria-label="分享内容"><i class="fas fa-share"></i> 分享</button>
+                                    <button aria-label="朗读内容"><i class="fas fa-volume-up"></i> 朗读</button>
+                                </div>
+                                <span>10:05 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户消息 -->
+                    <div class="flex justify-end">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm user-message-bubble message-bubble group" role="region" aria-label="用户消息">
+                            <p>招标智能体具体有哪些功能？</p>
+                            <div class="invisible group-hover:visible mt-2 flex justify-end text-xs text-blue-200 space-x-2">
+                                <button aria-label="编辑消息"><i class="fas fa-edit"></i> 编辑</button>
+                                <button aria-label="删除消息"><i class="fas fa-trash"></i> 删除</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI消息 -->
+                    <div class="flex">
+                        <div class="bg-white rounded-lg rounded-tl-none px-4 py-3 max-w-2xl shadow-sm ai-message-bubble message-bubble group relative" role="region" aria-label="AI回复">
+                            <p class="mb-3">招标智能体提供以下核心功能：</p>
+                            <ul class="list-disc pl-5 space-y-2 mb-3">
+                                <li><strong>招标文件稽核</strong>：检查招标文件是否符合相关法规和标准，识别潜在问题和风险点</li>
+                                <li><strong>投标文件稽核</strong>：分析投标文件质量和完整性，提供修改建议</li>
+                                <li><strong>专家评审表稽核</strong>：检查评审过程合规性，分析评审表数据</li>
+                                <li><strong>评委视频稽核</strong>：分析评审视频，提取关键信息和潜在问题</li>
+                                <li><strong>采购文件生成</strong>：根据项目需求自动生成符合规范的采购文件</li>
+                                <li><strong>采购方案生成</strong>：制定完整的采购实施方案，包括进度安排和预算分配</li>
+                            </ul>
+                            <p>您可以通过点击首页上的"招标智能体"卡片或在智能体选择页面中选择"招标智能体"来使用这些功能。</p>
+                            <div class="text-xs text-gray-500 flex justify-between items-center mt-3">
+                                <div class="invisible group-hover:visible flex space-x-2">
+                                    <button aria-label="复制内容"><i class="fas fa-copy"></i> 复制</button>
+                                    <button aria-label="分享内容"><i class="fas fa-share"></i> 分享</button>
+                                    <button aria-label="朗读内容"><i class="fas fa-volume-up"></i> 朗读</button>
+                                </div>
+                                <span>10:08 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI正在回复(示例) -->
+                    <div id="loading-message" class="flex">
+                        <div class="bg-white rounded-lg rounded-tl-none px-4 py-3 max-w-2xl shadow-sm ai-message-bubble" role="status" aria-live="polite">
+                            <div class="flex items-center space-x-2">
+                                <div class="animate-pulse flex space-x-2">
+                                    <div class="h-3 w-3 bg-blue-400 rounded-full"></div>
+                                    <div class="h-3 w-3 bg-blue-400 rounded-full"></div>
+                                    <div class="h-3 w-3 bg-blue-400 rounded-full"></div>
+                                </div>
+                                <span class="text-sm text-gray-500">AI正在思考...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 正在上传的文件显示区域 -->
+            <div id="upload-status" class="bg-blue-50 border-t border-blue-100 px-4 py-2 hidden">
+                <div class="upload-progress">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium">上传中：招标文件.pdf</span>
+                        <span class="text-sm">45%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full progress-animate" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="bg-white border-t p-4 shadow-md">
+                <div class="flex mb-2 space-x-2">
+                    <div class="relative">
+                        <button class="btn btn-outline px-3 py-1 text-sm flex items-center" aria-label="上传文件" id="upload-file-btn">
+                            <i class="fas fa-file-upload mr-1"></i> 上传文件
+                        </button>
+                        <input type="file" class="hidden" id="file-input" accept=".doc,.docx,.pdf,.xls,.xlsx,.jpg,.jpeg,.png" multiple>
+                        <div class="absolute z-50 bg-white rounded-lg shadow-lg p-2 text-xs text-gray-600 w-52 hidden" id="upload-tooltip" role="tooltip">
+                            支持DOC、DOCX、PDF、XLS、XLSX、JPG、PNG格式，单文件最大50MB
+                        </div>
+                    </div>
+                    <button class="btn btn-outline px-3 py-1 text-sm flex items-center" aria-label="插入图片">
+                        <i class="fas fa-image mr-1"></i> 图片
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm flex items-center" aria-label="语音输入">
+                        <i class="fas fa-microphone mr-1"></i> 语音
+                    </button>
+                </div>
+                <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                    <textarea class="flex-1 bg-transparent border-0 focus:ring-0 resize-none p-2 min-h-12" 
+                              placeholder="给公诚DeepSeek发消息吧..."
+                              rows="1"
+                              id="message-input"
+                              aria-label="消息输入框"
+                              oninput="this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 200) + 'px'"></textarea>
+                    <div class="flex items-center">
+                        <button class="text-gray-500 hover:text-blue-600 p-2 mr-1" title="清空输入" aria-label="清空输入">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700 transition" id="send-btn" aria-label="发送消息">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500 mt-2 flex justify-between">
+                    <div>
+                        <span>按 <kbd class="px-1 py-0.5 bg-gray-200 rounded text-gray-700">Enter</kbd> 发送，按 <kbd class="px-1 py-0.5 bg-gray-200 rounded text-gray-700">Shift+Enter</kbd> 换行</span>
+                        <span class="ml-3">还可输入 <span class="font-medium" id="char-count">3000</span> 字符</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="hover:text-blue-600" title="切换AI模型" aria-label="切换AI模型">
+                            <i class="fas fa-exchange-alt mr-1"></i> 选择模型
+                        </button>
+                        <button class="hover:text-blue-600" title="设置对话参数" aria-label="设置对话参数">
+                            <i class="fas fa-sliders-h mr-1"></i> 参数设置
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 清理历史对话确认弹窗 -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="confirm-dialog">
+        <div class="bg-white rounded-lg p-6 max-w-md mx-4" role="dialog" aria-labelledby="dialog-title" aria-modal="true">
+            <h3 class="text-lg font-medium mb-4" id="dialog-title">确认清理历史对话</h3>
+            <p class="text-gray-600 mb-6">您确定要删除所有历史对话记录吗？此操作无法撤销。</p>
+            <div class="flex justify-end space-x-4">
+                <button class="btn btn-outline" id="cancel-clear">取消</button>
+                <button class="btn btn-primary bg-red-600 hover:bg-red-700" id="confirm-clear">确认清理</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 字符计数功能
+        const messageInput = document.getElementById('message-input');
+        const charCount = document.getElementById('char-count');
+        const maxChars = 3000;
+        
+        messageInput.addEventListener('input', function() {
+            const remaining = maxChars - this.value.length;
+            charCount.textContent = remaining;
+            if (remaining < 100) {
+                charCount.classList.add('text-red-500');
+            } else {
+                charCount.classList.remove('text-red-500');
+            }
+        });
+        
+        // Enter键发送，Shift+Enter换行
+        messageInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('send-btn').click();
+            }
+        });
+        
+        // 上传文件按钮工具提示
+        const uploadBtn = document.getElementById('upload-file-btn');
+        const uploadTooltip = document.getElementById('upload-tooltip');
+        const fileInput = document.getElementById('file-input');
+        
+        uploadBtn.addEventListener('mouseenter', function() {
+            uploadTooltip.classList.remove('hidden');
+        });
+        
+        uploadBtn.addEventListener('mouseleave', function() {
+            uploadTooltip.classList.add('hidden');
+        });
+        
+        uploadBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        // 模拟文件上传演示
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                // 显示上传状态
+                document.getElementById('upload-status').classList.remove('hidden');
+                
+                // 模拟上传完成后隐藏
+                setTimeout(function() {
+                    document.getElementById('upload-status').classList.add('hidden');
+                }, 3000);
+            }
+        });
+        
+        // 清理历史对话确认
+        const clearHistoryBtn = document.getElementById('clear-history-btn');
+        const confirmDialog = document.getElementById('confirm-dialog');
+        const cancelClear = document.getElementById('cancel-clear');
+        const confirmClear = document.getElementById('confirm-clear');
+        
+        clearHistoryBtn.addEventListener('click', function() {
+            confirmDialog.classList.remove('hidden');
+        });
+        
+        cancelClear.addEventListener('click', function() {
+            confirmDialog.classList.add('hidden');
+        });
+        
+        confirmClear.addEventListener('click', function() {
+            // 执行清理历史逻辑
+            confirmDialog.classList.add('hidden');
+            // 这里可以添加清理历史的代码
+            alert('历史对话已清理');
+        });
+        
+        // 移动端侧边栏切换（如果添加了移动端支持）
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能体选择 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">最近使用</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>使用记录</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>收藏智能体</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="content-area">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <h2 class="text-xl font-semibold">智能体选择</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline flex items-center">
+                        <i class="fas fa-th-large mr-2"></i>
+                        <span>网格视图</span>
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页面内容 -->
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold">智能体库</h1>
+                    <div class="flex space-x-3">
+                        <div class="relative">
+                            <input type="text" class="input pl-10 py-2" placeholder="搜索智能体...">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        <div class="flex">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-filter mr-2"></i>
+                                筛选
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 分类标签 -->
+                <div class="flex flex-wrap items-center space-x-2 mb-6">
+                    <span class="text-gray-600 mr-2">分类：</span>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm">全部</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">财务</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">法律</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">招投标</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">旅游</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">教育</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">医疗</button>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">更多</button>
+                </div>
+                
+                <!-- 推荐智能体 -->
+                <h2 class="text-xl font-semibold mb-4">推荐智能体</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                    <!-- 财务智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">财务智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-2">4.5 (128人评价)</span>
+                                </div>
+                                <p class="text-gray-600">专业解答财务相关问题，提供财务分析与建议。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-blue">财务分析</span>
+                                <span class="tag tag-blue">会计</span>
+                                <span class="tag tag-blue">税务</span>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-full">立即使用</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 招标智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-purple-500 to-purple-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-gavel text-purple-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">招标智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-2">4.0 (96人评价)</span>
+                                </div>
+                                <p class="text-gray-600">专注招投标领域咨询，提供文件审核与生成服务。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-purple">招投标</span>
+                                <span class="tag tag-purple">政府采购</span>
+                                <span class="tag tag-purple">合同审核</span>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-full">立即使用</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 法律智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-balance-scale text-green-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">法律智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-2">4.8 (156人评价)</span>
+                                </div>
+                                <p class="text-gray-600">提供法律咨询、合同审核、法规解读等专业服务。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-green">法律咨询</span>
+                                <span class="tag tag-green">合同审核</span>
+                                <span class="tag tag-green">法规解读</span>
+                            </div>
+                            <div class="mt-auto relative">
+                                <button class="btn btn-primary w-full">立即使用</button>
+                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">热门</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 最近使用 -->
+                <h2 class="text-xl font-semibold mb-4">最近使用</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                    <!-- 旅游智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-yellow-500 to-yellow-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-plane text-yellow-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">旅游智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-500">10分钟前</span>
+                                </div>
+                                <p class="text-gray-600">提供景点推荐、旅游规划和行程安排建议。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-yellow">景点推荐</span>
+                                <span class="tag tag-yellow">旅游规划</span>
+                                <span class="tag tag-yellow">行程安排</span>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-full">立即使用</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 财务智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">财务智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-500">昨天</span>
+                                </div>
+                                <p class="text-gray-600">专业解答财务相关问题，提供财务分析与建议。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-blue">财务分析</span>
+                                <span class="tag tag-blue">会计</span>
+                                <span class="tag tag-blue">税务</span>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-full">立即使用</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 全部智能体 -->
+                <h2 class="text-xl font-semibold mb-4">全部智能体</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 教育智能体 -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-64 flex flex-col">
+                        <div class="h-32 bg-gradient-to-r from-red-500 to-red-700 flex items-center justify-center p-6">
+                            <div class="rounded-full bg-white p-3 shadow-sm">
+                                <i class="fas fa-graduation-cap text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold text-lg mb-2">教育智能体</h3>
+                            <p class="text-sm text-gray-600 mb-3">提供学习辅导、知识解答、课程规划等服务</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline w-full text-sm">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 医疗智能体 -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-64 flex flex-col">
+                        <div class="h-32 bg-gradient-to-r from-teal-500 to-teal-700 flex items-center justify-center p-6">
+                            <div class="rounded-full bg-white p-3 shadow-sm">
+                                <i class="fas fa-stethoscope text-teal-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold text-lg mb-2">医疗智能体</h3>
+                            <p class="text-sm text-gray-600 mb-3">提供健康咨询、医学知识、健康管理等服务</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline w-full text-sm">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 旅游智能体 -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-64 flex flex-col">
+                        <div class="h-32 bg-gradient-to-r from-amber-500 to-amber-700 flex items-center justify-center p-6">
+                            <div class="rounded-full bg-white p-3 shadow-sm">
+                                <i class="fas fa-map-marked-alt text-amber-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold text-lg mb-2">旅游智能体</h3>
+                            <p class="text-sm text-gray-600 mb-3">提供景点推荐、行程规划、旅游咨询等服务</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline w-full text-sm">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- IT智能体 -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow h-64 flex flex-col">
+                        <div class="h-32 bg-gradient-to-r from-indigo-500 to-indigo-700 flex items-center justify-center p-6">
+                            <div class="rounded-full bg-white p-3 shadow-sm">
+                                <i class="fas fa-laptop-code text-indigo-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold text-lg mb-2">IT智能体</h3>
+                            <p class="text-sm text-gray-600 mb-3">提供编程指导、技术问题解答、IT咨询等服务</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline w-full text-sm">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 分页 -->
+                <div class="flex justify-center mt-8">
+                    <nav class="flex items-center">
+                        <a href="#" class="px-3 py-2 border rounded-l-md hover:bg-gray-100">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-r bg-blue-600 text-white">1</a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-r hover:bg-gray-100">2</a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-r hover:bg-gray-100">3</a>
+                        <span class="px-3 py-2 border-t border-b">...</span>
+                        <a href="#" class="px-4 py-2 border-t border-b border-r hover:bg-gray-100">8</a>
+                        <a href="#" class="px-3 py-2 border-t border-b border-r rounded-r-md hover:bg-gray-100">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

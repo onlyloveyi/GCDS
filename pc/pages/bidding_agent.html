@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招标智能体 - 公诚DeepSeek</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="main-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar h-screen">
+            <div class="mb-8">
+                <div class="flex items-center mb-6">
+                    <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
+                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                </div>
+                
+                <div class="relative">
+                    <input type="text" class="input pl-10" placeholder="搜索...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <nav>
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 ml-2">主菜单</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>对话</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>知识库</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>景点问答</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">智能体</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>智能体选择</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>财务智能体</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-gavel"></i>
+                    <span>招标智能体</span>
+                </a>
+                
+                <div class="text-xs uppercase font-semibold text-gray-500 mb-2 mt-6 ml-2">招标工具</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-contract"></i>
+                    <span>招标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>投标文件稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>专家评审表稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>评委视频稽核</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>采购文件生成</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>采购方案生成</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="flex flex-col h-screen">
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <button class="btn btn-outline mr-4">
+                            <i class="fas fa-plus"></i> 开启新对话
+                        </button>
+                        <h2 class="text-xl font-semibold">招标智能体</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-upload mr-2"></i>
+                        上传文件
+                    </button>
+                    <div class="relative">
+                        <img src="../img/user-avatar.svg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 招标智能体功能选择 -->
+            <div class="bg-white border-b">
+                <div class="container mx-auto py-6 px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-file-contract text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">招标文件稽核</h3>
+                                    <p class="text-sm text-gray-600">检查招标文件是否符合相关法规和标准，识别潜在问题</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-file-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">投标文件稽核</h3>
+                                    <p class="text-sm text-gray-600">分析投标文件质量和完整性，提供修改建议</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-clipboard-check text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">专家评审表稽核</h3>
+                                    <p class="text-sm text-gray-600">检查评审过程合规性，分析评审表数据</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-video text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">评委视频稽核</h3>
+                                    <p class="text-sm text-gray-600">分析评审视频，提取关键信息和潜在问题</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-file-invoice text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">采购文件生成</h3>
+                                    <p class="text-sm text-gray-600">根据项目需求自动生成符合规范的采购文件</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 duration-200">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 rounded-full p-3 text-white mr-4 shadow-sm">
+                                    <i class="fas fa-project-diagram text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">采购方案生成</h3>
+                                    <p class="text-sm text-gray-600">制定完整的采购实施方案，包括进度安排和预算</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主要内容 -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- 对话内容 -->
+                <div class="p-6 bg-gray-50">
+                    <!-- 欢迎消息 -->
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-white rounded-lg shadow-sm p-6 max-w-3xl w-full">
+                            <div class="flex items-center mb-4">
+                                <div class="rounded-full bg-purple-100 p-3 mr-4 shadow-sm">
+                                    <i class="fas fa-gavel text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">招标智能体</h3>
+                                    <p class="text-sm text-gray-600">专注招投标领域咨询，提供文件审核与生成服务</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">您可以向我咨询招投标相关的问题，上传招标文件、投标文件进行审核，或生成采购文件和方案。我能帮助您规避风险，提高采购和投标质量。</p>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">政府采购法规</button>
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">招标文件审核</button>
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">投标策略咨询</button>
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">评标流程合规</button>
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">采购计划制定</button>
+                                <button class="btn btn-outline text-sm py-2 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors">合同条款审核</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户提问 -->
+                    <div class="flex justify-end mb-6">
+                        <div class="bg-blue-600 text-white rounded-lg rounded-tr-none px-4 py-3 max-w-xl shadow-sm">
+                            <p>我想了解政府采购招标文件中技术规格要求如何避免限制竞争</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI回答 -->
+                    <div class="flex mb-8">
+                        <div class="bg-white rounded-lg rounded-tl-none px-6 py-5 max-w-3xl shadow-sm">
+                            <p class="mb-4">在政府采购招标文件中制定技术规格要求时，避免限制竞争是非常重要的合规要点。以下是相关建议：</p>
+                            
+                            <div class="space-y-4 mb-5">
+                                <div class="p-4 bg-purple-50 rounded-lg shadow-sm border border-purple-100">
+                                    <h4 class="font-semibold text-purple-800 mb-2 flex items-center">
+                                        <i class="fas fa-gavel mr-2 text-purple-600"></i>
+                                        关于技术规格的法律规定
+                                    </h4>
+                                    <p class="text-sm mb-2">《政府采购法》第二十条规定：</p>
+                                    <blockquote class="pl-3 border-l-4 border-purple-300 italic text-sm text-gray-700 bg-white p-3 rounded-r-lg">
+                                        "采购人应当根据采购项目的特点和实际需要编制资格预审文件或者招标文件。招标文件应当包括采购项目的技术规格、数量、质量要求和供应商的资格条件等。<strong>采购人不得以不合理的条件对供应商实行差别待遇或者歧视待遇，不得以特定行政区域或者特定行业的业绩、奖项作为加分条件或者中标、成交条件。</strong>"
+                                    </blockquote>
+                                </div>
+                                
+                                <div class="p-5 border rounded-lg shadow-sm bg-white">
+                                    <h4 class="font-semibold text-purple-800 mb-3 pb-2 border-b">技术规格要求的合规原则</h4>
+                                    <div class="space-y-3 mt-3">
+                                        <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-purple-50 transition-colors">
+                                            <div class="bg-purple-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                                <i class="fas fa-check text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-purple-900">功能导向而非品牌导向</h5>
+                                                <p class="text-sm text-gray-700 mt-1">技术规格应以功能、性能为导向，而非指向特定品牌或供应商。除非必要，不应使用"与XX同等或相当"的表述。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-purple-50 transition-colors">
+                                            <div class="bg-purple-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                                <i class="fas fa-check text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-purple-900">采用通用标准</h5>
+                                                <p class="text-sm text-gray-700 mt-1">优先采用国家标准、行业标准、通用技术规范，避免采用特定企业的非标准规格要求。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-purple-50 transition-colors">
+                                            <div class="bg-purple-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                                <i class="fas fa-check text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-purple-900">合理设置参数范围</h5>
+                                                <p class="text-sm text-gray-700 mt-1">技术参数应设置合理范围，避免过于精确的数值（如指向特定产品的尺寸、重量等），可使用"不小于"、"不大于"等表述。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-purple-50 transition-colors">
+                                            <div class="bg-purple-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                                <i class="fas fa-check text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-purple-900">明确实质性和非实质性要求</h5>
+                                                <p class="text-sm text-gray-700 mt-1">区分"必须满足"的实质性要求和"优先"的非实质性要求，避免将非必要的功能设为实质性要求。</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-start bg-gray-50 p-3 rounded-lg hover:bg-purple-50 transition-colors">
+                                            <div class="bg-purple-100 rounded-full p-2 mr-3 mt-1 flex-shrink-0 shadow-sm">
+                                                <i class="fas fa-check text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-purple-900">避免不必要的资质要求</h5>
+                                                <p class="text-sm text-gray-700 mt-1">不得将供应商的注册地、资产规模、从业人员、营业收入、利润等与特定行政区域或者特定行业挂钩。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg mb-5 shadow-sm">
+                                <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                                    <i class="fas fa-exclamation-triangle mr-2 text-yellow-600"></i>
+                                    常见不合规示例
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-2 text-sm">
+                                    <li>"设备必须采用XX品牌的核心组件"（指定品牌）</li>
+                                    <li>"系统界面须与采购方现有XX系统完全一致"（指向现有供应商）</li>
+                                    <li>"投标人须提供自有知识产权的XXX系统"（不合理限制）</li>
+                                    <li>"供应商须在本地区有3年以上同类项目经验"（地域歧视）</li>
+                                    <li>过于精确的参数设置："重量必须为1.257kg±0.001kg"（疑似定向）</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-5">如果您有具体的招标文件需要审核，可以上传文件，我将帮您检查是否存在限制竞争的技术规格要求，并提供修改建议。</p>
+                            
+                            <div class="flex justify-center mt-5">
+                                <button class="btn bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-sm transition-colors">
+                                    <i class="fas fa-upload mr-2"></i> 上传招标文件进行审核
+                                </button>
+                            </div>
+                            
+                            <p class="text-sm text-gray-500 text-right mt-3">15:20 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="bg-white border-t p-4 sticky bottom-0 shadow-md">
+                <div class="flex mb-2 space-x-2 overflow-x-auto pb-1">
+                    <button class="btn btn-outline px-3 py-1 text-sm hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors flex-shrink-0">
+                        <i class="fas fa-file-upload mr-1"></i> 上传文件
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors flex-shrink-0">
+                        <i class="fas fa-balance-scale mr-1"></i> 法规查询
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors flex-shrink-0">
+                        <i class="fas fa-file-signature mr-1"></i> 文件模板
+                    </button>
+                    <button class="btn btn-outline px-3 py-1 text-sm hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 transition-colors flex-shrink-0">
+                        <i class="fas fa-calendar-alt mr-1"></i> 招标日历
+                    </button>
+                </div>
+                <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                    <textarea class="flex-1 bg-transparent border-0 focus:ring-0 resize-none p-2 h-12" placeholder="输入您的招投标相关问题..."></textarea>
+                    <button class="bg-purple-600 text-white rounded-lg p-3 ml-2 hover:bg-purple-700 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
