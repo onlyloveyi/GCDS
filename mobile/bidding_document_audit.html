@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 招标文件稽核</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .upload-area {
+            border: 2px dashed var(--gray);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: rgba(var(--background-rgb), 0.5);
+        }
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(var(--primary-rgb), 0.05);
+        }
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 85%;
+            border-radius: 4px;
+        }
+        .audit-result {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 4px 12px var(--shadow);
+            overflow: hidden;
+        }
+        .result-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+        }
+        .result-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .result-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .status-icon {
+            flex: 0 0 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+        .status-icon.error {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #FF4C4C;
+        }
+        .status-icon.warning {
+            background-color: rgba(255, 187, 51, 0.1);
+            color: #FFBB33;
+        }
+        .status-icon.success {
+            background-color: rgba(68, 214, 125, 0.1);
+            color: #44D67D;
+        }
+        .item-content {
+            flex: 1;
+        }
+        .item-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .item-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>下午3:45 阅</div>
+        <div>
+            <span>6.2K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>42%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='bidding_agent.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            招标文件稽核
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 上传区域 -->
+        <div class="upload-area">
+            <i class="fas fa-file-upload upload-icon"></i>
+            <div style="font-weight: 600; margin-bottom: 8px;">拖拽上传招标文件</div>
+            <div style="font-size: 13px; color: var(--text-light); margin-bottom: 16px;">支持DOCX、PDF、ZIP格式，最大50MB</div>
+            <button class="btn btn-primary" style="min-width: 160px;">
+                <i class="fas fa-plus"></i> 选择文件
+            </button>
+        </div>
+        
+        <!-- 已上传文件 -->
+        <div class="card" style="margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-file-word" style="color: var(--primary); font-size: 20px;"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 500; margin-bottom: 4px;">某项目招标文件.docx</div>
+                    <div style="font-size: 12px; color: var(--text-light);">25.3MB • 2025-04-12 上传</div>
+                </div>
+                <button style="background: none; border: none; color: var(--text-light); font-size: 18px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-light); margin-bottom: 8px;">
+                <span>稽核进度：85%</span>
+                <span>预计剩余时间：1分钟</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- 稽核结果 -->
+        <div class="audit-result">
+            <div class="result-header">
+                <div style="font-size: 18px; margin-bottom: 8px;">招标文件稽核结果</div>
+                <div style="font-size: 13px; font-weight: normal;">发现 3 处问题，12 处警告</div>
+            </div>
+            
+            <div class="result-section">
+                <h3 style="font-size: 16px; margin-bottom: 16px;">文件结构</h3>
+                
+                <div class="result-item">
+                    <div class="status-icon success">
+                        <i class="fas fa-check" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">招标文件基础结构完整</div>
+                        <div class="item-desc">检测到标准六部分结构：招标公告、投标人须知、评标办法、合同条款、技术规格、投标文件格式</div>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">资格预审文件缺少附件</div>
+                        <div class="item-desc">建议补充资格审查表格式和评分标准</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-section">
+                <h3 style="font-size: 16px; margin-bottom: 16px;">合规性检查</h3>
+                
+                <div class="result-item">
+                    <div class="status-icon error">
+                        <i class="fas fa-times" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">评分标准存在歧义</div>
+                        <div class="item-desc">第47页 "技术方案评分" 中的 "完整性" 评分项缺少明确的评分依据和量化标准</div>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="status-icon error">
+                        <i class="fas fa-times" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">资质要求可能限制竞争</div>
+                        <div class="item-desc">第23页要求投标人必须具有"5年以上同类项目经验"可能过度限制潜在投标人参与</div>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">投标截止时间设置不足</div>
+                        <div class="item-desc">从招标公告发布到投标截止仅15天，建议延长至少20天</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">保证金比例设置过高</div>
+                        <div class="item-desc">投标保证金比例设置为5%，超过了《政府采购法实施条例》规定的2%限制</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">合同条款过于倾向招标方</div>
+                        <div class="item-desc">第65页合同条款中对违约责任的约定对招标方和投标方责任不对等</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">付款条件过于苛刻</div>
+                        <div class="item-desc">第68页规定最终付款需等待1年质保期结束后，不符合行业惯例</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-section">
+                <h3 style="font-size: 16px; margin-bottom: 16px;">技术规范</h3>
+                
+                <div class="audit-item">
+                    <div class="item-header" style="display: flex; align-items: center;">
+                        <div class="item-icon" style="background-color: rgba(255, 187, 51, 0.1); color: #FFBB33;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="item-badges">
+                            <span class="badge" style="background-color: rgba(255, 187, 51, 0.15); color: #FFBB33;">中度风险</span>
+                            <span class="badge" style="background-color: rgba(112, 112, 112, 0.1); color: var(--text-light); margin-left: 4px;">技术规范部分</span>
+                        </div>
+                    </div>
+                    <div class="item-content" style="margin-top: 12px; margin-bottom: 20px;">
+                        <div class="item-title">技术规格疑似指向特定品牌</div>
+                        <div class="item-desc" style="margin-bottom: 8px;">第82页对控制系统的描述与某品牌产品特征高度吻合，可能违反政府采购法。具体表现为：</div>
+                        <div class="item-details" style="margin-left: 12px; font-size: 12px; color: var(--text-light); line-height: 1.5;">
+                            <p>1. 规定处理器必须为"X86架构，主频3.2GHz，6核12线程"，与某品牌型号完全一致</p>
+                            <p>2. 指定接口类型和数量与市场主流产品不符</p>
+                            <p>3. 要求系统支持特定的专利技术，该技术仅某品牌拥有</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">技术参数要求过于严格</div>
+                        <div class="item-desc">第78页要求设备运行温度范围-20℃~55℃，超出市场主流产品规格</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">软件兼容性要求不明确</div>
+                        <div class="item-desc">第85页未明确说明系统必须兼容的第三方软件版本范围</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h3 style="font-size: 16px; margin-bottom: 16px;">评标办法</h3>
+                
+                <div class="result-item">
+                    <div class="status-icon error">
+                        <i class="fas fa-times" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">综合评分法权重设置不合理</div>
+                        <div class="item-desc">第42页价格分占比仅15%，低于财政部推荐的30%最低标准</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">商务分评审标准不够细化</div>
+                        <div class="item-desc">第45页商务分评审未明确各类证书的有效性判断标准</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">价格评分计算公式不规范</div>
+                        <div class="item-desc">第43页价格分计算未考虑异常低价情况的处理机制</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">样品评审要求不明确</div>
+                        <div class="item-desc">第49页对样品的评审未提供明确的测试方法和评分标准</div>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="status-icon warning">
+                        <i class="fas fa-exclamation" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">专家评审表格设计不合理</div>
+                        <div class="item-desc">第50页专家评审表缺少评分理由填写区域，不利于评审公正性</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 16px; background-color: white; box-shadow: 0 -2px 10px var(--shadow); display: flex; gap: 12px;">
+            <button class="btn btn-primary" style="flex: 1;">
+                <i class="fas fa-download"></i> 导出报告
+            </button>
+            <button class="btn" style="flex: 1; background-color: white; border: 1px solid var(--gray); color: var(--text-dark);">
+                <i class="fas fa-magic"></i> 智能修改
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 招标智能体</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>中午12:18 阅</div>
+        <div>
+            <span>8.4K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>39%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            XXDeepSeek
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-bullseye"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <!-- 招标智能体介绍 -->
+        <div class="agent-card" style="flex-direction: column; align-items: flex-start; padding: 20px;">
+            <div style="display: flex; width: 100%; margin-bottom: 16px; align-items: center;">
+                <div class="agent-icon" style="width: 64px; height: 64px; font-size: 28px; background-color: rgba(62, 123, 250, 0.1); color: var(--primary);">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div style="flex: 1; margin-left: 16px;">
+                    <div style="font-size: 20px; font-weight: 600; margin-bottom: 6px;">招标智能体</div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge" style="background-color: rgba(62, 123, 250, 0.15);">
+                            <i class="fas fa-flask" style="margin-right: 4px;"></i> 内测
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-light);">
+                            <i class="far fa-eye" style="margin-right: 4px;"></i> 4.8k
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-light);">
+                            <i class="far fa-star" style="margin-right: 4px;"></i> 4.7
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="color: var(--text-light); font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+                专业招标采购智能体，提供招标文件稽核、投标文件稽核、专家评审表稽核、评委视频稽核、采购文件生成和采购方案生成等全方位服务，帮助您规范招投标流程，确保合规高效。
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">招标文件</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">投标稽核</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">评审稽核</span>
+                <span class="badge" style="background-color: rgba(62, 123, 250, 0.1);">采购方案</span>
+            </div>
+            
+            <div style="display: flex; gap: 10px; width: 100%;">
+                <button class="btn btn-primary" style="flex: 1;">
+                    <i class="fas fa-robot"></i> 开始咨询
+                </button>
+                <button style="background-color: white; border: 1px solid var(--gray-light); border-radius: 8px; padding: 12px; color: var(--text-light); flex: 0 0 auto;">
+                    <i class="fas fa-plus-circle"></i> 新对话
+                </button>
+            </div>
+        </div>
+        
+        <!-- 招标功能模块 -->
+        <div class="section-title">智能稽核与生成服务</div>
+        
+        <div class="card" onclick="window.location.href='bidding_document_audit.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-file-contract" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">招标文件稽核</div>
+                    <div style="font-size: 12px; color: var(--text-light);">智能分析招标文件合规性与完整性</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" onclick="window.location.href='bid_document_audit.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-file-signature" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">投标文件稽核</div>
+                    <div style="font-size: 12px; color: var(--text-light);">检查投标文件是否符合招标要求</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" onclick="window.location.href='expert_review_audit.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-clipboard-check" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">专家评审表稽核</div>
+                    <div style="font-size: 12px; color: var(--text-light);">审核评分表格式与评分合理性</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" onclick="window.location.href='reviewer_video_audit.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-video" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">评委视频稽核</div>
+                    <div style="font-size: 12px; color: var(--text-light);">智能分析评标过程视频规范性</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" onclick="window.location.href='procurement_document_gen.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-file-alt" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">采购文件生成</div>
+                    <div style="font-size: 12px; color: var(--text-light);">快速生成符合规范的采购文件</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <div class="card" onclick="window.location.href='procurement_plan_gen.html'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background-color: rgba(62, 123, 250, 0.1); display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                    <i class="fas fa-project-diagram" style="color: var(--primary); font-size: 18px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 4px;">采购实施方案生成</div>
+                    <div style="font-size: 12px; color: var(--text-light);">智能分析稽核技术规范书，自动生成采购实施方案</div>
+                </div>
+                <i class="fas fa-chevron-right" style="margin-left: auto; color: var(--text-light);"></i>
+            </div>
+        </div>
+        
+        <!-- 相关智能体 -->
+        <div class="section-title">相关智能体</div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(38, 70, 83, 0.1); color: var(--dark-primary);">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">法律顾问</div>
+                <div class="agent-description">提供合同审核与法律合规建议</div>
+            </div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-icon" style="background-color: rgba(233, 196, 106, 0.2); color: #E76F51;">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name">财务智能体</div>
+                <div class="agent-description">协助进行预算管理与成本控制</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

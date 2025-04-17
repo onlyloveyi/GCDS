@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 专家评审表稽核</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .upload-area {
+            border: 2px dashed var(--gray);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: rgba(var(--background-rgb), 0.5);
+        }
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(var(--primary-rgb), 0.05);
+        }
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .analysis-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 24px;
+        }
+        .analysis-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+        }
+        .analysis-content {
+            padding: 20px;
+        }
+        .analysis-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .data-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .data-label {
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .data-value {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .chart-container {
+            height: 200px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            background-color: var(--primary);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s;
+        }
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+            width: 60px;
+        }
+        .chart-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: var(--gray-light);
+        }
+        .chart-line-label {
+            position: absolute;
+            left: 0;
+            font-size: 12px;
+            color: var(--text-light);
+            transform: translateY(-50%);
+        }
+        .problem-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .problem-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .problem-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .problem-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .problem-solution {
+            background-color: rgba(62, 123, 250, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--primary);
+        }
+        .tab-controls {
+            display: flex;
+            background-color: var(--gray-light);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .tab-control {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-control.active {
+            background-color: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+        .tag.red {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #FF4C4C;
+        }
+        .tag.yellow {
+            background-color: rgba(255, 187, 51, 0.1);
+            color: #FFBB33;
+        }
+        .tag.green {
+            background-color: rgba(68, 214, 125, 0.1);
+            color: #44D67D;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>上午10:45 阅</div>
+        <div>
+            <span>5.3K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>52%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='bidding_agent.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            专家评审表稽核
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 标签切换 -->
+        <div class="tab-controls">
+            <div class="tab-control active">评分分析</div>
+            <div class="tab-control" onclick="window.location.href='expert_review_audit_form.html'">形式审查</div>
+            <div class="tab-control" onclick="window.location.href='expert_review_audit_pro.html'">专业审查</div>
+        </div>
+        
+        <!-- 上传区域 -->
+        <div class="upload-area">
+            <i class="fas fa-file-upload upload-icon"></i>
+            <div style="font-weight: 600; margin-bottom: 8px;">上传专家评审表</div>
+            <div style="font-size: 13px; color: var(--text-light); margin-bottom: 16px;">支持Excel、PDF格式，上传后将自动识别评分表格</div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-primary" style="min-width: 140px;">
+                    <i class="fas fa-plus"></i> 选择文件
+                </button>
+                <button class="btn" style="min-width: 140px; background-color: white; border: 1px solid var(--text-light); color: var(--text-dark);">
+                    <i class="fas fa-camera"></i> 拍照上传
+                </button>
+            </div>
+        </div>
+        
+        <!-- 工作模式选择 -->
+        <div style="background-color: white; border-radius: 10px; margin-bottom: 16px; padding: 16px;">
+            <div style="font-weight: 500; font-size: 14px; margin-bottom: 12px;">稽核检测模式</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 6px;">
+                <div style="flex: 1; min-width: 140px; display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: var(--primary); color: white;">
+                    <input type="radio" name="mode" checked style="margin-right: 8px;">
+                    <div>
+                        <div style="font-size: 13px; font-weight: 500;">全面检测模式</div>
+                        <div style="font-size: 11px; opacity: 0.9;">全面稽核各类评分异常</div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 140px; display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid #ddd;">
+                    <input type="radio" name="mode" style="margin-right: 8px;">
+                    <div>
+                        <div style="font-size: 13px; font-weight: 500;">自动打分模式</div>
+                        <div style="font-size: 11px; color: #666;">通过AI提取摘录自动打分</div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 12px; color: #666; background-color: rgba(62, 123, 250, 0.05); padding: 10px; border-radius: 6px; margin-top: 10px;">
+                <i class="fas fa-info-circle" style="color: var(--primary); margin-right: 4px;"></i>
+                自动打分模式将根据投标文件摘录内容自动完成打分，可大幅减少人工评分工作量
+            </div>
+        </div>
+        
+        <!-- 评分统计分析 -->
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <div style="font-size: 16px;">评审表分析结果</div>
+            </div>
+            <div class="analysis-content">
+                <div class="analysis-title">评分统计分析</div>
+                
+                <div class="wx-section-title">评分数据统计</div>
+                <div class="wx-card" style="margin-bottom: 16px;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                        <div class="wx-data-row" style="display: flex; align-items: center;">
+                            <div style="background: rgba(24, 144, 255, 0.1); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="fas fa-user-tie" style="color: #1890ff; font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #999;">专家人数</div>
+                                <div style="font-size: 20px; font-weight: 500; color: #000;">5人</div>
+                            </div>
+                        </div>
+                        <div class="wx-data-row" style="display: flex; align-items: center;">
+                            <div style="background: rgba(82, 196, 26, 0.1); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="fas fa-building" style="color: #52c41a; font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #999;">投标供应商</div>
+                                <div style="font-size: 20px; font-weight: 500; color: #000;">3家</div>
+                            </div>
+                        </div>
+                        <div class="wx-data-row" style="display: flex; align-items: center;">
+                            <div style="background: rgba(250, 173, 20, 0.1); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="fas fa-chart-line" style="color: #faad14; font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #999;">评分区间</div>
+                                <div style="font-size: 20px; font-weight: 500; color: #000;">72-96分</div>
+                            </div>
+                        </div>
+                        <div class="wx-data-row" style="display: flex; align-items: center;">
+                            <div style="background: rgba(245, 34, 45, 0.1); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="fas fa-trophy" style="color: #f5222d; font-size: 18px;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #999;">最高得分供应商</div>
+                                <div style="font-size: 20px; font-weight: 500; color: #000;">北京科技</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wx-section-title">评分异常分析</div>
+                <div class="wx-card">
+                    <div style="background: #F8F9FC; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                        <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <div style="width: 6px; height: 16px; background: #f5222d; border-radius: 3px; margin-right: 8px;"></div>
+                                区间外评分 
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="background: #FFF2F0; padding: 4px 8px; border-radius: 12px; font-size: 12px; display: flex; align-items: center;">
+                                    <i class="fas fa-exclamation-circle" style="color: #f5222d; margin-right: 4px;"></i>
+                                    <span style="color: #f5222d; font-weight: 500;">3处异常</span>
+                                </div>
+                                <div style="width: 24px; height: 24px; border-radius: 50%; background: #f5222d; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: white; border-radius: 8px; padding: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed #f0f0f0;">
+                                <div style="width: 40px; height: 40px; background: #FFF2F0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                    <i class="fas fa-exclamation-circle" style="font-size: 20px; color: #f5222d;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 15px;">专家2对"技术方案"的评分超出区间</div>
+                                    <div style="font-size: 13px; color: #666; margin-bottom: 12px;">评分为14分，超出标准区间(0-10分)</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                        <div style="font-size: 12px; color: #666;">评分范围:</div>
+                                        <div style="height: 6px; background: #f0f0f0; flex: 1; border-radius: 3px; position: relative;">
+                                            <div style="position: absolute; height: 6px; width: 100%; background: #52c41a; border-radius: 3px; max-width: 50%;"></div>
+                                            <div style="position: absolute; height: 12px; width: 12px; background: #f5222d; border-radius: 50%; right: -6px; top: -3px;"></div>
+                                            <div style="position: absolute; top: -20px; right: -12px; font-size: 12px; color: #f5222d; font-weight: 600;">14分</div>
+                                        </div>
+                                        <div style="font-size: 12px; font-weight: 500; color: #666; width: 60px; text-align: right;">0-10分</div>
+                                    </div>
+                                    <div style="background: #FFF7E6; border-radius: 4px; padding: 10px; font-size: 13px; color: #d46b08; display: flex; align-items: flex-start;">
+                                        <i class="fas fa-lightbulb" style="margin-right: 8px; margin-top: 2px; flex-shrink: 0;"></i>
+                                        <div>建议与专家确认是否为填写错误，或是否对评分标准理解有误。若确认无误，应在评审报告中说明理由。</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; background: #FFF2F0; padding: 4px 12px; border-radius: 4px; height: fit-content; margin-left: 12px;">
+                                    <span style="font-size: 13px; color: #f5222d; font-weight: 600;">严重</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed #f0f0f0;">
+                                <div style="width: 40px; height: 40px; background: #FFFBE6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; color: #faad14;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 15px;">专家1对"服务水平"的评分低于区间</div>
+                                    <div style="font-size: 13px; color: #666; margin-bottom: 12px;">评分为3分，低于最低标准(5分)</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                        <div style="font-size: 12px; color: #666;">评分范围:</div>
+                                        <div style="height: 6px; background: #f0f0f0; flex: 1; border-radius: 3px; position: relative;">
+                                            <div style="position: absolute; height: 6px; width: 100%; background: #52c41a; border-radius: 3px; max-width: 50%; left: 50%;"></div>
+                                            <div style="position: absolute; height: 12px; width: 12px; background: #faad14; border-radius: 50%; left: 30%; top: -3px;"></div>
+                                            <div style="position: absolute; top: -20px; left: 27%; font-size: 12px; color: #faad14; font-weight: 600;">3分</div>
+                                        </div>
+                                        <div style="font-size: 12px; font-weight: 500; color: #666; width: 60px; text-align: right;">5-10分</div>
+                                    </div>
+                                    <div style="background: #FFF7E6; border-radius: 4px; padding: 10px; font-size: 13px; color: #d46b08; display: flex; align-items: flex-start;">
+                                        <i class="fas fa-lightbulb" style="margin-right: 8px; margin-top: 2px; flex-shrink: 0;"></i>
+                                        <div>检查专家评审表中的评价依据，如有充分理由，可在评审报告中详细说明原因。</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; background: #FFFBE6; padding: 4px 12px; border-radius: 4px; height: fit-content; margin-left: 12px;">
+                                    <span style="font-size: 13px; color: #faad14; font-weight: 600;">中等</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="width: 40px; height: 40px; background: #E6F7FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                    <i class="fas fa-info-circle" style="font-size: 20px; color: #1890ff;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 15px;">专家3对"价格评分"计算错误</div>
+                                    <div style="font-size: 13px; color: #666; margin-bottom: 12px;">评分为28分，正确应为30分</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                        <div style="font-size: 12px; color: #666;">分值对比:</div>
+                                        <div style="display: flex; gap: 4px; flex: 1; align-items: center;">
+                                            <div style="background: #f0f0f0; height: 20px; border-radius: 4px; width: 70%; position: relative;">
+                                                <div style="position: absolute; left: 8px; top: 0; height: 20px; line-height: 20px; font-size: 12px; color: #666;">当前评分: 28分</div>
+                                            </div>
+                                            <div style="font-size: 16px; color: #666;">→</div>
+                                            <div style="background: #e6f7ff; height: 20px; border-radius: 4px; width: 75%; position: relative; border: 1px solid #91d5ff;">
+                                                <div style="position: absolute; left: 8px; top: 0; height: 20px; line-height: 20px; font-size: 12px; color: #1890ff;">正确评分: 30分</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="background: #E6F7FF; border-radius: 4px; padding: 10px; font-size: 13px; color: #1890ff; display: flex; align-items: flex-start;">
+                                        <i class="fas fa-lightbulb" style="margin-right: 8px; margin-top: 2px; flex-shrink: 0;"></i>
+                                        <div>价格分计算公式为: (最低投标价/投标报价)×价格权重×100，建议核对计算过程并更正。</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; background: #E6F7FF; padding: 4px 12px; border-radius: 4px; height: fit-content; margin-left: 12px;">
+                                    <span style="font-size: 13px; color: #1890ff; font-weight: 600;">轻微</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #F8F9FC; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                        <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <div style="width: 6px; height: 16px; background: #faad14; border-radius: 3px; margin-right: 8px;"></div>
+                                专家打分一致性异常
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="background: #FFFBE6; padding: 4px 8px; border-radius: 12px; font-size: 12px; display: flex; align-items: center;">
+                                    <i class="fas fa-exclamation-triangle" style="color: #faad14; margin-right: 4px;"></i>
+                                    <span style="color: #faad14; font-weight: 500;">2处异常</span>
+                                </div>
+                                <div style="width: 24px; height: 24px; border-radius: 50%; background: #faad14; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: white; border-radius: 8px; padding: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+                                <div style="width: 40px; height: 40px; background: #FFFBE6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; color: #faad14;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 15px;">"技术响应"评分差异过大</div>
+                                    <div style="font-size: 13px; color: #666; margin-bottom: 16px;">专家评分区间为(6-18分)，标准差超过5分</div>
+                                    
+                                    <div style="font-weight: 500; font-size: 13px; margin-bottom: 12px;">专家评分分布</div>
+                                    <div style="display: flex; margin-bottom: 20px; position: relative;">
+                                        <div style="height: 6px; background: #f0f0f0; flex: 1; border-radius: 3px; margin-top: 8px; position: relative;">
+                                            <div style="position: absolute; width: 100%; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #f5222d 0%, #faad14 50%, #52c41a 100%);"></div>
+                                        </div>
+                                        <div style="display: flex; position: absolute; top: -10px; width: 100%; justify-content: space-between;">
+                                            <div style="width: 24px; height: 24px; background: white; border: 2px solid #f5222d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; transform: translateX(-50%);">6</div>
+                                            <div style="width: 24px; height: 24px; background: white; border: 2px solid #faad14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; transform: translateX(-50%);">12</div>
+                                            <div style="width: 24px; height: 24px; background: white; border: 2px solid #52c41a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; transform: translateX(-50%);">14</div>
+                                            <div style="width: 24px; height: 24px; background: white; border: 2px solid #1890ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; transform: translateX(-50%);">16</div>
+                                            <div style="width: 24px; height: 24px; background: white; border: 2px solid #722ed1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; transform: translateX(-50%);">18</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                        <div style="font-size: 12px; font-weight: 600; color: #666; width: 50px; text-align: center;">专家1</div>
+                                        <div style="font-size: 12px; font-weight: 600; color: #666; width: 50px; text-align: center;">专家2</div>
+                                        <div style="font-size: 12px; font-weight: 600; color: #666; width: 50px; text-align: center;">专家3</div>
+                                        <div style="font-size: 12px; font-weight: 600; color: #666; width: 50px; text-align: center;">专家4</div>
+                                        <div style="font-size: 12px; font-weight: 600; color: #666; width: 50px; text-align: center;">专家5</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                                        <div style="width: 80px; text-align: center; font-size: 12px; color: #666;">方差分析</div>
+                                        <div style="flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; position: relative;">
+                                            <div style="position: absolute; height: 8px; width: 75%; background: #faad14; border-radius: 4px;"></div>
+                                        </div>
+                                        <div style="width: 80px; font-weight: 500; font-size: 13px; color: #faad14;">差异显著</div>
+                                    </div>
+                                    
+                                    <div style="font-weight: 500; font-size: 13px; margin-bottom: 10px;">建议解决方案</div>
+                                    <div style="background: #F6FFED; border-radius: 4px; padding: 12px; font-size: 13px; color: #52c41a; display: flex; align-items: flex-start; border-left: 3px solid #52c41a;">
+                                        <i class="fas fa-check-circle" style="margin-right: 8px; margin-top: 2px; flex-shrink: 0;"></i>
+                                        <div>召开专家评审协商会议，讨论技术响应评分标准，重新确认各项技术指标的评分要点，并形成一致的评分理解。</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #F8F9FC; border-radius: 8px; padding: 16px;">
+                        <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <div style="width: 6px; height: 16px; background: #1890ff; border-radius: 3px; margin-right: 8px;"></div>
+                                主观评分异常
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="background: #E6F7FF; padding: 4px 8px; border-radius: 12px; font-size: 12px; display: flex; align-items: center;">
+                                    <i class="fas fa-info-circle" style="color: #1890ff; margin-right: 4px;"></i>
+                                    <span style="color: #1890ff; font-weight: 500;">1处异常</span>
+                                </div>
+                                <div style="width: 24px; height: 24px; border-radius: 50%; background: #1890ff; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: white; border-radius: 8px; padding: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
+                                <div style="width: 40px; height: 40px; background: #E6F7FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                    <i class="fas fa-info-circle" style="font-size: 20px; color: #1890ff;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 15px;">专家4对"服务承诺"打分与文字评价不符</div>
+                                    <div style="font-size: 13px; color: #666; margin-bottom: 16px;">评价为"服务承诺全面，响应速度快"但仅给出7分(满分15分)</div>
+                                    
+                                    <div style="border: 1px solid #d9d9d9; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: rgba(24, 144, 255, 0.05);">
+                                        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                            <i class="fas fa-quote-left" style="color: #1890ff; margin-right: 8px;"></i>
+                                            <div style="font-weight: 600; font-size: 14px;">专家文字评价</div>
+                                        </div>
+                                        <div style="font-size: 13px; color: #666; line-height: 1.6; padding-left: 8px; border-left: 3px solid #1890ff;">
+                                            "该供应商服务承诺全面，响应速度快，售后服务体系完整，在行业内具有良好口碑。提供的方案中详细说明了7*24小时服务响应机制，承诺2小时内到场解决问题，并提供为期三年的免费维保服务。"
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; margin-bottom: 16px; align-items: center; justify-content: space-between; background: #f9f9f9; padding: 12px; border-radius: 8px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">评价与打分匹配度</div>
+                                            <div style="font-size: 14px; font-weight: 600; color: #1890ff;">低匹配度</div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="font-size: 12px; color: #666;">打分:</div>
+                                            <div style="font-size: 18px; font-weight: 700; color: #1890ff;">7<span style="font-size: 14px; color: #666;">/15</span></div>
+                                            <div style="font-size: 14px; color: #faad14;">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="font-weight: 500; font-size: 13px; margin-bottom: 10px;">建议解决方案</div>
+                                    <div style="background: #F6FFED; border-radius: 4px; padding: 12px; font-size: 13px; color: #52c41a; display: flex; align-items: flex-start; border-left: 3px solid #52c41a;">
+                                        <i class="fas fa-check-circle" style="margin-right: 8px; margin-top: 2px; flex-shrink: 0;"></i>
+                                        <div>与专家确认评分是否存在填写错误，或重新审视评分标准的理解是否一致。对比同类评价的其他分数，确保评分标准统一。</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #f9f9f9; border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-robot" style="color: #1890ff; font-size: 20px;"></i>
+                                </div>
+                                <div style="flex: 1; font-size: 13px; color: #666;">
+                                    AI分析：根据文字评价内容，该项评分预期应在12-15分区间，建议检查专家是否有意对该项做了扣分处理。
+                                </div>
+                                <button style="background: #1890ff; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer;">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 自动打分功能 -->
+        <div class="analysis-card">
+            <div class="analysis-content" style="padding: 24px;">
+                <div class="analysis-title">自动打分工具</div>
+                
+                <div style="background-color: rgba(62, 123, 250, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <i class="fas fa-robot" style="color: var(--primary); margin-right: 8px; font-size: 16px;"></i>
+                        <div style="font-size: 14px; font-weight: 500;">AI辅助打分</div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-dark); line-height: 1.5;">
+                        上传投标文件后，系统可自动摘录关键信息并根据评分标准辅助完成打分。特别适合客观评分项和标准明确的主观评分项。
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 500; font-size: 14px; margin-bottom: 10px;">选择打分模式</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <div style="flex: 1; min-width: 140px; display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid var(--primary);">
+                            <input type="radio" name="scoring-mode" checked style="margin-right: 8px;">
+                            <div>
+                                <div style="font-size: 13px; font-weight: 500;">客观项自动打分</div>
+                                <div style="font-size: 11px; color: #666;">针对资质证书等客观项</div>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 140px; display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid #ddd;">
+                            <input type="radio" name="scoring-mode" style="margin-right: 8px;">
+                            <div>
+                                <div style="font-size: 13px; font-weight: 500;">全程辅助打分</div>
+                                <div style="font-size: 11px; color: #666;">AI辅助所有评分项打分</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 500; font-size: 14px; margin-bottom: 10px;">添加数据源</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid rgba(0,0,0,0.1);">
+                            <div style="flex: 1;">
+                                <div style="font-size: 13px; font-weight: 500;">评分标准</div>
+                                <div style="font-size: 11px; color: #666;">已从评审表中识别</div>
+                            </div>
+                            <div style="color: var(--primary);">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid rgba(0,0,0,0.1);">
+                            <div style="flex: 1;">
+                                <div style="font-size: 13px; font-weight: 500;">甲公司投标文件</div>
+                                <div style="font-size: 11px; color: #666;">尚未上传</div>
+                            </div>
+                            <button style="background-color: var(--primary); border: none; color: white; font-size: 12px; padding: 6px 12px; border-radius: 6px;">
+                                <i class="fas fa-upload"></i> 上传
+                            </button>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; padding: 12px; border-radius: 8px; background-color: white; border: 1px solid rgba(0,0,0,0.1);">
+                            <div style="flex: 1;">
+                                <div style="font-size: 13px; font-weight: 500;">乙公司投标文件</div>
+                                <div style="font-size: 11px; color: #666;">尚未上传</div>
+                            </div>
+                            <button style="background-color: var(--primary); border: none; color: white; font-size: 12px; padding: 6px 12px; border-radius: 6px;">
+                                <i class="fas fa-upload"></i> 上传
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <button style="background: none; border: none; color: var(--primary); font-size: 13px; padding: 8px;">
+                                <i class="fas fa-plus-circle"></i> 添加更多投标文件
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center;">
+                    <button class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 500; font-size: 14px;">
+                        <i class="fas fa-play-circle"></i> 开始自动打分
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评分规则合规性 -->
+        <div class="analysis-card">
+            <div class="analysis-content" style="padding: 24px;">
+                <div class="analysis-title">评分规则合规性</div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag green" style="padding: 4px 10px;">合规</span>
+                        <span>评分区间设置</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        评分表中各分项的分值区间设置符合政府采购法及实施条例的相关规定。
+                    </div>
+                </div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag red" style="padding: 4px 10px;">不合规</span>
+                        <span>技术分值过低</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        评分表中技术评分占总分40%，低于政府采购工程类项目技术分占比不低于60%的要求。
+                    </div>
+                    <div class="problem-solution" style="padding: 15px; border-radius: 10px;">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议调整评分权重，确保技术分值比例符合政策规定，或者提供充分的特殊情况说明。
+                    </div>
+                </div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag yellow" style="padding: 4px 10px;">待改进</span>
+                        <span>评分标准描述不够清晰</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        "服务方案"评分项的评分标准描述为"方案优良得8-10分，一般得4-7分，较差得0-3分"，缺乏客观量化的评判依据。
+                    </div>
+                    <div class="problem-solution" style="padding: 15px; border-radius: 10px;">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议细化评分标准，增加客观量化指标，如"响应时间不超过2小时得3分，不超过4小时得2分"等。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评审表格式检查 -->
+        <div class="analysis-card" style="margin-top: 24px;">
+            <div class="analysis-header">
+                <div style="font-size: 16px;">评审表格式规范性检查</div>
+            </div>
+            <div class="analysis-content" style="padding: 24px;">
+                <div class="analysis-title">格式规范检查结果</div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag green" style="padding: 4px 10px;">通过</span>
+                        <span>评审表签名完整性</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        所有评审专家均已在评分表上签字确认，符合《政府采购评审专家管理办法》第十六条规定。
+                    </div>
+                </div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag red" style="padding: 4px 10px;">不合规</span>
+                        <span>评分表日期格式问题</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        专家2和专家4的评分表日期格式不一致，且专家4的日期与评标当天不符，可能存在事后补填情况。
+                    </div>
+                    <div class="problem-solution" style="padding: 15px; border-radius: 10px;">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议统一日期格式为"YYYY年MM月DD日"，并要求专家当场填写确认日期。
+                    </div>
+                </div>
+                
+                <div class="problem-item" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <div class="problem-title">
+                        <span class="tag yellow" style="padding: 4px 10px;">待核实</span>
+                        <span>评分分值填写方式</span>
+                    </div>
+                    <div class="problem-desc" style="margin: 10px 0 15px 0; line-height: 1.6;">
+                        部分评分存在小数点后超过2位数的情况，不符合评分表填写规范中"小数点后最多保留2位"的要求。
+                    </div>
+                    <div class="problem-solution" style="padding: 15px; border-radius: 10px;">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议在评标前明确分值填写规则，按照四舍五入法统一保留2位小数。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 16px; background-color: white; box-shadow: 0 -2px 10px var(--shadow); display: flex; gap: 12px;">
+            <button class="btn btn-primary" style="flex: 1;">
+                <i class="fas fa-download"></i> 导出报告
+            </button>
+            <button class="btn" style="flex: 1; background-color: white; border: 1px solid var(--gray); color: var(--text-dark);">
+                <i class="fas fa-magic"></i> 智能修改
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 评委视频稽核</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .upload-area {
+            border: 2px dashed var(--gray);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: rgba(var(--background-rgb), 0.5);
+        }
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(var(--primary-rgb), 0.05);
+        }
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .video-player {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: 0 4px 16px var(--shadow);
+            background-color: #000;
+            aspect-ratio: 16/9;
+        }
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
+        .video-play {
+            color: white;
+            background: none;
+            border: none;
+            width: 30px;
+            text-align: center;
+        }
+        .video-progress {
+            flex: 1;
+            height: 4px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin: 0 12px;
+            position: relative;
+        }
+        .video-progress-fill {
+            position: absolute;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 2px;
+            width: 35%;
+        }
+        .video-time {
+            color: white;
+            font-size: 12px;
+        }
+        .timeline {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .timeline-track {
+            height: 6px;
+            background-color: var(--gray-light);
+            border-radius: 3px;
+            position: relative;
+        }
+        .timeline-segment {
+            position: absolute;
+            height: 100%;
+            border-radius: 3px;
+        }
+        .timeline-segment.issue {
+            background-color: #FF4C4C;
+        }
+        .timeline-segment.warning {
+            background-color: #FFBB33;
+        }
+        .timeline-segment.highlight {
+            background-color: #44D67D;
+        }
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid var(--primary);
+            left: 35%;
+        }
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .analysis-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 24px;
+        }
+        .analysis-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+        }
+        .analysis-content {
+            padding: 20px;
+        }
+        .analysis-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .stats-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            flex: 1;
+            background-color: var(--gray-light);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .issue-item {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .issue-item:hover {
+            background-color: rgba(62, 123, 250, 0.05);
+        }
+        .issue-item:last-child {
+            border-bottom: none;
+        }
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .issue-title {
+            font-weight: 500;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        .issue-time {
+            font-size: 13px;
+            color: var(--primary);
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+        .tag.red {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #FF4C4C;
+        }
+        .tag.yellow {
+            background-color: rgba(255, 187, 51, 0.1);
+            color: #FFBB33;
+        }
+        .tag.green {
+            background-color: rgba(68, 214, 125, 0.1);
+            color: #44D67D;
+        }
+        .issue-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        .issue-frame {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .frame-box {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--gray-light);
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+        .frame-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .frame-label {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+        }
+        .recognition-box {
+            position: absolute;
+            border: 2px solid #FF4C4C;
+            border-radius: 4px;
+            width: 30%;
+            height: 25%;
+            top: 10%;
+            left: 10%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>下午2:30 阅</div>
+        <div>
+            <span>8.7K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>29%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='bidding_agent.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            评委视频稽核
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 上传区域 -->
+        <div class="upload-area">
+            <i class="fas fa-video upload-icon"></i>
+            <div style="font-weight: 600; margin-bottom: 8px;">上传评标视频进行稽核</div>
+            <div style="font-size: 13px; color: var(--text-light); margin-bottom: 16px;">支持MP4、AVI、MOV等格式，系统将分析评标过程中的合规性问题</div>
+            <button class="btn btn-primary" style="min-width: 160px;">
+                <i class="fas fa-plus"></i> 选择视频
+            </button>
+        </div>
+        
+        <!-- 视频播放器 -->
+        <div class="video-player">
+            <img src="https://images.unsplash.com/photo-1573166364524-d9dbfd8bbf83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVldGluZ3x8fHx8fDE3MTI5OTg5NjA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="video-controls">
+                <button class="video-play">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <div class="video-progress">
+                    <div class="video-progress-fill"></div>
+                </div>
+                <div class="video-time">01:25:37 / 03:42:18</div>
+            </div>
+        </div>
+        
+        <!-- 视频时间轴 -->
+        <div class="timeline">
+            <div class="timeline-track">
+                <!-- 问题片段 -->
+                <div class="timeline-segment issue" style="left: 10%; width: 5%;"></div>
+                <div class="timeline-segment issue" style="left: 30%; width: 8%;"></div>
+                <div class="timeline-segment warning" style="left: 45%; width: 4%;"></div>
+                <div class="timeline-segment warning" style="left: 65%; width: 6%;"></div>
+                <div class="timeline-segment highlight" style="left: 80%; width: 10%;"></div>
+                
+                <!-- 当前播放位置 -->
+                <div class="timeline-marker"></div>
+            </div>
+            <div class="timeline-labels">
+                <span>00:00:00</span>
+                <span>01:00:00</span>
+                <span>02:00:00</span>
+                <span>03:00:00</span>
+                <span>04:00:00</span>
+            </div>
+        </div>
+        
+        <!-- 分析结果概览 -->
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <div style="font-size: 16px;">视频分析结果</div>
+            </div>
+            <div class="analysis-content">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: #3E7BFA;">86%</div>
+                        <div class="stat-label">合规评分</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: #FF4C4C;">4</div>
+                        <div class="stat-label">严重问题</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: #FFBB33;">7</div>
+                        <div class="stat-label">警告事项</div>
+                    </div>
+                </div>
+                
+                <div style="font-size: 14px; font-weight: 500; margin-bottom: 12px;">
+                    视频基本信息
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; margin-bottom: 20px;">
+                    <div style="display: flex;">
+                        <div style="flex: 1; color: var(--text-light);">项目名称</div>
+                        <div>某市政府数字化升级项目</div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="flex: 1; color: var(--text-light);">评标时间</div>
+                        <div>2025年3月25日 09:30-13:15</div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="flex: 1; color: var(--text-light);">评标地点</div>
+                        <div>市政府采购中心3号评标室</div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="flex: 1; color: var(--text-light);">视频时长</div>
+                        <div>3小时42分18秒</div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="flex: 1; color: var(--text-light);">评标专家</div>
+                        <div>已识别7位专家</div>
+                    </div>
+                </div>
+                
+                <div style="font-size: 14px; font-weight: 500; margin-bottom: 12px;">
+                    系统识别结果
+                </div>
+                
+                <div style="background-color: rgba(62, 123, 250, 0.05); padding: 12px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div style="font-weight: 500; font-size: 13px;">参与评标的人员</div>
+                        <div style="font-size: 13px; color: var(--primary);">查看详情 <i class="fas fa-chevron-right" style="font-size: 10px;"></i></div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-light);">
+                        系统已识别7位评标专家、2位采购代理人员、1位监督人员，全部符合评标资格要求
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 问题列表 -->
+        <div class="analysis-card">
+            <div class="analysis-content">
+                <div class="analysis-title">发现的问题</div>
+                
+                <div class="issue-item">
+                    <div class="issue-header">
+                        <div class="issue-title">
+                            <span class="tag red">严重</span>
+                            <span>评标专家使用手机</span>
+                        </div>
+                        <div class="issue-time">01:25:37</div>
+                    </div>
+                    <div class="issue-desc">
+                        识别到专家3在评审过程中使用手机，违反评标纪律。此行为持续约2分钟。
+                    </div>
+                    <div class="issue-frame">
+                        <div class="frame-box">
+                            <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8b2ZmaWNlLHBob25lfHx8fHx8MTcxMjk5ODczNw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080">
+                            <div class="frame-label">01:25:37</div>
+                            <div class="recognition-box"></div>
+                        </div>
+                        <div class="frame-box">
+                            <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8b2ZmaWNlLHBob25lfHx8fHx8MTcxMjk5ODczNw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080">
+                            <div class="frame-label">01:26:42</div>
+                            <div class="recognition-box"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="issue-item">
+                    <div class="issue-header">
+                        <div class="issue-title">
+                            <span class="tag red">严重</span>
+                            <span>评标室内出现非评标人员</span>
+                        </div>
+                        <div class="issue-time">00:43:18</div>
+                    </div>
+                    <div class="issue-desc">
+                        在评审过程中，有非评标工作人员进入评标室并与评标专家交谈，违反评标保密规定。
+                    </div>
+                </div>
+                
+                <div class="issue-item">
+                    <div class="issue-header">
+                        <div class="issue-title">
+                            <span class="tag yellow">警告</span>
+                            <span>评标专家组长未组织讨论</span>
+                        </div>
+                        <div class="issue-time">02:15:22</div>
+                    </div>
+                    <div class="issue-desc">
+                        在评分出现明显差异的情况下，评标专家组长未按规定组织专家讨论，而是由各专家独立打分。
+                    </div>
+                </div>
+                
+                <div class="issue-item">
+                    <div class="issue-header">
+                        <div class="issue-title">
+                            <span class="tag yellow">警告</span>
+                            <span>评标室摄像头被遮挡</span>
+                        </div>
+                        <div class="issue-time">03:07:45</div>
+                    </div>
+                    <div class="issue-desc">
+                        评标过程中摄像头被部分遮挡约5分钟，影响评标过程监控记录的完整性。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 16px; background-color: white; box-shadow: 0 -2px 10px var(--shadow); display: flex; gap: 12px;">
+            <button class="btn btn-primary" style="flex: 1;">
+                <i class="fas fa-download"></i> 导出报告
+            </button>
+            <button class="btn" style="flex: 1; background-color: white; border: 1px solid var(--gray); color: var(--text-dark);">
+                <i class="fas fa-magic"></i> 智能分析
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 

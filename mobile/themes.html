@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择设计方案</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="themes.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        .theme-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .theme-card.active {
+            box-shadow: 0 0 0 3px #3E7BFA, 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        
+        .theme-preview {
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .theme-header {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            color: white;
+            justify-content: space-between;
+        }
+        
+        .theme-body {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .fake-input {
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 12px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-2 text-center">选择设计方案</h1>
+        <p class="text-center mb-8 text-gray-600">选择一种设计风格，查看不同的视觉效果</p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <!-- 主题1 -->
+            <div class="theme-card active" data-theme="1">
+                <div class="theme-preview theme-1">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>现代蓝色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">现代蓝色 (默认)</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #3E7BFA;"></span>
+                        <span class="color-dot" style="background-color: #FF7D45;"></span>
+                        <span class="color-dot" style="background-color: #F4F4F8;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">标准圆角风格，现代清爽的设计语言</p>
+                </div>
+            </div>
+            
+            <!-- 主题2 -->
+            <div class="theme-card" data-theme="2">
+                <div class="theme-preview theme-2">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>深邃紫色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">深邃紫色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #6A5ACD;"></span>
+                        <span class="color-dot" style="background-color: #FF6B81;"></span>
+                        <span class="color-dot" style="background-color: #F8F7FC;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">扁平化科技风格，方正利落的设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题3 -->
+            <div class="theme-card" data-theme="3">
+                <div class="theme-preview theme-3">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>活力橙色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">活力橙色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #FF8C00;"></span>
+                        <span class="color-dot" style="background-color: #4F86F7;"></span>
+                        <span class="color-dot" style="background-color: #FFF8F2;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">圆形元素风格，弧度丰富的活力设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题4 -->
+            <div class="theme-card" data-theme="4">
+                <div class="theme-preview theme-4">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>商务灰色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">商务灰色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #607D8B;"></span>
+                        <span class="color-dot" style="background-color: #FFC107;"></span>
+                        <span class="color-dot" style="background-color: #ECEFF1;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">简约商务风格，专业紧凑的界面设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题5 -->
+            <div class="theme-card" data-theme="5">
+                <div class="theme-preview theme-5">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>自然绿色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">自然绿色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #4CAF50;"></span>
+                        <span class="color-dot" style="background-color: #FF5722;"></span>
+                        <span class="color-dot" style="background-color: #F1F8E9;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">有机自然风格，灵动清新的曲线设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题6 -->
+            <div class="theme-card" data-theme="6">
+                <div class="theme-preview theme-6">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>深夜模式</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">深夜模式</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #BB86FC;"></span>
+                        <span class="color-dot" style="background-color: #03DAC6;"></span>
+                        <span class="color-dot" style="background-color: #121212;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">未来科技风格，暗色调高对比度设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题7 -->
+            <div class="theme-card" data-theme="7">
+                <div class="theme-preview theme-7">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>柔和粉色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">柔和粉色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #F06292;"></span>
+                        <span class="color-dot" style="background-color: #42A5F5;"></span>
+                        <span class="color-dot" style="background-color: #FFF0F8;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">卡通可爱风格，圆润活泼的俏皮设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题8 -->
+            <div class="theme-card" data-theme="8">
+                <div class="theme-preview theme-8">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>沉稳红色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">沉稳红色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #D32F2F;"></span>
+                        <span class="color-dot" style="background-color: #448AFF;"></span>
+                        <span class="color-dot" style="background-color: #FFEBEE;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">古典优雅风格，简练沉稳的传统设计</p>
+                </div>
+            </div>
+            
+            <!-- 主题9 -->
+            <div class="theme-card" data-theme="9">
+                <div class="theme-preview theme-9">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>科技蓝绿</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">科技蓝绿</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #00BCD4;"></span>
+                        <span class="color-dot" style="background-color: #FF9800;"></span>
+                        <span class="color-dot" style="background-color: #E0F7FA;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">极简设计风格，简约直接的清爽界面</p>
+                </div>
+            </div>
+            
+            <!-- 主题10 -->
+            <div class="theme-card" data-theme="10">
+                <div class="theme-preview theme-10">
+                    <div class="theme-header" style="background-color: var(--primary);">
+                        <span>高端金色</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="theme-body" style="background-color: var(--background);">
+                        <div class="rounded-lg p-2 mb-2" style="background-color: var(--white);">
+                            <div class="w-2/3 h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                        </div>
+                        <div class="fake-input" style="background-color: var(--white);">
+                            <div class="w-full h-2 rounded-full" style="background-color: var(--gray-light);"></div>
+                            <i class="fas fa-paper-plane ml-2" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 bg-white">
+                    <h2 class="font-semibold mb-2">高端金色</h2>
+                    <div class="flex mb-2">
+                        <span class="color-dot" style="background-color: #FFC107;"></span>
+                        <span class="color-dot" style="background-color: #536DFE;"></span>
+                        <span class="color-dot" style="background-color: #FFFDE7;"></span>
+                    </div>
+                    <p class="text-xs text-gray-500">豪华质感风格，精致华丽的高端设计</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 flex justify-center space-x-4">
+            <a href="index.html" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+                返回主页
+            </a>
+            <a href="#" id="apply-theme-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                应用选择的方案
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // 选择主题逻辑
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // 移除所有卡片的active类
+                document.querySelectorAll('.theme-card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                
+                // 给当前卡片添加active类
+                this.classList.add('active');
+            });
+        });
+        
+        // 应用主题按钮点击事件
+        document.getElementById('apply-theme-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedTheme = document.querySelector('.theme-card.active').getAttribute('data-theme');
+            
+            // 保存主题到localStorage
+            localStorage.setItem('selected-theme', selectedTheme);
+            
+            // 重定向到主页
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html> 

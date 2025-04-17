@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXDeepSeek - 专家评审表稽核（专业审查）</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme-loader.js"></script>
+    <style>
+        .analysis-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 24px;
+        }
+        .analysis-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+        }
+        .analysis-content {
+            padding: 24px;
+        }
+        .analysis-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .tab-controls {
+            display: flex;
+            background-color: var(--gray-light);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .tab-control {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-control.active {
+            background-color: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+        .tag.red {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: #FF4C4C;
+        }
+        .tag.yellow {
+            background-color: rgba(255, 187, 51, 0.1);
+            color: #FFBB33;
+        }
+        .tag.green {
+            background-color: rgba(68, 214, 125, 0.1);
+            color: #44D67D;
+        }
+        .pro-check-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .pro-check-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .pro-check-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .pro-check-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 10px 0 15px 0;
+        }
+        .pro-check-solution {
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(62, 123, 250, 0.05);
+            font-size: 13px;
+            color: var(--primary);
+        }
+        .progress-bar {
+            height: 6px;
+            background-color: #F4F4F8;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .comparison-table th {
+            background-color: rgba(62, 123, 250, 0.05);
+            padding: 10px;
+            text-align: left;
+            font-weight: 500;
+        }
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .score-distribution {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(62, 123, 250, 0.05);
+            border-radius: 10px;
+        }
+        .score-distribution-item {
+            flex: 1;
+            text-align: center;
+        }
+        .score-distribution-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .score-distribution-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div>上午10:45 阅</div>
+        <div>
+            <span>5.3K/s</span>
+            <i class="fas fa-snowflake"></i>
+            <i class="fas fa-bell-slash"></i>
+            <i class="fas fa-clock"></i>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <span>52%</span>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-title">
+            <button style="background: none; border: none; color: white; margin-right: 16px; font-size: 18px;" onclick="window.location.href='expert_review_audit.html'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            专家评审表稽核
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-outline" style="background-color: rgba(255,255,255,0.1); border: none; color: white; padding: 8px; border-radius: 50%;">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="main-content" style="padding-bottom: 100px;">
+        <!-- 标签切换 -->
+        <div class="tab-controls">
+            <div class="tab-control" onclick="window.location.href='expert_review_audit.html'">评分分析</div>
+            <div class="tab-control" onclick="window.location.href='expert_review_audit_form.html'">形式审查</div>
+            <div class="tab-control active">专业审查</div>
+        </div>
+        
+        <!-- 专业审查摘要 -->
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <div style="font-size: 16px;">专业审查摘要</div>
+            </div>
+            <div class="analysis-content">
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div style="font-weight: 500;">评审专业性评分</div>
+                        <div style="color: #FF4C4C; font-weight: 600;">65/100</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%; background-color: #FF4C4C;"></div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 8px;">评审存在明显专业性问题，影响评审结果的公正性和准确性</div>
+                </div>
+                
+                <div class="score-distribution">
+                    <div class="score-distribution-item">
+                        <div class="score-distribution-value">30%</div>
+                        <div class="score-distribution-label">主观评价占比过高</div>
+                    </div>
+                    <div class="score-distribution-item">
+                        <div class="score-distribution-value">50%</div>
+                        <div class="score-distribution-label">关键评分项缺乏依据</div>
+                    </div>
+                    <div class="score-distribution-item">
+                        <div class="score-distribution-value">42%</div>
+                        <div class="score-distribution-label">评分标准应用不统一</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评分标准应用分析 -->
+        <div class="analysis-card">
+            <div class="analysis-content">
+                <div class="analysis-title">评分标准应用分析</div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag red">严重问题</span>
+                        <span>同类项目评分标准应用不一致</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        在"技术方案"评分项上，专家对不同投标人使用了不同的评分尺度。例如：乙公司与丁公司提交了类似水平的技术方案，但评分差异高达15%。
+                    </div>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>投标人</th>
+                                <th>技术方案相似点</th>
+                                <th>平均得分</th>
+                                <th>差异率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>乙公司</td>
+                                <td>采用微服务架构、全冗余设计</td>
+                                <td>27.4分</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>丁公司</td>
+                                <td>采用微服务架构、全冗余设计</td>
+                                <td>23.2分</td>
+                                <td>15.3%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议重新审视评标委员对技术方案的评分依据，确保对相似技术方案使用一致的评分标准。可考虑组织专家复评，明确量化的评分细则。
+                    </div>
+                </div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag red">严重问题</span>
+                        <span>评分缺乏专业依据</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        多位专家在技术评分中使用了"优秀"、"良好"等模糊描述，但未提供具体专业理由。特别是专家1和专家6对甲公司的"系统架构设计"给出的评价过于笼统，没有针对架构的可扩展性、容错性等方面进行专业分析。
+                    </div>
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议要求专家在评审意见中增加专业性描述，如"系统采用主备双活架构，满足99.99%可用性要求"等具体内容，避免泛泛而谈。
+                    </div>
+                </div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag yellow">待改进</span>
+                        <span>商务条款评分项理解偏差</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        部分专家对商务条款的评分存在理解偏差。例如，对"免费质保期"的评分，招标文件规定"2年以上得3分，1-2年得2分，1年以下得1分"，但专家5对提供1.5年质保的丙公司给出了3分，与评分标准不符。
+                    </div>
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议在评审前对评分标准进行详细解读，统一专家对商务条款的理解，避免因解读不一致导致评分偏差。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评分结果分析 -->
+        <div class="analysis-card">
+            <div class="analysis-content">
+                <div class="analysis-title">评分结果分析</div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag red">严重问题</span>
+                        <span>异常评分模式</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        专家3的评分显示出明显的倾向性，在所有技术评分项目上均给予乙公司最高分，而对其他投标人则普遍给予较低分数。此模式与其他专家评分形成鲜明对比，可能存在主观偏好或其他不当影响。
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <div style="width: 80px; font-size: 12px; color: var(--text-light);">专家1-7平均:</div>
+                            <div class="progress-bar" style="flex: 1; margin: 0 10px 0 0;">
+                                <div class="progress-fill" style="width: 86.3%; background-color: rgba(62, 123, 250, 0.7);"></div>
+                            </div>
+                            <div style="width: 40px; font-size: 12px; text-align: right;">86.3分</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <div style="width: 80px; font-size: 12px; color: var(--text-light);">专家3:</div>
+                            <div class="progress-bar" style="flex: 1; margin: 0 10px 0 0;">
+                                <div class="progress-fill" style="width: 97.5%; background-color: #FF4C4C;"></div>
+                            </div>
+                            <div style="width: 40px; font-size: 12px; text-align: right;">97.5分</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 80px; font-size: 12px; color: var(--text-light);">其他专家平均:</div>
+                            <div class="progress-bar" style="flex: 1; margin: 0 10px 0 0;">
+                                <div class="progress-fill" style="width: 84.0%; background-color: rgba(62, 123, 250, 0.7);"></div>
+                            </div>
+                            <div style="width: 40px; font-size: 12px; text-align: right;">84.0分</div>
+                        </div>
+                    </div>
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议核查专家3的评分依据，必要时考虑剔除该专家评分或要求其重新评审并提供充分的专业依据。
+                    </div>
+                </div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag yellow">待改进</span>
+                        <span>评分集中度过高</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        在"项目管理能力"评分项中，所有专家对所有投标人的评分都集中在8-9分（满分10分）区间，缺乏必要的区分度，表明评分标准在实际应用中未能有效区分不同投标人之间的能力差异。
+                    </div>
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议细化项目管理能力的评分标准，增加客观量化指标，如"项目经理资质"、"过往项目完成情况"等，提高评分的区分度。
+                    </div>
+                </div>
+                
+                <div class="pro-check-item">
+                    <div class="pro-check-title">
+                        <span class="tag yellow">待改进</span>
+                        <span>关键技术评分项权重设置不合理</span>
+                    </div>
+                    <div class="pro-check-desc">
+                        系统核心功能（占总分30%）与辅助功能（占总分25%）的分值比例不符合项目实际重要性，导致投标人可能将资源过多投入到不重要的功能上，而忽略核心功能的质量。
+                    </div>
+                    <div class="pro-check-solution">
+                        <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                        建议在今后类似项目中，调整评分权重设置，使核心功能占比提高到40-50%，辅助功能降低到15-20%，更好地反映功能的实际重要性。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div style="position: fixed; bottom: 70px; left: 0; right: 0; padding: 16px; background-color: white; box-shadow: 0 -2px 10px var(--shadow); display: flex; gap: 12px;">
+            <button class="btn btn-primary" style="flex: 1;">
+                <i class="fas fa-download"></i> 导出报告
+            </button>
+            <button class="btn" style="flex: 1; background-color: white; border: 1px solid var(--gray); color: var(--text-dark);">
+                <i class="fas fa-magic"></i> 智能修改
+            </button>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <div class="tab-item">
+            <i class="fas fa-comment-dots tab-icon"></i>
+            <span>对话</span>
+        </div>
+        <div class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>知识库</span>
+        </div>
+        <div class="tab-item active">
+            <i class="fas fa-robot tab-icon"></i>
+            <span>智能体</span>
+        </div>
+    </div>
+</body>
+</html> 
