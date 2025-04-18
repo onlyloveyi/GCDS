@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>采购文件生成 - 公诚DeepSeek</title>
+    <title>采购文件生成 - GCDeepSeek</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -69,7 +69,7 @@
             <div class="mb-8">
                 <div class="flex items-center mb-6">
                     <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
-                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                    <h1 class="text-xl font-bold">GCDeepSeek</h1>
                 </div>
                 
                 <div class="relative">
@@ -162,30 +162,41 @@
             <!-- 主要内容 -->
             <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
                 <div class="max-w-5xl mx-auto">
-                    <!-- 顶部进度条 -->
-                    <div class="mb-8">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-green-500 rounded-l-full"></div>
-                                <div class="flex items-center justify-center absolute -top-2 left-0 w-6 h-6 rounded-full bg-green-500 text-white">
-                                    <i class="fas fa-check text-xs"></i>
-                                </div>
-                                <div class="absolute -bottom-8 left-0 font-medium text-green-500 text-center w-20 -ml-6">基本信息</div>
+                    <!-- 替换旧的进度条为stepper-horizontal，保留5个步骤 -->
+                    <div class="stepper-horizontal mb-8">
+                        <div class="step active">
+                            <div class="step-circle">
+                                <i class="fas fa-info-circle"></i>
                             </div>
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-gray-300"></div>
-                                <div class="flex items-center justify-center absolute -top-2 left-1/2 w-6 h-6 rounded-full bg-gray-300 text-white transform -translate-x-1/2">
-                                    <span class="text-xs">2</span>
-                                </div>
-                                <div class="absolute -bottom-8 left-1/2 font-medium text-gray-500 text-center w-20 transform -translate-x-1/2">内容定制</div>
+                            <div class="step-title">基本信息</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-circle">
+                                <i class="fas fa-clipboard-list"></i>
                             </div>
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-gray-300 rounded-r-full"></div>
-                                <div class="flex items-center justify-center absolute -top-2 right-0 w-6 h-6 rounded-full bg-gray-300 text-white">
-                                    <span class="text-xs">3</span>
-                                </div>
-                                <div class="absolute -bottom-8 right-0 font-medium text-gray-500 text-center w-20 -mr-6">生成完成</div>
+                            <div class="step-title">采购方式</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-circle">
+                                <i class="fas fa-tasks"></i>
                             </div>
+                            <div class="step-title">采购需求</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-circle">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="step-title">文件模板</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-circle">
+                                <i class="fas fa-file-export"></i>
+                            </div>
+                            <div class="step-title">生成文件</div>
                         </div>
                     </div>
                     
@@ -204,10 +215,10 @@
                         <!-- 模块化导航 -->
                         <div class="module-nav">
                             <div class="module-nav-item active" data-target="basic-info">基本信息</div>
-                            <div class="module-nav-item" data-target="procurement-method">采购方式与评审</div>
-                            <div class="module-nav-item" data-target="project-type">项目类型</div>
-                            <div class="module-nav-item" data-target="project-desc">项目描述</div>
-                            <div class="module-nav-item" data-target="special-requirements">特殊要求</div>
+                            <div class="module-nav-item" data-target="procurement-method">采购方式</div>
+                            <div class="module-nav-item" data-target="procurement-requirements">采购需求</div>
+                            <div class="module-nav-item" data-target="document-template">文件模板</div>
+                            <div class="module-nav-item" data-target="generate-document">生成文件</div>
                         </div>
                         
                         <form id="procurementForm" class="border-t border-gray-200 pt-6">
@@ -262,7 +273,7 @@
                             
                             <!-- 采购方式与评审方法 -->
                             <div class="form-section hidden" id="procurement-method">
-                                <h3 class="font-medium text-lg mb-4">采购方式与评审方法</h3>
+                                <h3 class="font-medium text-lg mb-4">采购方式</h3>
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                     <div>
@@ -302,130 +313,108 @@
                                 </div>
                             </div>
                             
-                            <!-- 项目类型 -->
-                            <div class="form-section hidden" id="project-type">
-                                <h3 class="font-medium text-lg mb-4">项目类型</h3>
+                            <!-- 采购需求 -->
+                            <div class="form-section hidden" id="procurement-requirements">
+                                <h3 class="font-medium text-lg mb-4">采购需求</h3>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 required-field">需求描述</label>
+                                    <textarea class="input w-full h-32" name="requirementsDescription" placeholder="请详细描述采购需求、技术规格、质量要求等内容" required></textarea>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">交付要求</label>
+                                    <textarea class="input w-full h-24" name="deliveryRequirements" placeholder="请说明项目交付时间、地点、验收标准等要求"></textarea>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">商务要求</label>
+                                    <textarea class="input w-full h-24" name="businessRequirements" placeholder="请说明供应商资质、业绩、服务团队等要求"></textarea>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">其他要求</label>
+                                    <textarea class="input w-full h-24" name="otherRequirements" placeholder="请说明其他相关要求"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- 文件模板 -->
+                            <div class="form-section hidden" id="document-template">
+                                <h3 class="font-medium text-lg mb-4">文件模板</h3>
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                    <div class="border rounded-lg p-4 bg-green-50 border-green-200 relative project-type-item">
-                                        <input type="radio" name="projectType" id="itSystem" value="itSystem" checked class="absolute right-3 top-3" required>
-                                        <label for="itSystem" class="block cursor-pointer">
+                                    <div class="border rounded-lg p-4 bg-green-50 border-green-200 relative template-item">
+                                        <input type="radio" name="documentTemplate" id="template1" value="standard" checked class="absolute right-3 top-3" required>
+                                        <label for="template1" class="block cursor-pointer">
                                             <div class="text-center mb-2">
-                                                <i class="fas fa-laptop-code text-green-500 text-3xl"></i>
+                                                <i class="fas fa-file-alt text-green-500 text-3xl"></i>
                                             </div>
-                                            <h4 class="font-medium text-center">信息系统</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">适用于信息系统建设、软件开发等IT项目</p>
+                                            <h4 class="font-medium text-center">标准模板</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于常规采购项目</p>
                                         </label>
                                     </div>
                                     
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="goods" value="goods" class="absolute right-3 top-3">
-                                        <label for="goods" class="block cursor-pointer">
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative template-item">
+                                        <input type="radio" name="documentTemplate" id="template2" value="it" class="absolute right-3 top-3">
+                                        <label for="template2" class="block cursor-pointer">
+                                            <div class="text-center mb-2">
+                                                <i class="fas fa-laptop-code text-gray-400 text-3xl"></i>
+                                            </div>
+                                            <h4 class="font-medium text-center">信息化项目</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于信息系统、软件开发等项目</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative template-item">
+                                        <input type="radio" name="documentTemplate" id="template3" value="goods" class="absolute right-3 top-3">
+                                        <label for="template3" class="block cursor-pointer">
                                             <div class="text-center mb-2">
                                                 <i class="fas fa-boxes text-gray-400 text-3xl"></i>
                                             </div>
-                                            <h4 class="font-medium text-center">货物类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">适用于设备、材料等货物采购项目</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="service" value="service" class="absolute right-3 top-3">
-                                        <label for="service" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-concierge-bell text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">服务类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">适用于咨询、服务外包等服务类项目</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="engineering" value="engineering" class="absolute right-3 top-3">
-                                        <label for="engineering" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-hard-hat text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">工程类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">适用于建设工程、装修改造等工程项目</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="ppp" value="ppp" class="absolute right-3 top-3">
-                                        <label for="ppp" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-handshake text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">PPP项目</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">适用于政府和社会资本合作项目</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="other" value="other" class="absolute right-3 top-3">
-                                        <label for="other" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-tools text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">其他类型</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">自定义项目类型</p>
+                                            <h4 class="font-medium text-center">货物采购</h4>
+                                            <p class="text-xs text-gray-600 text-center mt-1">适用于设备、物资等货物采购项目</p>
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <!-- 项目描述 -->
-                            <div class="form-section hidden" id="project-desc">
-                                <h3 class="font-medium text-lg mb-4">项目描述</h3>
                                 
-                                <div class="mb-6">
-                                    <textarea class="input w-full h-32" name="projectDescription" placeholder="请填写项目基本情况、采购内容、技术要求等，也可上传需求文档由系统自动提取"></textarea>
-                                    <div class="mt-2 flex items-center">
-                                        <button type="button" class="text-sm text-green-600 hover:text-green-800 flex items-center">
-                                            <i class="fas fa-upload mr-1"></i>
-                                            上传需求文档
-                                        </button>
-                                        <span class="mx-2 text-gray-300">|</span>
-                                        <button type="button" class="text-sm text-green-600 hover:text-green-800 flex items-center">
-                                            <i class="fas fa-microphone mr-1"></i>
-                                            语音输入
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- 特殊要求 -->
-                            <div class="form-section hidden" id="special-requirements">
-                                <h3 class="font-medium text-lg mb-4">特殊要求</h3>
-                                
-                                <div class="space-y-3 mb-6">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox text-green-500" name="allowJointBidding" value="1">
-                                        <span class="ml-2">支持联合体投标</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox text-green-500" name="forSmallBusiness" value="1">
-                                        <span class="ml-2">专门面向中小企业</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox text-green-500" name="importedProducts" value="1">
-                                        <span class="ml-2">采购进口产品</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox text-green-500" name="mandatoryStandards" value="1">
-                                        <span class="ml-2">需要政府采购强制性标准</span>
-                                    </label>
-                                </div>
-                                
-                                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
                                     <div class="flex">
                                         <div class="flex-shrink-0">
                                             <i class="fas fa-info-circle text-green-400"></i>
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm text-green-700">
-                                                完成基本信息填写后，点击"下一步"进入内容定制页面，您可以进一步自定义文件结构和细节内容。
+                                                选择合适的文件模板后，系统将根据您前面填写的信息生成规范的采购文件。您也可以在生成后进行个性化调整。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 生成文件 -->
+                            <div class="form-section hidden" id="generate-document">
+                                <h3 class="font-medium text-lg mb-4">生成文件</h3>
+                                
+                                <div class="text-center py-8">
+                                    <div class="inline-block p-6 bg-green-50 rounded-full mb-4">
+                                        <i class="fas fa-file-invoice text-green-500 text-5xl"></i>
+                                    </div>
+                                    <h4 class="text-xl font-medium mb-2">准备就绪，可以生成文件</h4>
+                                    <p class="text-gray-600 mb-6">点击下方按钮，系统将根据您填写的信息生成采购文件</p>
+                                    <button type="button" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-magic mr-2"></i>
+                                        智能生成采购文件
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-green-50 border-l-4 border-green-400 p-4 mt-8">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-lightbulb text-green-400"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-green-700">
+                                                生成后的文件将保存至您的账户中，您可以随时查看、编辑或导出为Word文档。系统会自动分析项目特点，为您提供专业建议，确保采购文件符合相关法规要求。
                                             </p>
                                         </div>
                                     </div>

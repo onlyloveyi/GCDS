@@ -1,12 +1,12 @@
-/* 公诚DeepSeek PC端样式 */
+/* GCDeepSeek PC端样式 */
 :root {
   --primary-color: #3b82f6;
   --primary-light: #93c5fd;
   --primary-dark: #1d4ed8;
-  --secondary-color: #10b981;
-  --secondary-light: #6ee7b7;
-  --secondary-dark: #059669;
-  --accent-color: #8b5cf6;
+  --secondary-color: var(--primary-color);
+  --secondary-light: var(--primary-light);
+  --secondary-dark: var(--primary-dark);
+  --accent-color: var(--primary-color);
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
   --text-tertiary: #9ca3af;
@@ -55,21 +55,21 @@ body {
 }
 
 .btn-secondary {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: var(--secondary-dark);
+  background-color: var(--primary-dark);
 }
 
 .btn-accent {
-  background-color: var(--accent-color);
+  background-color: var(--primary-color);
   color: white;
 }
 
 .btn-accent:hover {
-  background-color: #7c3aed;
+  background-color: var(--primary-dark);
 }
 
 .btn-outline {
@@ -106,6 +106,7 @@ body {
 
 .btn-icon:hover {
   background-color: var(--bg-tertiary);
+  color: var(--primary-color);
 }
 
 .card {
@@ -434,13 +435,13 @@ body {
 }
 
 .tag-green {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--secondary-color);
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
 }
 
 .tag-purple {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: var(--accent-color);
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
 }
 
 /* 进度条指示器 */
@@ -482,9 +483,9 @@ body {
 }
 
 .step.completed .step-circle {
-  background-color: var(--success-color);
+  background-color: var(--primary-color);
   color: white;
-  border-color: var(--success-color);
+  border-color: var(--primary-color);
 }
 
 .step-title {
@@ -533,15 +534,15 @@ body {
 }
 
 .score-value.good {
-  color: var(--success-color);
+  color: var(--primary-color);
 }
 
 .score-value.warning {
-  color: var(--warning-color);
+  color: var(--primary-color);
 }
 
 .score-value.danger {
-  color: var(--error-color);
+  color: var(--primary-color);
 }
 
 .score-bar {
@@ -557,15 +558,15 @@ body {
 }
 
 .score-value.good + .score-bar .score-progress {
-  background-color: var(--success-color);
+  background-color: var(--primary-color);
 }
 
 .score-value.warning + .score-bar .score-progress {
-  background-color: var(--warning-color);
+  background-color: var(--primary-color);
 }
 
 .score-value.danger + .score-bar .score-progress {
-  background-color: var(--error-color);
+  background-color: var(--primary-color);
 }
 
 /* 问题卡片样式 */
@@ -617,4 +618,153 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 图标颜色 */
+.icon-primary {
+  color: var(--primary-color);
+}
+
+/* 悬停效果 */
+.hover-primary:hover {
+  color: var(--primary-color);
+}
+
+/* 强调色背景 */
+.bg-accent {
+  background-color: var(--primary-light);
+}
+
+/* 为所有交互元素添加通用的焦点效果 */
+button:focus, 
+a:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* 高亮文本颜色 */
+.text-highlight {
+  color: var(--primary-color);
+}
+
+/* 开关组件 */
+.toggle-switch input:checked + .toggle-slider {
+  background-color: var(--primary-color);
+}
+
+/* 统一蓝色渐变样式 */
+.bg-gradient-primary {
+  background-image: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+}
+
+/* 覆盖Tailwind渐变类 */
+.bg-gradient-to-r.from-blue-500.to-blue-700,
+.bg-gradient-to-r.from-purple-500.to-purple-700,
+.bg-gradient-to-r.from-green-500.to-green-700,
+.bg-gradient-to-r.from-pink-500.to-rose-700,
+.bg-gradient-to-r.from-yellow-500.to-yellow-700,
+.bg-gradient-to-r.from-red-500.to-red-700,
+.bg-gradient-to-r.from-teal-500.to-teal-700,
+.bg-gradient-to-r.from-amber-500.to-amber-700,
+.bg-gradient-to-r.from-indigo-500.to-indigo-700 {
+  background-image: linear-gradient(to right, var(--primary-color), var(--primary-dark)) !important;
+}
+
+.bg-gradient-to-r.from-orange-50.to-white {
+  background-image: linear-gradient(to right, rgba(59, 130, 246, 0.05), white) !important;
+}
+
+/* 统一背景色样式 */
+.bg-blue-100,
+.bg-purple-100,
+.bg-green-100,
+.bg-yellow-100,
+.bg-red-100,
+.bg-pink-100,
+.bg-indigo-100,
+.bg-gray-100 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* 统一文本颜色样式 */
+.text-blue-600,
+.text-purple-600,
+.text-green-600,
+.text-yellow-600,
+.text-red-600,
+.text-pink-600,
+.text-indigo-600 {
+  color: var(--primary-color) !important;
+}
+
+/* 覆盖招标相关页面中的紫色背景和边框 */
+.bg-purple-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.bg-purple-100 {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.bg-purple-500, .bg-purple-600, .bg-purple-700 {
+  background-color: var(--primary-color) !important;
+}
+
+.text-purple-500, .text-purple-600, .text-purple-700, .text-purple-800, .text-purple-900 {
+  color: var(--primary-color) !important;
+}
+
+.border-purple-100, .border-purple-200, .border-purple-300, .border-purple-500, .border-purple-600 {
+  border-color: var(--primary-color) !important;
+}
+
+.hover\:bg-purple-50:hover, .hover\:bg-purple-100:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.hover\:bg-purple-700:hover, .hover\:bg-purple-600:hover {
+  background-color: var(--primary-dark) !important;
+}
+
+.hover\:text-purple-700:hover, .hover\:text-purple-600:hover, .hover\:text-purple-800:hover {
+  color: var(--primary-dark) !important;
+}
+
+.hover\:border-purple-300:hover {
+  border-color: var(--primary-light) !important;
+}
+
+/* 修复招标智能体页面中的紫色相关元素 */
+.border-l-4.border-purple-500 {
+  border-left-color: var(--primary-color) !important;
+}
+
+/* 修复智能修改页面中的diff样式 */
+.issue-item.active {
+  border-color: var(--primary-color) !important;
+  background-color: rgba(59, 130, 246, 0.05) !important;
+}
+
+.issue-item:hover:not(.active) {
+  border-color: var(--primary-light) !important;
+  background-color: rgba(59, 130, 246, 0.05) !important;
+}
+
+/* 修复diff样式 */
+.diff-added {
+  background-color: rgba(187, 247, 208, 0.5);
+  color: var(--primary-dark) !important;
+  font-weight: 500;
 } 

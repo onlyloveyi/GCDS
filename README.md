@@ -1,4 +1,4 @@
-# XXDeepSeek - 优化原型
+# GCDeepSeek - 优化原型
 
 <div align="center">
   <img src="https://img.shields.io/badge/状态-开发中-brightgreen?style=for-the-badge" alt="状态-开发中">
@@ -10,7 +10,7 @@
 
 ## 📝 项目介绍
 
-XXDeepSeek是一个专注于提升交互体验与视觉表达的现代设计原型项目。该项目采用简约设计风格，通过多种设计方案满足不同场景和用户需求，从商务到活泼，从现代到传统，从简约到豪华。
+GCDeepSeek是一个专注于提升交互体验与视觉表达的现代设计原型项目。该项目采用简约设计风格，通过多种设计方案满足不同场景和用户需求，从商务到活泼，从现代到传统，从简约到豪华。
 
 ## ✨ 主要特点
 

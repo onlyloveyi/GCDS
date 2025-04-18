@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>采购方案生成 - 公诚DeepSeek</title>
+    <title>采购实施方案生成 - GCDeepSeek</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -40,7 +40,7 @@
             transition: all 0.2s;
         }
         .module-nav-item.active {
-            background-color: #0D9488;
+            background-color: blue;
             color: white;
         }
         .module-nav-item:hover:not(.active) {
@@ -66,6 +66,66 @@
         .conditional-field.visible {
             display: block;
         }
+        /* 新增样式 */
+        .problem-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 0.75rem;
+        }
+        .problem-card-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .problem-card-body {
+            padding: 1rem;
+            color: #6B7280;
+        }
+        .procurement-method-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .procurement-method-card.selected {
+            border-color: #0D9488;
+            background-color: rgba(13, 148, 136, 0.05);
+        }
+        .procurement-method-card:hover:not(.selected) {
+            background-color: #F9FAFB;
+        }
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #D1D5DB;
+            margin-right: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .procurement-method-card.selected .radio-circle {
+            border-color: #0D9488;
+        }
+        .procurement-method-card.selected .radio-circle::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #0D9488;
+        }
+        .summary-point {
+            background-color: white;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -75,7 +135,7 @@
             <div class="mb-8">
                 <div class="flex items-center mb-6">
                     <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
-                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                    <h1 class="text-xl font-bold">GCDeepSeek</h1>
                 </div>
                 
                 <div class="relative">
@@ -140,7 +200,7 @@
                 </a>
                 <a href="#" class="nav-item active">
                     <i class="fas fa-project-diagram"></i>
-                    <span>采购方案生成</span>
+                    <span>采购实施方案生成</span>
                 </a>
             </nav>
         </div>
@@ -151,7 +211,7 @@
             <div class="top-nav">
                 <div class="flex-1">
                     <div class="flex items-center">
-                        <h2 class="text-xl font-semibold">采购方案生成</h2>
+                        <h2 class="text-xl font-semibold">采购实施方案生成</h2>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -168,33 +228,6 @@
             <!-- 主要内容 -->
             <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
                 <div class="max-w-5xl mx-auto">
-                    <!-- 顶部进度条 -->
-                    <div class="mb-8">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-teal-500 rounded-l-full"></div>
-                                <div class="flex items-center justify-center absolute -top-2 left-0 w-6 h-6 rounded-full bg-teal-500 text-white">
-                                    <i class="fas fa-check text-xs"></i>
-                                </div>
-                                <div class="absolute -bottom-8 left-0 font-medium text-teal-500 text-center w-20 -ml-6">基本信息</div>
-                            </div>
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-gray-300"></div>
-                                <div class="flex items-center justify-center absolute -top-2 left-1/2 w-6 h-6 rounded-full bg-gray-300 text-white transform -translate-x-1/2">
-                                    <span class="text-xs">2</span>
-                                </div>
-                                <div class="absolute -bottom-8 left-1/2 font-medium text-gray-500 text-center w-20 transform -translate-x-1/2">方案选项</div>
-                            </div>
-                            <div class="flex-1 relative">
-                                <div class="h-2 bg-gray-300 rounded-r-full"></div>
-                                <div class="flex items-center justify-center absolute -top-2 right-0 w-6 h-6 rounded-full bg-gray-300 text-white">
-                                    <span class="text-xs">3</span>
-                                </div>
-                                <div class="absolute -bottom-8 right-0 font-medium text-gray-500 text-center w-20 -mr-6">生成完成</div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!-- 主要内容区 -->
                     <div class="bg-white rounded-xl shadow-sm p-8 mb-6">
                         <div class="flex items-center mb-6">
@@ -202,37 +235,28 @@
                                 <i class="fas fa-project-diagram text-teal-500 text-lg"></i>
                             </div>
                             <div>
-                                <h2 class="text-xl font-bold">采购方案生成</h2>
+                                <h2 class="text-xl font-bold">采购实施方案生成</h2>
                                 <p class="text-gray-600">智能生成符合法规的采购实施方案</p>
                             </div>
                         </div>
                         
                         <!-- 模块化导航 -->
                         <div class="module-nav">
-                            <div class="module-nav-item active" data-target="basic-info">基本信息</div>
-                            <div class="module-nav-item" data-target="procurement-needs">采购需求与范围</div>
-                            <div class="module-nav-item" data-target="market-research">市场调研情况</div>
-                            <div class="module-nav-item" data-target="project-category">采购项目分类</div>
-                            <div class="module-nav-item" data-target="approval-status">采购批准情况</div>
+                            <div class="module-nav-item active" data-target="overview">基本信息</div>
+                            <div class="module-nav-item" data-target="techspec">技术规范分析</div>
+                            <div class="module-nav-item" data-target="procurement">采购方式推荐</div>
+                            <div class="module-nav-item" data-target="qualification">资格评审</div>
+                            <div class="module-nav-item" data-target="scoring">评分表</div>
+                            <div class="module-nav-item" data-target="summary">方案总结</div>
                         </div>
                         
                         <form id="procurementPlanForm" class="border-t border-gray-200 pt-6">
-                            <!-- 自动保存提示 -->
-                            <div class="flex justify-end mb-4">
-                                <span class="autosave-indicator" id="autosaveIndicator">
-                                    <i class="fas fa-sync-alt fa-spin mr-1"></i>
-                                    <span id="autosaveText">自动保存中...</span>
-                                </span>
-                            </div>
-
-                            <!-- 基本信息 -->
-                            <div class="form-section active" id="basic-info">
-                                <h3 class="font-medium text-lg mb-4">基本信息</h3>
-                                
+                            <!-- 基本信息模块 -->
+                            <div class="form-section active" id="overview-module">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目名称</label>
-                                        <input type="text" class="input w-full" name="projectName" placeholder="某市政务信息系统集成项目" required>
+                                        <input type="text" class="input w-full" name="projectName" value="智慧城市数据中心基础设施采购项目" required>
                                         <div class="form-error">请输入项目名称</div>
                                     </div>
                                     
@@ -246,243 +270,566 @@
                                         <input type="text" class="input w-full" name="procurer" placeholder="某市政务服务数据管理局" required>
                                         <div class="form-error">请输入采购人</div>
                                     </div>
-                                    
+
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">采购单位性质</label>
-                                        <select class="input w-full" name="procurerType">
-                                            <option value="">请选择采购单位性质</option>
-                                            <option value="government">政府机关</option>
-                                            <option value="institution">事业单位</option>
-                                            <option value="soe">国有企业</option>
-                                            <option value="other">其他</option>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目预算</label>
+                                        <input type="text" class="input w-full" name="budget" value="2,450,000.00元" required>
+                                        <div class="form-error">请输入项目预算</div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">采购类别</label>
+                                        <select name="procurementCategory" class="select w-full" required>
+                                            <option value="goods" selected>货物</option>
+                                            <option value="engineering">工程</option>
+                                            <option value="service">服务</option>
+                                            <option value="mixed">混合采购</option>
                                         </select>
+                                        <div class="form-error">请选择采购类别</div>
                                     </div>
-                                    
+
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">项目预算金额(万元)</label>
-                                        <input type="number" class="input w-full" name="budget" placeholder="500" required min="0">
-                                        <div class="form-error">请输入有效的项目预算金额</div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1 required-field">采购周期</label>
+                                        <div class="flex items-center">
+                                            <input type="number" class="input w-full" name="procurementCycle" value="136" required>
+                                            <span class="ml-2">天</span>
+                                        </div>
+                                        <div class="form-error">请输入采购周期</div>
                                     </div>
-                                    
+
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">资金来源</label>
-                                        <select class="input w-full" name="fundingSource">
-                                            <option value="">请选择资金来源</option>
-                                            <option value="fiscal">财政资金</option>
+                                        <select name="fundingSource" class="select w-full">
+                                            <option value="fiscal" selected>财政拨款</option>
                                             <option value="self">自筹资金</option>
-                                            <option value="special">专项资金</option>
-                                            <option value="mixed">混合资金</option>
+                                            <option value="loan">贷款</option>
+                                            <option value="mixed">多渠道筹资</option>
                                         </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">采购负责人</label>
+                                        <input type="text" class="input w-full" name="procurementManager" placeholder="请输入采购负责人姓名">
+                                    </div>
+
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">项目背景与目标</label>
+                                        <textarea name="projectBackground" class="input w-full" rows="4" placeholder="请简述项目背景与采购目标...">为支持智慧城市建设，提升数据处理能力，本项目计划采购数据中心基础设施设备，包括服务器、存储设备和网络设备等，满足城市大数据分析和应用需求。</textarea>
+                                    </div>
+
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">特殊要求</label>
+                                        <textarea name="specialRequirements" class="input w-full" rows="2" placeholder="如有特殊要求，请在此说明...">设备需兼容现有系统，并满足国产化替代要求。</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 新增预计时间节点 -->
+                                <div class="mb-8">
+                                    <h4 class="font-medium text-gray-700 mb-3">预计时间节点</h4>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">采购公告发布</label>
+                                                <input type="date" class="input w-full" name="announcementDate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">投标截止日期</label>
+                                                <input type="date" class="input w-full" name="bidDeadline">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">评标日期</label>
+                                                <input type="date" class="input w-full" name="evaluationDate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">预计合同签订</label>
+                                                <input type="date" class="input w-full" name="contractDate">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- 采购需求与范围 -->
-                            <div class="form-section hidden" id="procurement-needs">
-                                <h3 class="font-medium text-lg mb-4">采购需求与范围</h3>
+                            <!-- 技术规范分析模块 -->
+                            <div class="form-section hidden" id="techspec-module">
+                                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                                    <div class="flex items-center mb-4">
+                                        <i class="fas fa-upload text-teal-500 mr-3"></i>
+                                        <h4 class="font-medium">上传技术规范书</h4>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-file-upload mr-2"></i>
+                                            选择文件
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-search mr-2"></i>
+                                            开始分析
+                                        </button>
+                                </div>
+                            </div>
+                            
+                                <!-- 新增技术规范分析内容 -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-lg mb-4">技术规范书分析结果</h4>
+
+                                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                                        <div class="flex items-start">
+                                            <div class="text-blue-500 mt-1 mr-3">
+                                                <i class="fas fa-info-circle"></i>
+                                        </div>
+                                            <div>
+                                                <h5 class="font-medium text-blue-800 mb-1">技术规范概述</h5>
+                                                <p class="text-blue-700 text-sm">本技术规范书主要包含服务器(共12台)、存储设备(2套)、网络设备(8台)及相关配套设备，并要求提供3年质保服务。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
+                                        <div class="p-4 border-b border-gray-100 bg-gray-50">
+                                            <h5 class="font-medium">采购清单分类统计</h5>
+                                    </div>
+                                    <div class="p-4">
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                <div class="bg-indigo-50 p-3 rounded-lg text-center">
+                                                    <div class="text-indigo-600 font-bold text-xl">12</div>
+                                                    <div class="text-indigo-800 text-sm">服务器</div>
+                                    </div>
+                                                <div class="bg-green-50 p-3 rounded-lg text-center">
+                                                    <div class="text-green-600 font-bold text-xl">2</div>
+                                                    <div class="text-green-800 text-sm">存储设备</div>
+                                </div>
+                                                <div class="bg-purple-50 p-3 rounded-lg text-center">
+                                                    <div class="text-purple-600 font-bold text-xl">8</div>
+                                                    <div class="text-purple-800 text-sm">网络设备</div>
+                            </div>
+                                                <div class="bg-amber-50 p-3 rounded-lg text-center">
+                                                    <div class="text-amber-600 font-bold text-xl">5</div>
+                                                    <div class="text-amber-800 text-sm">配套设备</div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
                                 
                                 <div class="mb-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1 required-field">采购基本需求</label>
-                                    <textarea class="input w-full h-32" name="procurementNeeds" placeholder="请填写采购内容、背景、目标等基本情况，也可上传需求文档由系统自动提取" required></textarea>
-                                    <div class="form-error">请填写采购基本需求</div>
-                                    <div class="mt-2 flex items-center">
-                                        <button type="button" class="text-sm text-teal-600 hover:text-teal-800 flex items-center">
-                                            <i class="fas fa-upload mr-1"></i>
-                                            上传需求文档
-                                        </button>
-                                        <span class="mx-2 text-gray-300">|</span>
-                                        <button type="button" class="text-sm text-teal-600 hover:text-teal-800 flex items-center">
-                                            <i class="fas fa-microphone mr-1"></i>
-                                            语音输入
+                                    <div class="flex items-center mb-4">
+                                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                                        <h4 class="font-medium">发现的问题 (8项)</h4>
+                                    </div>
+                                    
+                                    <div class="problem-card">
+                                        <div class="problem-card-header">
+                                            <h5 class="font-medium text-gray-800">技术指标过于宽泛</h5>
+                                        </div>
+                                        <div class="problem-card-body">
+                                            第12页CPU性能指标未明确具体型号或详细参数要求，可能导致投标产品质量差异过大
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="problem-card">
+                                        <div class="problem-card-header">
+                                            <h5 class="font-medium text-gray-800">供货期限不合理</h5>
+                                        </div>
+                                        <div class="problem-card-body">
+                                            第5页要求合同签订后15天内完成全部设备交付，考虑到当前市场供应链状况，建议延长至30-45天
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="problem-card">
+                                        <div class="problem-card-header">
+                                            <h5 class="font-medium text-gray-800">疑似指定品牌</h5>
+                                        </div>
+                                        <div class="problem-card-body">
+                                            第8页服务器规格描述与某品牌产品完全一致，建议修改为功能性或性能性指标
+                                        </div>
+                                    </div>
+
+                                        <div class="problem-card">
+                                            <div class="problem-card-header">
+                                                <h5 class="font-medium text-gray-800">缺少软件兼容性要求</h5>
+                                            </div>
+                                            <div class="problem-card-body">
+                                                第15页未明确说明所需设备与现有系统软件的兼容性要求，建议添加详细兼容性清单
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="flex justify-center mb-4">
+                                        <button type="button" class="text-teal-500 hover:text-teal-600 flex items-center">
+                                            查看更多问题 <i class="fas fa-chevron-down ml-1"></i>
                                         </button>
                                     </div>
                                 </div>
                                 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">采购属性</label>
-                                        <select class="input w-full" name="procurementAttribute">
-                                            <option value="">请选择采购属性</option>
-                                            <option value="first">首次采购</option>
-                                            <option value="repeat">重复采购</option>
-                                            <option value="additional">追加采购</option>
-                                        </select>
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
+                                        <div class="p-4 border-b border-gray-100 bg-gray-50">
+                                            <h5 class="font-medium">建议修改的技术指标</h5>
+                                        </div>
+                                        <div class="divide-y divide-gray-100">
+                                            <div class="p-4 flex items-start">
+                                                <div class="text-red-500 line-through flex-1">CPU处理器：双处理器，主频≥2.4GHz，每颗处理器核心数≥12核</div>
+                                                <i class="fas fa-arrow-right mx-4 text-gray-400 mt-0.5"></i>
+                                                <div class="text-green-600 flex-1">CPU处理器：英特尔至强处理器或AMD EPYC处理器，每颗≥12核，基础频率≥2.4GHz，睿频≥3.0GHz</div>
                                     </div>
+                                            <div class="p-4 flex items-start">
+                                                <div class="text-red-500 line-through flex-1">存储设备：SAS接口，支持RAID 0/1/5/6/10</div>
+                                                <i class="fas fa-arrow-right mx-4 text-gray-400 mt-0.5"></i>
+                                                <div class="text-green-600 flex-1">存储设备：支持SAS/SATA/NVMe接口，具备RAID 0/1/5/6/10功能，支持热插拔</div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+                            
+                                <!-- 添加采购时间进度规划部分 -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-lg mb-4">采购时间进度规划</h4>
                                     
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">采购周期</label>
-                                        <select class="input w-full" name="procurementCycle">
-                                            <option value="">请选择采购周期</option>
-                                            <option value="single">单次采购</option>
-                                            <option value="continuous">连续性采购</option>
-                                            <option value="framework">框架协议</option>
-                                        </select>
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-4">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-4">
+                                                <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                                    <span class="text-teal-600 font-medium">1</span>
+                                    </div>
+                                                <div class="ml-3">
+                                                    <h5 class="font-medium">前期准备阶段</h5>
+                                                    <p class="text-sm text-gray-500">预计时长: 15天</p>
+                                                </div>
+                                                <div class="ml-auto">
+                                                    <input type="date" class="input" value="2023-07-01">
+                                                </div>
+                                </div>
+                                
+                                            <div class="pl-11">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>需求调研与论证</span>
+                                            </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>预算申请与批复</span>
+                                            </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>采购方案制定</span>
+                                        </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>采购文件编制</span>
+                                            </div>
+                                        </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-4">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-4">
+                                                <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                                    <span class="text-teal-600 font-medium">2</span>
+                                            </div>
+                                                <div class="ml-3">
+                                                    <h5 class="font-medium">采购实施阶段</h5>
+                                                    <p class="text-sm text-gray-500">预计时长: 45天</p>
+                                        </div>
+                                                <div class="ml-auto">
+                                                    <input type="date" class="input" value="2023-07-16">
+                                    </div>
+                                </div>
+                                
+                                            <div class="pl-11">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>采购公告发布</span>
+                                    </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>投标人资格审查</span>
+                                </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>开标与评标</span>
+                                    </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>中标结果公示</span>
+                                </div>
+                            </div>
+                                </div>
+                                            </div>
+                                            </div>
+                                            
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-4">
+                                                <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                                    <span class="text-teal-600 font-medium">3</span>
+                                            </div>
+                                                <div class="ml-3">
+                                                    <h5 class="font-medium">合同履行阶段</h5>
+                                                    <p class="text-sm text-gray-500">预计时长: 76天</p>
+                                                </div>
+                                                <div class="ml-auto">
+                                                    <input type="date" class="input" value="2023-09-01">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="pl-11">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>合同签订</span>
+                                            </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>货物交付与验收</span>
+                                        </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>付款结算</span>
+                                    </div>
+                                                    <div class="flex items-center bg-gray-50 p-2 rounded text-sm">
+                                                        <i class="fas fa-check-circle text-teal-500 mr-2"></i>
+                                                        <span>项目验收与结项</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 添加风险评估与控制板块 -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-lg mb-4">风险评估与控制</h4>
+                                    
+                                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
+                                        <div class="p-4 border-b border-gray-100 bg-gray-50">
+                                            <h5 class="font-medium">主要风险识别</h5>
+                                        </div>
+                                        <div class="divide-y divide-gray-100">
+                                            <div class="p-4 grid grid-cols-12 gap-2">
+                                                <div class="col-span-4">
+                                                    <div class="font-medium">供应链风险</div>
+                                                    <div class="text-sm text-gray-600">芯片短缺可能导致设备交付延期</div>
+                                            </div>
+                                                <div class="col-span-3">
+                                                    <div class="text-amber-500 font-medium">中风险</div>
+                                            </div>
+                                                <div class="col-span-5">
+                                                    <div class="text-sm">延长交货期要求，增加备选方案</div>
+                                            </div>
+                                            </div>
+                                            <div class="p-4 grid grid-cols-12 gap-2">
+                                                <div class="col-span-4">
+                                                    <div class="font-medium">技术匹配风险</div>
+                                                    <div class="text-sm text-gray-600">新设备与现有系统兼容问题</div>
+                                        </div>
+                                                <div class="col-span-3">
+                                                    <div class="text-red-500 font-medium">高风险</div>
+                                    </div>
+                                                <div class="col-span-5">
+                                                    <div class="text-sm">详细指定兼容性要求，安排充分测试验证</div>
+                                    </div>
+                                </div>
+                                            <div class="p-4 grid grid-cols-12 gap-2">
+                                                <div class="col-span-4">
+                                                    <div class="font-medium">预算风险</div>
+                                                    <div class="text-sm text-gray-600">市场价格波动导致预算不足</div>
+                                    </div>
+                                                <div class="col-span-3">
+                                                    <div class="text-amber-500 font-medium">中风险</div>
+                                                </div>
+                                                <div class="col-span-5">
+                                                    <div class="text-sm">设置预算弹性空间，预留10%应急资金</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 grid grid-cols-12 gap-2">
+                                                <div class="col-span-4">
+                                                    <div class="font-medium">投标风险</div>
+                                                    <div class="text-sm text-gray-600">投标人不足导致竞争不充分</div>
+                                                </div>
+                                                <div class="col-span-3">
+                                                    <div class="text-green-500 font-medium">低风险</div>
+                                                </div>
+                                                <div class="col-span-5">
+                                                    <div class="text-sm">提前进行市场调研，扩大公告传播范围</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- 市场调研情况 -->
-                            <div class="form-section hidden" id="market-research">
-                                <h3 class="font-medium text-lg mb-4">市场调研情况</h3>
+                            <!-- 采购方式推荐模块 -->
+                            <div class="form-section hidden" id="procurement-module">
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-lg mb-4">采购方式推荐</h4>
+                                    
+                                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                                        <div class="flex items-center mb-3">
+                                            <i class="fas fa-lightbulb text-blue-500 mr-3 text-xl"></i>
+                                            <h4 class="font-medium text-blue-800">系统推荐采购方式</h4>
+                                        </div>
+                                        <p class="text-blue-700 leading-relaxed mb-4">
+                                            基于项目预算(￥2,450,000)、采购对象(货物)和技术规范分析结果，系统推荐采用<span class="font-semibold">公开招标</span>方式。
+                                        </p>
+                                        <div class="text-sm bg-white p-3 rounded-lg text-blue-800">
+                                            <p class="mb-2"><i class="fas fa-info-circle mr-1"></i> 推荐理由：</p>
+                                            <ul class="list-disc pl-5 space-y-1 text-blue-700">
+                                                <li>本项目预算超过政府采购货物类公开招标数额标准(200万元)</li>
+                                                <li>项目采购内容标准化程度高，市场供应充分</li>
+                                                <li>技术规范要求明确，适合竞争性采购方式</li>
+                                                <li>无符合单一来源采购条件的特殊情况</li>
+                                            </ul>
+                                        </div>
+                                </div>
                                 
                                 <div class="mb-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">市场供应商情况</label>
-                                    <select class="input w-full mb-4" name="marketSuppliers">
-                                        <option value="">请选择市场供应商情况</option>
-                                        <option value="many">供应商众多，市场竞争充分</option>
-                                        <option value="few">市场供应商较少（少于5家）</option>
-                                        <option value="monopoly">市场垄断或寡头垄断</option>
-                                        <option value="single">唯一供应商</option>
-                                        <option value="unknown">暂无调研</option>
-                                    </select>
+                                        <h5 class="font-medium mb-3">可选采购方式比较</h5>
+                                        
+                                        <div class="procurement-method-card selected">
+                                            <div class="radio-circle"></div>
+                                            <div class="flex-1">
+                                                <div class="font-medium text-teal-700">公开招标</div>
+                                                <div class="text-sm text-gray-600">完全公开竞争，适用于标准化程度高、市场竞争充分的采购项目</div>
+                                        </div>
+                                            <div class="ml-4 text-teal-500 font-medium">推荐</div>
+                                    </div>
                                     
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">市场调研结果描述</label>
-                                    <textarea class="input w-full h-24" name="marketResearch" placeholder="请描述市场调研的方法和结果，包括供应商情况、价格区间、产品服务质量等..."></textarea>
-                                </div>
-                            </div>
-                            
-                            <!-- 采购项目分类 -->
-                            <div class="form-section hidden" id="project-category">
-                                <h3 class="font-medium text-lg mb-4">采购项目分类</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                    <div class="border rounded-lg p-4 bg-teal-50 border-teal-200 relative project-type-item">
-                                        <input type="radio" name="projectType" id="itSystem" value="itSystem" checked class="absolute right-3 top-3" required>
-                                        <label for="itSystem" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-laptop-code text-teal-500 text-3xl"></i>
+                                        <div class="procurement-method-card">
+                                            <div class="radio-circle"></div>
+                                            <div class="flex-1">
+                                                <div class="font-medium">邀请招标</div>
+                                                <div class="text-sm text-gray-600">特定范围内邀请不少于3家供应商参与投标</div>
+                                        </div>
+                                    </div>
+                                    
+                                        <div class="procurement-method-card">
+                                            <div class="radio-circle"></div>
+                                            <div class="flex-1">
+                                                <div class="font-medium">竞争性谈判</div>
+                                                <div class="text-sm text-gray-600">通过与多家供应商谈判确定最终成交供应商</div>
                                             </div>
-                                            <h4 class="font-medium text-center">信息化类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">信息系统、软件、IT服务等</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="goods" value="goods" class="absolute right-3 top-3">
-                                        <label for="goods" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-boxes text-gray-400 text-3xl"></i>
+                                        </div>
+                                        
+                                        <div class="procurement-method-card">
+                                            <div class="radio-circle"></div>
+                                            <div class="flex-1">
+                                                <div class="font-medium">单一来源采购</div>
+                                                <div class="text-sm text-gray-600">仅能从唯一供应商处采购的特殊情况</div>
                                             </div>
-                                            <h4 class="font-medium text-center">货物类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">设备、物资、办公用品等</p>
-                                        </label>
+                                        </div>
                                     </div>
                                     
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="service" value="service" class="absolute right-3 top-3">
-                                        <label for="service" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-concierge-bell text-gray-400 text-3xl"></i>
+                                    <!-- 添加法规政策引用和合规性提示 -->
+                                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
                                             </div>
-                                            <h4 class="font-medium text-center">服务类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">咨询、培训、外包服务等</p>
-                                        </label>
-                                    </div>
+                                            <div class="ml-3">
+                                                <h5 class="text-sm font-medium text-yellow-800">法规依据与合规提示</h5>
+                                                <div class="mt-2 text-sm text-yellow-700">
+                                                    <p class="mb-2">根据《中华人民共和国政府采购法》第二十七条规定，达到公开招标数额标准的货物或服务，应当采用公开招标方式。</p>
+                                                    <p>若需采用非公开招标方式，必须符合《政府采购法》第三十条至第三十二条规定的条件，并按程序报财政部门批准。</p>
+                                        </div>
+                                                </div>
+                                                </div>
+                                                </div>
                                     
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="engineering" value="engineering" class="absolute right-3 top-3">
-                                        <label for="engineering" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-hard-hat text-gray-400 text-3xl"></i>
+                                    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-6">
+                                        <h5 class="font-medium mb-3">采购组织形式</h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="flex items-center bg-gray-50 p-3 rounded-lg cursor-pointer hover:bg-teal-50 transition-colors">
+                                                <input type="radio" name="procurementOrg" id="selfProc" class="mr-3" checked>
+                                                <label for="selfProc" class="cursor-pointer">
+                                                    <div class="font-medium">自行组织采购</div>
+                                                    <div class="text-sm text-gray-600">采购人自行组织实施采购活动</div>
+                                                </label>
                                             </div>
-                                            <h4 class="font-medium text-center">工程类</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">建设工程、维修改造等</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="ppp" value="ppp" class="absolute right-3 top-3">
-                                        <label for="ppp" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-handshake text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">PPP项目</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">政府和社会资本合作项目</p>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 hover:bg-gray-50 relative project-type-item">
-                                        <input type="radio" name="projectType" id="other" value="other" class="absolute right-3 top-3">
-                                        <label for="other" class="block cursor-pointer">
-                                            <div class="text-center mb-2">
-                                                <i class="fas fa-tools text-gray-400 text-3xl"></i>
-                                            </div>
-                                            <h4 class="font-medium text-center">其他类型</h4>
-                                            <p class="text-xs text-gray-600 text-center mt-1">自定义项目类型</p>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- 采购批准情况 -->
-                            <div class="form-section hidden" id="approval-status">
-                                <h3 class="font-medium text-lg mb-4">采购批准情况</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">项目是否已批准</label>
-                                        <select class="input w-full" id="approvalStatus" name="approvalStatus">
-                                            <option value="">请选择批准状态</option>
-                                            <option value="yes">是，已获批准</option>
-                                            <option value="no">否，尚未批准</option>
-                                            <option value="part">部分批准</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div id="approvalNumberField" class="conditional-field">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">批准文号</label>
-                                        <input type="text" class="input w-full" name="approvalNumber" placeholder="例如：某发改[2023]123号">
-                                    </div>
-                                    
-                                    <div id="approvalDescField" class="conditional-field col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">批准情况说明</label>
-                                        <textarea class="input w-full h-20" name="approvalDescription" placeholder="请简要描述项目的立项和批准情况..."></textarea>
-                                    </div>
-                                    
-                                    <div id="planToApproveField" class="conditional-field col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">预计批准时间</label>
-                                        <input type="date" class="input w-full" name="expectedApprovalDate">
-                                        <div class="mt-2">
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">采购前置条件</label>
-                                            <textarea class="input w-full h-20" name="preConditions" placeholder="请描述在正式采购前还需要满足的前置条件..."></textarea>
+                                            <div class="flex items-center bg-gray-50 p-3 rounded-lg cursor-pointer hover:bg-teal-50 transition-colors">
+                                                <input type="radio" name="procurementOrg" id="agencyProc" class="mr-3">
+                                                <label for="agencyProc" class="cursor-pointer">
+                                                    <div class="font-medium">委托代理机构</div>
+                                                    <div class="text-sm text-gray-600">委托采购代理机构代理组织采购</div>
+                                                </label>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="bg-teal-50 border-l-4 border-teal-400 p-4 mb-6">
-                                    <div class="flex">
-                                        <div class="flex-shrink-0">
-                                            <i class="fas fa-info-circle text-teal-400"></i>
+                                    <div class="mb-6">
+                                        <h5 class="font-medium mb-3">采购公告要点</h5>
+                                        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="p-3 flex">
+                                                    <div class="w-36 font-medium text-gray-700">采购人</div>
+                                                    <div class="flex-1 text-gray-800">某市大数据管理局</div>
+                            </div>
+                                                <div class="p-3 flex">
+                                                    <div class="w-36 font-medium text-gray-700">采购项目名称</div>
+                                                    <div class="flex-1 text-gray-800">智慧城市数据中心基础设施采购项目</div>
+                                            </div>
+                                                <div class="p-3 flex">
+                                                    <div class="w-36 font-medium text-gray-700">项目预算</div>
+                                                    <div class="flex-1 text-gray-800">¥2,450,000.00</div>
                                         </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm text-teal-700">
-                                                完成基本信息填写后，点击"下一步"进入方案选项页面，AI将根据您提供的信息推荐适合的采购方式、评审方法等选项。
-                                            </p>
+                                                <div class="p-3 flex">
+                                                    <div class="w-36 font-medium text-gray-700">投标截止时间</div>
+                                                    <div class="flex-1 text-gray-800">公告发布后不少于20日</div>
+                                            </div>
+                                                <div class="p-3 flex">
+                                                    <div class="w-36 font-medium text-gray-700">公告期限</div>
+                                                    <div class="flex-1 text-gray-800">自公告发布之日起5个工作日</div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                            <!-- 资格评审模块 -->
+                            <div class="form-section hidden" id="qualification-module">
+                                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                    <div class="divide-y divide-gray-100">
+                                        <div class="p-4 flex items-center">
+                                            <input type="checkbox" checked class="form-checkbox h-5 w-5 text-teal-500 mr-3">
+                                            <div class="flex-1 text-sm">具有ISO 9001质量管理体系认证</div>
+                                            </div>
+                                        <div class="p-4 flex items-center">
+                                            <input type="checkbox" checked class="form-checkbox h-5 w-5 text-teal-500 mr-3">
+                                            <div class="flex-1 text-sm">近3年至少2个类似项目经验</div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                            <!-- 评分表模块 -->
+                            <div class="form-section hidden" id="scoring-module">
+                                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                    <div class="p-4 border-b border-gray-100">
+                                        <div class="font-medium">技术指标响应程度</div>
+                                        <div class="text-xs text-gray-600">根据投标文件响应技术规范的程度评分</div>
+                                        <div class="text-teal-500 font-medium mt-2">20分</div>
+                                            </div>
+                                    <div class="p-4">
+                                        <div class="font-medium">项目管理能力</div>
+                                        <div class="text-xs text-gray-600">评估项目管理方法及团队经验</div>
+                                        <div class="text-teal-500 font-medium mt-2">15分</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="flex justify-between">
-                                <div class="flex items-center">
-                                    <button type="button" id="prevBtn" class="btn btn-outline opacity-50 cursor-not-allowed" disabled>
-                                        <i class="fas fa-arrow-left mr-2"></i>
-                                        上一项
-                                    </button>
-                                    <button type="button" id="nextBtn" class="btn btn-outline ml-3">
-                                        下一项
-                                        <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button type="button" id="saveBtn" class="btn btn-outline mr-4">
-                                        <i class="fas fa-save mr-2"></i>
-                                        保存草稿
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        下一步
-                                        <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
+                                
+                            <!-- 方案总结模块 -->
+                            <div class="form-section hidden" id="summary-module">
+                                <div class="text-center py-8">
+                                    <div class="inline-block p-6 bg-teal-50 rounded-full mb-4">
+                                        <i class="fas fa-file-alt text-teal-500 text-4xl"></i>
+                                    </div>
+                                    <h4 class="text-xl font-medium mb-2">方案已生成</h4>
+                                    <p class="text-gray-600 mb-6">包含技术规范问题分析、采购方式推荐、资格评审和评分表</p>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <button class="btn btn-outline">导出方案</button>
+                                        <button class="btn btn-primary">提交审批</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>

@@ -3,10 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能体选择 - 公诚DeepSeek</title>
+    <title>智能体选择 - GCDeepSeek</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 添加新的分类选择器样式 */
+        .category-tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-tab {
+            padding: 0.75rem 1.25rem;
+            font-weight: 500;
+            color: #6b7280;
+            position: relative;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        
+        .category-tab:hover {
+            color: #3b82f6;
+        }
+        
+        .category-tab.active {
+            color: #3b82f6;
+        }
+        
+        .category-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #3b82f6;
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .category-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: #f3f4f6;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        
+        .filter-chip:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .filter-chip.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+        }
+        
+        .filter-chip .chip-icon {
+            margin-right: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <div class="main-layout">
@@ -15,7 +106,7 @@
             <div class="mb-8">
                 <div class="flex items-center mb-6">
                     <img src="../img/logo-sm.svg" alt="Logo" class="rounded-lg mr-3">
-                    <h1 class="text-xl font-bold">公诚DeepSeek</h1>
+                    <h1 class="text-xl font-bold">GCDeepSeek</h1>
                 </div>
                 
                 <div class="relative">
@@ -96,34 +187,109 @@
                             <input type="text" class="input pl-10 py-2" placeholder="搜索智能体...">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
-                        <div class="flex">
-                            <button class="btn btn-outline">
-                                <i class="fas fa-filter mr-2"></i>
-                                筛选
-                            </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-filter mr-2"></i>
+                            筛选
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 新的分类筛选设计 -->
+                <div class="filter-section">
+                    <!-- 分类标签页 -->
+                    <div class="category-tabs">
+                        <div class="category-tab active">全部</div>
+                        <div class="category-tab">专业领域</div>
+                        <div class="category-tab">生活服务</div>
+                        <div class="category-tab">工作效率</div>
+                        <div class="category-tab">教育培训</div>
+                        <div class="category-tab">娱乐休闲</div>
+                    </div>
+                    
+                    <!-- 类别内容区域 -->
+                    <div class="category-content">
+                        <div class="filter-chip active">
+                            <span class="chip-icon"><i class="fas fa-globe"></i></span>
+                            <span>全部智能体</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-chart-line"></i></span>
+                            <span>财务</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-gavel"></i></span>
+                            <span>招投标</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-balance-scale"></i></span>
+                            <span>法律</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-stethoscope"></i></span>
+                            <span>医疗</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-plane"></i></span>
+                            <span>旅游</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-graduation-cap"></i></span>
+                            <span>教育</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-utensils"></i></span>
+                            <span>餐饮</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-shopping-cart"></i></span>
+                            <span>购物</span>
+                        </div>
+                        <div class="filter-chip">
+                            <span class="chip-icon"><i class="fas fa-laptop-code"></i></span>
+                            <span>IT技术</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 增加高级筛选选项 -->
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-4">
+                            <div class="w-full md:w-auto">
+                                <label class="text-sm text-gray-600 block mb-1">评分</label>
+                                <select class="select text-sm py-2">
+                                    <option>全部评分</option>
+                                    <option>4星以上</option>
+                                    <option>3星以上</option>
+                                </select>
+                            </div>
+                            <div class="w-full md:w-auto">
+                                <label class="text-sm text-gray-600 block mb-1">上线时间</label>
+                                <select class="select text-sm py-2">
+                                    <option>全部时间</option>
+                                    <option>最近一周</option>
+                                    <option>最近一月</option>
+                                </select>
+                            </div>
+                            <div class="w-full md:w-auto">
+                                <label class="text-sm text-gray-600 block mb-1">使用热度</label>
+                                <select class="select text-sm py-2">
+                                    <option>全部</option>
+                                    <option>热门优先</option>
+                                    <option>新上线优先</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 分类标签 -->
-                <div class="flex flex-wrap items-center space-x-2 mb-6">
-                    <span class="text-gray-600 mr-2">分类：</span>
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm">全部</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">财务</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">法律</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">招投标</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">旅游</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">教育</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">医疗</button>
-                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm">更多</button>
-                </div>
-                
                 <!-- 推荐智能体 -->
                 <h2 class="text-xl font-semibold mb-4">推荐智能体</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 items-stretch">
                     <!-- 财务智能体 -->
-                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                    <div class="agent-card hover:shadow-lg flex flex-col h-full">
                         <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <button class="btn btn-outline text-white border-white hover:bg-white hover:text-blue-600">查看详情</button>
+                            </div>
                             <div class="flex flex-col items-center">
                                 <div class="rounded-full bg-white p-4 mb-3 shadow-md">
                                     <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
@@ -157,7 +323,7 @@
                     </div>
                     
                     <!-- 招标智能体 -->
-                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                    <div class="agent-card hover:shadow-lg flex flex-col h-full">
                         <div class="h-48 bg-gradient-to-r from-purple-500 to-purple-700 flex items-center justify-center p-6 rounded-t-lg">
                             <div class="flex flex-col items-center">
                                 <div class="rounded-full bg-white p-4 mb-3 shadow-md">
@@ -192,7 +358,7 @@
                     </div>
                     
                     <!-- 法律智能体 -->
-                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                    <div class="agent-card hover:shadow-lg flex flex-col h-full">
                         <div class="h-48 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center p-6 rounded-t-lg">
                             <div class="flex flex-col items-center">
                                 <div class="rounded-full bg-white p-4 mb-3 shadow-md">
@@ -220,9 +386,51 @@
                                 <span class="tag tag-green">合同审核</span>
                                 <span class="tag tag-green">法规解读</span>
                             </div>
+                            <div class="mt-auto">
+                                <div class="relative">
+                                    <button class="btn btn-primary w-full">立即使用</button>
+                                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">热门</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新上线 -->
+                <h2 class="text-xl font-semibold mb-4">新上线</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                    <!-- 数据分析智能体 -->
+                    <div class="agent-card hover:shadow-lg flex flex-col h-96">
+                        <div class="h-48 bg-gradient-to-r from-pink-500 to-rose-700 flex items-center justify-center p-6 rounded-t-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-full bg-white p-4 mb-3 shadow-md">
+                                    <i class="fas fa-database text-pink-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-white text-lg font-semibold">数据分析智能体</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col bg-white rounded-b-lg">
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-2">4.2 (68人评价)</span>
+                                </div>
+                                <p class="text-gray-600">提供数据可视化、统计分析和市场趋势预测专业服务。</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tag tag-pink">数据分析</span>
+                                <span class="tag tag-pink">可视化</span>
+                                <span class="tag tag-pink">趋势预测</span>
+                            </div>
                             <div class="mt-auto relative">
                                 <button class="btn btn-primary w-full">立即使用</button>
-                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">热门</span>
+                                <span class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">新上线</span>
                             </div>
                         </div>
                     </div>
@@ -389,5 +597,32 @@
             </div>
         </div>
     </div>
+    
+    <!-- 添加交互脚本 -->
+    <script>
+        // 为分类标签添加点击事件
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('.category-tab').forEach(t => 
+                    t.classList.remove('active'));
+                
+                // 为当前点击的标签添加active类
+                this.classList.add('active');
+                
+                // 这里可以添加更新显示内容的代码
+                // 例如通过AJAX加载内容或者切换显示隐藏的元素
+            });
+        });
+        
+        // 为筛选芯片添加点击事件
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.toggle('active');
+                
+                // 这里可以添加应用筛选的代码
+            });
+        });
+    </script>
 </body>
 </html> 
